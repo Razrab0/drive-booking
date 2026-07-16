@@ -334,9 +334,21 @@
                 let isAllowed = true;
                 let isCarType = (type === "car_granta_manual" || type === "car_logan_manual" || type === "car_logan_auto" || type === "car_murano_auto");
 
+                                // СКВОРЗНАЯ ПРОВЕРКА КОНКРЕТНОЙ МОДЕЛИ МАШИНЫ НА ЭКРАНЕ САЙТА
                 if (isCarType) {
-                    if (slot.totalMoto > 0 || slot.car > 0) isAllowed = false;
-                } else if (type === "moto") {
+                    // 1. Проверяем, не занята ли эта конкретная машина кем-то другим в этот же час
+                    let isThisCarBusyByAnyone = globalSlotsData.some(s => s.date === slot.date && s.time === slot.time && (s.bikes || []).includes(type));
+                    
+                    if (isThisCarBusyByAnyone) {
+                        isAllowed = false;
+                    }
+                    
+                    // 2. Проверяем, не занят ли сам выбранный инструктор (чтобы у него не было двух учеников одновременно)
+                    if (slot.car > 0 || slot.totalMoto > 0) {
+                        isAllowed = false;
+                    }
+                }
+else if (type === "moto") {
                     if (slot.car > 0 || slot.totalMoto >= 3) isAllowed = false;
                     if (level === "red" && (slot.red > 0 || slot.yellow > 0 || slot.green > 2)) isAllowed = false;
                     if (level === "yellow") {
