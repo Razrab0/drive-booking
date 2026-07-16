@@ -1,0 +1,483 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Онлайн-запись к автоинструкторам</title>
+    <style>
+        :root { --primary: #2563eb; --primary-hover: #1d4ed8; --success: #065f46; --success-bg: #d1fae5; --danger: #ef4444; --bg: #f8fafc; --text: #1e293b; }
+        body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; background: var(--bg); color: var(--text); margin: 0; padding: 15px; display: flex; flex-direction: column; align-items: center; min-height: 100vh; box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+        .box { background: white; padding: 24px; border-radius: 16px; box-shadow: 0 4px 6px -1px rgba(0,0,0,0.05); width: 100%; max-width: 440px; margin-bottom: 20px; box-sizing: border-box; border: 1px solid #e2e8f0; }
+        h2 { font-size: 20px; font-weight: 700; text-align: center; margin: 0 0 20px 0; color: #0f172a; display: flex; align-items: center; justify-content: center; gap: 8px; }
+        h3 { font-size: 18px; margin: 0 0 15px 0; color: #0f172a; text-align: center; }
+        label { font-size: 14px; font-weight: 600; display: block; margin: 16px 0 6px; color: #475569; }
+        input, select { width: 100%; padding: 12px 14px; border: 1px solid #cbd5e1; border-radius: 10px; box-sizing: border-box; font-size: 15px; background: #fff; color: var(--text); }
+        input:focus, select:focus { outline: none; border-color: var(--primary); box-shadow: 0 0 0 3px rgba(37,99,235,0.15); }
+        
+        .type-switcher { display: grid; grid-template-columns: 1fr; gap: 10px; margin-bottom: 5px; }
+        .type-tab { padding: 12px; border: 2px solid #e2e8f0; background: #fff; border-radius: 10px; font-weight: 600; font-size: 15px; cursor: pointer; text-align: center; transition: 0.2s; }
+        .type-tab.active { border-color: var(--primary) !important; background: #eff6ff !important; color: var(--primary) !important; box-shadow: 0 4px 12px rgba(37,99,235,0.08); }
+        
+        .level-grid { display: grid; grid-template-columns: 1fr; gap: 8px; }
+        .level-card { padding: 12px 14px; border: 2px solid #e2e8f0; border-radius: 10px; cursor: pointer; display: flex; align-items: center; gap: 10px; font-weight: 500; font-size: 14px; background: white; }
+        .level-card.active { border-color: var(--primary); background: #eff6ff; font-weight: 600; }
+        
+        .date-group { margin-top: 15px; }
+        .date-header { font-size: 13px; font-weight: 700; color: #64748b; text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 8px; border-bottom: 1px dashed #e2e8f0; padding-bottom: 4px; }
+        .slot-container { display: grid; grid-template-columns: 1fr; gap: 8px; }
+        
+        .slot-btn { padding: 14px; border: 1px solid #34d399; background: var(--success-bg); color: var(--success); border-radius: 10px; cursor: pointer; font-size: 14px; font-weight: 700; text-align: left; display: flex; justify-content: space-between; align-items: center; width: 100%; box-sizing: border-box; transition: background 0.1s, color 0.1s; }
+        .slot-btn.selected, .slot-btn:active:not(:disabled) { background: var(--primary) !important; color: white !important; border-color: var(--primary) !important; box-shadow: 0 4px 12px rgba(37,99,235,0.2); }
+        .slot-btn.selected span { color: white !important; }
+        .slot-btn:disabled { background: #f1f5f9; border-color: #e2e8f0; color: #94a3b8; cursor: not-allowed; font-weight: 500; }
+        
+        button.submit-btn { width: 100%; background: var(--primary); color: white; border: none; padding: 14px; border-radius: 10px; font-size: 16px; cursor: pointer; margin-top: 24px; font-weight: 700; }
+        button.submit-btn:disabled { background: #cbd5e1; color: #94a3b8; cursor: not-allowed; }
+        button.cancel-btn { width: 100%; background: #fff; color: var(--danger); border: 2px solid #fee2e2; padding: 12px; border-radius: 10px; font-size: 15px; cursor: pointer; margin-top: 10px; font-weight: 600; }
+        
+        #status, #cancelStatus { margin-top: 15px; padding: 12px 16px; border-radius: 10px; text-align: center; display: none; font-weight: 600; font-size: 14px; }
+        .ok { background: #ecfdf5; color: #065f46; border: 1px solid #a7f3d0; }
+        .err { background: #fef2f2; color: #991b1b; border: 1px solid #fee2e2; }
+        
+        .info-trigger { box-sizing: border-box; width: 100%; background: #f1f5f9; border: 1px dashed #cbd5e1; padding: 12px; border-radius: 10px; font-size: 13px; font-weight: 600; color: #475569; cursor: pointer; text-align: center; margin-bottom: 0; transition: 0.2s; }
+        .info-trigger:hover { background: #e2e8f0; }
+        .info-content { display: none; background: #fafafa; border: 1px solid #e2e8f0; padding: 14px; border-radius: 10px; font-size: 13px; line-height: 1.5; color: #475569; margin-bottom: 15px; }
+        .info-content ol { margin: 6px 0; padding-left: 20px; }
+        .info-content li { margin-bottom: 4px; }
+    </style>
+</head>
+<body>
+
+<div class="box" style="padding: 16px; width: 100%; max-width: 440px; margin: 0 auto 15px auto; background: #f8fafc; border-color: #cbd5e1;">
+    <div class="info-trigger" style="margin-bottom: 0;" onclick="toggleInfo()">ℹ️ Как пользоваться сайтом (Инструкция)</div>
+    <div class="info-content" id="infoBlock" style="margin-top: 15px; margin-bottom: 0;">
+        <strong>📝 Запись на занятие:</strong>
+        <ol>
+            <li>Заполните ваше Имя, Фамилию и <strong>обязательно Телефон</strong>.</li>
+            <li>Выберите вашего инструктора (Игорь Иванов или Андрей Гришин).</li>
+            <li>Выберите категорию (Мото/Авто), а затем конкретную модель.</li>
+            <li>Нажмите на подходящее зеленое время и подтвердите запись.</li>
+            <li><strong>Важно:</strong> Запишите или заскриньте 6-значный код отмены с экрана!</li>
+        </ol>
+    </div>
+</div>
+
+<script>
+    function toggleInfo() {
+        var block = document.getElementById('infoBlock');
+        block.style.display = (block.style.display === 'block') ? 'none' : 'block';
+    }
+</script>
+
+<div class="box">
+    <h2>📅 Онлайн-запись к инструктору</h2>
+    <form id="mainForm">
+        <label>Ваше Имя и Фамилия:</label>
+        <input type="text" id="name" required placeholder="Иван Иванов">
+
+        <label>Email (необязательно):</label>
+        <input type="email" id="email" placeholder="example@gmail.com">
+
+        <label>Телефон:</label>
+        <input type="tel" id="phone" required value="+7 " placeholder="+7 (900) 000-00-00">
+
+        <!-- НОВЫЙ БЛОК: ВЫБОР ИНСТРУКТОРА -->
+        <label>Выберите инструктора:</label>
+        <div class="type-switcher" style="grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 15px;">
+            <div class="type-tab active" id="inst-igor" onclick="setInstructor('Игорь Иванов')">👨‍🏫 Игорь Иванов</div>
+            <div class="type-tab" id="inst-andrey" onclick="setInstructor('Андрей Гришин')">👨‍🏫 Андрей Гришин</div>
+        </div>
+
+        <label>Категория обучения:</label>
+        <div class="type-switcher" style="grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 15px;">
+            <div class="type-tab active" id="tab-cat-moto" onclick="setCategory('moto')" style="padding: 12px; font-weight: 700; text-align: center;">🏍️ Мотоциклы</div>
+            <div class="type-tab" id="tab-cat-car" onclick="setCategory('car')" style="padding: 12px; font-weight: 700; text-align: center;">🚗 Автомобили</div>
+        </div>
+
+        <input type="hidden" id="selectedInstructor" value="Игорь Иванов">
+        <!-- БЛОК МОТОЦИКЛОВ -->
+        <div id="motoBikesBlock" style="display: block; margin-bottom: 15px;">
+            <label>Выберите мотоцикл:</label>
+            <div class="type-switcher" style="grid-template-columns: 1fr; gap: 10px;">
+                <div class="type-tab active" id="bike-boxer" onclick="setBike('Bajaj Boxer')" style="display: flex; align-items: center; gap: 15px; padding: 8px 14px; text-align: left;">
+                    <img src="boxer.jpg" alt="" style="width: 70px; height: 45px; object-fit: cover; border-radius: 6px; border: 1px solid #cbd5e1;">
+                    <div><div style="font-weight: 700; font-size: 15px; color: #0f172a;">Bajaj Boxer</div></div>
+                </div>
+                <div class="type-tab" id="bike-fuego" onclick="setBike('Fuego Rambolor 250')" style="display: flex; align-items: center; gap: 15px; padding: 8px 14px; text-align: left;">
+                    <img src="fuego.jpg" alt="" style="width: 70px; height: 45px; object-fit: cover; border-radius: 6px; border: 1px solid #cbd5e1;">
+                    <div><div style="font-weight: 700; font-size: 15px; color: #0f172a;">Fuego Rambolor 250</div></div>
+                </div>
+                <div class="type-tab" id="bike-yamaha" onclick="setBike('Yamaha YBR 125')" style="display: flex; align-items: center; gap: 15px; padding: 8px 14px; text-align: left;">
+                    <img src="yamaha.jpg" alt="" style="width: 70px; height: 45px; object-fit: cover; border-radius: 6px; border: 1px solid #cbd5e1;">
+                    <div><div style="font-weight: 700; font-size: 15px; color: #0f172a;">Yamaha YBR 125</div></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- РАСШИРЕННЫЙ БЛОК АВТОМОБИЛЕЙ -->
+        <div id="carVehiclesBlock" style="display: none; margin-bottom: 15px;">
+            <label>Выберите автомобиль:</label>
+            <div class="type-switcher" style="grid-template-columns: 1fr; gap: 10px;">
+                <!-- Lada Granta МКПП -->
+                <div class="type-tab" id="tab-car_granta_manual" onclick="setVehicleType('car_granta_manual')" style="display: flex; align-items: center; gap: 15px; padding: 8px 14px; text-align: left;">
+                    <img src="granta.jpg" alt="" style="width: 70px; height: 45px; object-fit: cover; border-radius: 6px; border: 1px solid #cbd5e1;">
+                    <div><div style="font-weight: 700; font-size: 14px; color: #0f172a;">Lada Granta</div><div style="font-size: 11px; color: #64748b; font-weight: 500;">Механика (МКПП)</div></div>
+                </div>
+                <!-- Renault Logan МКПП -->
+                <div class="type-tab" id="tab-car_logan_manual" onclick="setVehicleType('car_logan_manual')" style="display: flex; align-items: center; gap: 15px; padding: 8px 14px; text-align: left;">
+                    <img src="logan_manual.jpg" alt="" style="width: 70px; height: 45px; object-fit: cover; border-radius: 6px; border: 1px solid #cbd5e1;">
+                    <div><div style="font-weight: 700; font-size: 14px; color: #0f172a;">Renault Logan</div><div style="font-size: 11px; color: #64748b; font-weight: 500;">Механика (МКПП)</div></div>
+                </div>
+                <!-- Renault Logan АКПП -->
+                <div class="type-tab" id="tab-car_logan_auto" onclick="setVehicleType('car_logan_auto')" style="display: flex; align-items: center; gap: 15px; padding: 8px 14px; text-align: left;">
+                    <img src="logan_auto.jpg" alt="" style="width: 70px; height: 45px; object-fit: cover; border-radius: 6px; border: 1px solid #cbd5e1;">
+                    <div><div style="font-weight: 700; font-size: 14px; color: #0f172a;">Renault Logan</div><div style="font-size: 11px; color: #64748b; font-weight: 500;">Автомат (АКПП)</div></div>
+                </div>
+                <!-- Nissan Murano АКПП (Эксклюзив Игоря) -->
+                <div class="type-tab" id="tab-car_murano_auto" onclick="setVehicleType('car_murano_auto')" style="display: flex; align-items: center; gap: 15px; padding: 8px 14px; text-align: left;">
+                    <img src="murano.jpg" alt="" style="width: 70px; height: 45px; object-fit: cover; border-radius: 6px; border: 1px solid #cbd5e1;">
+                    <div><div style="font-weight: 700; font-size: 14px; color: #0f172a;">Nissan Murano</div><div style="font-size: 11px; color: #64748b; font-weight: 500;">Автомат (АКПП)</div></div>
+                </div>
+            </div>
+        </div>
+
+        <input type="hidden" id="type" value="moto">
+        <input type="hidden" id="selectedBike" value="Bajaj Boxer">
+        <div id="motoLevelBlock">
+            <label>Ваш уровень подготовки:</label>
+            <div class="level-grid">
+                <div class="level-card active" id="lvl-green" onclick="setLevel('green')"><span>🟢</span> Уверенно катаюсь</div>
+                <div class="level-card" id="lvl-yellow" onclick="setLevel('yellow')"><span>🟡</span> Я средний</div>
+                <div class="level-card" id="lvl-red" onclick="setLevel('red')"><span>🔴</span> Я новичок</div>
+            </div>
+            <input type="hidden" id="level" value="green">
+        </div>
+
+        <label style="margin-bottom: 2px;">Выберите доступное время у этого инструктора:</label>
+        <div id="slotsBox">
+            <div style="text-align: center; color: #64748b; padding: 10px;">Загрузка расписания...</div>
+        </div>
+
+        <input type="hidden" id="selectedSlot" required>
+        <button type="submit" class="submit-btn" id="submitBtn" disabled>Подтвердить запись</button>
+    </form>
+    <div id="status"></div>
+</div>
+
+<div class="box" style="border-top: 4px solid var(--danger);">
+    <h3>❌ Отмена записи</h3>
+    <input type="text" id="cancelCode" placeholder="6-значный цифровой код">
+    <button type="button" class="cancel-btn" onclick="cancelBooking()">Отменить занятие</button>
+    <div id="cancelStatus"></div>
+</div>
+<script>
+    // ВСТАВЬТЕ СЮДА ВАШУ НОВУЮ ССЫЛКУ ИЗ GOOGLE APPS SCRIPT МЕЖДУ КАВЫЧЕК
+    const API_URL = 'https://script.google.com/macros/s/AKfycbzz7uFCTrok22jwAFkXNahLl_bH6K6AFy8kZc0dVLljzYEyOy1oAV1ekLX7vCfDAr-S/exec';
+    
+    let globalSlotsData = [];
+    let currentCategory = 'moto';
+
+    // УМНАЯ МАСКА НА РОССИЙСКИЙ НОМЕР ТЕЛЕФОНА
+    document.getElementById('phone').addEventListener('input', function(e) {
+        let matrix = '+7 (9xx) xxx-xx-xx',
+            i = 0,
+            def = matrix.replace(/\D/g, ""),
+            val = this.value.replace(/\D/g, "");
+        if (def.length >= val.length) val = def;
+        this.value = matrix.replace(/./g, function(a) {
+            return /[x\d]/.test(a) && i < val.length ? val.charAt(i++) : i >= val.length ? "" : a;
+        });
+    });
+
+    document.getElementById('cancelCode').addEventListener('input', function(e) {
+        e.target.value = e.target.value.replace(/\D/g, '').substring(0,6);
+    });
+
+    // УПРАВЛЕНИЕ ВЫБОРОМ ИНСТРУКТОРА И ЕГО АВТОПАРКОМ
+    function setInstructor(name) {
+        document.getElementById('selectedInstructor').value = name;
+        document.getElementById('inst-igor').classList.toggle('active', name === 'Игорь Иванов');
+        document.getElementById('inst-andrey').classList.toggle('active', name === 'Андрей Гришин');
+        
+        // Жёсткий фильтр: Андрей не ездит на Мурано
+        const muranoCard = document.getElementById('tab-car_murano_auto');
+        if (name === 'Андрей Гришин') {
+            muranoCard.style.display = 'none';
+            // Если у ученика стоял Мурано, переключаем на Гранту
+            if (document.getElementById('type').value === 'car_murano_auto') {
+                setVehicleType('car_granta_manual');
+            }
+        } else {
+            muranoCard.style.display = 'flex';
+        }
+        updateInterface();
+    }
+
+    function setCategory(cat) {
+        currentCategory = cat;
+        document.getElementById('tab-cat-moto').classList.toggle('active', cat === 'moto');
+        document.getElementById('tab-cat-car').classList.toggle('active', cat === 'car');
+        
+        document.getElementById('motoBikesBlock').style.display = cat === 'moto' ? 'block' : 'none';
+        document.getElementById('carVehiclesBlock').style.display = cat === 'car' ? 'block' : 'none';
+        
+        if (cat === 'moto') {
+            setBike(document.getElementById('selectedBike').value || 'Bajaj Boxer');
+        } else {
+            // Если выбран авто, проверяем текущее значение, чтобы не слетело на забаненный Мурано
+            let currentType = document.getElementById('type').value;
+            let currentInst = document.getElementById('selectedInstructor').value;
+            
+            if (currentType.startsWith('car_') && !(currentInst === 'Андрей Гришин' && currentType === 'car_murano_auto')) {
+                setVehicleType(currentType);
+            } else {
+                setVehicleType('car_granta_manual');
+            }
+        }
+        updateInterface();
+    }
+    function setVehicleType(v) {
+        document.getElementById('type').value = v;
+        document.getElementById('tab-car_granta_manual').classList.toggle('active', v === 'car_granta_manual');
+        document.getElementById('tab-car_logan_manual').classList.toggle('active', v === 'car_logan_manual');
+        document.getElementById('tab-car_logan_auto').classList.toggle('active', v === 'car_logan_auto');
+        document.getElementById('tab-car_murano_auto').classList.toggle('active', v === 'car_murano_auto');
+        updateInterface();
+    }
+
+    function setBike(b) {
+        document.getElementById('type').value = 'moto';
+        document.getElementById('selectedBike').value = b;
+        document.getElementById('bike-boxer').classList.toggle('active', b === 'Bajaj Boxer');
+        document.getElementById('bike-fuego').classList.toggle('active', b === 'Fuego Rambolor 250');
+        document.getElementById('bike-yamaha').classList.toggle('active', b === 'Yamaha YBR 125');
+    }
+
+    function setLevel(l) {
+        document.getElementById('level').value = l;
+        ['green', 'yellow', 'red'].forEach(id => {
+            document.getElementById('lvl-' + id).classList.toggle('active', id === l);
+        });
+        updateInterface();
+    }
+
+    function loadSlots() {
+        const oldScript = document.getElementById('jsonp-slots');
+        if(oldScript) oldScript.remove();
+        const script = document.createElement('script');
+        script.id = 'jsonp-slots';
+        script.src = API_URL + '?callback=renderSlotsData&_t=' + new Date().getTime();
+        document.body.appendChild(script);
+    }
+
+    function renderSlotsData(slots) {
+        globalSlotsData = slots;
+        updateInterface();
+    }
+    function updateInterface() {
+        const type = document.getElementById('type').value;
+        const level = document.getElementById('level').value;
+        const currentInst = document.getElementById('selectedInstructor').value;
+        const slotsBox = document.getElementById('slotsBox');
+        const submitBtn = document.getElementById('submitBtn');
+        
+        document.getElementById('motoLevelBlock').style.display = currentCategory === 'moto' ? 'block' : 'none';
+        slotsBox.innerHTML = '';
+        
+        // Фильтруем общую базу: оставляем только слоты активного инструктора
+        const instructorSlots = (globalSlotsData || []).filter(slot => slot.instructor === currentInst);
+        
+        if (instructorSlots.length === 0) {
+            slotsBox.innerHTML = '<div style="text-align: center; color: #64748b; padding: 10px;">У этого инструктора нет свободных слотов в календаре</div>';
+            submitBtn.disabled = true;
+            return;
+        }
+
+        let grouped = {};
+        instructorSlots.forEach(slot => {
+            if (!grouped[slot.date]) grouped[slot.date] = [];
+            grouped[slot.date].push(slot);
+        });
+
+        Object.keys(grouped).forEach(dateStr => {
+            let groupDiv = document.createElement('div');
+            groupDiv.className = 'date-group';
+            
+            let dateParts = dateStr.split('-');
+            let months = ['янв', 'фев', 'мар', 'апр', 'май', 'июн', 'июл', 'авг', 'сен', 'окт', 'ноя', 'дек'];
+            let day = parseInt(dateParts[2], 10);
+            let monthIdx = parseInt(dateParts[1], 10) - 1;
+            let formattedDate = day + ' ' + months[monthIdx];
+            
+            let header = document.createElement('div');
+            header.className = 'date-header';
+            header.innerText = formattedDate;
+            groupDiv.appendChild(header);
+
+            let container = document.createElement('div');
+            container.className = 'slot-container';
+            grouped[dateStr].forEach(slot => {
+                let btn = document.createElement('button');
+                btn.type = 'button';
+                btn.className = 'slot-btn';
+                
+                let timeText = document.createElement('span');
+                timeText.innerText = slot.time;
+                btn.appendChild(timeText);
+                
+                let badge = document.createElement('span');
+                badge.style.fontSize = '12px';
+                badge.style.opacity = '0.9';
+                badge.innerText = 'Свободно';
+                btn.appendChild(badge);
+                
+                let isAllowed = true;
+                let isCarType = (type === "car_granta_manual" || type === "car_logan_manual" || type === "car_logan_auto" || type === "car_murano_auto");
+
+                if (isCarType) {
+                    if (slot.totalMoto > 0 || slot.car > 0) isAllowed = false;
+                } else if (type === "moto") {
+                    if (slot.car > 0 || slot.totalMoto >= 3) isAllowed = false;
+                    if (level === "red" && (slot.red > 0 || slot.yellow > 0 || slot.green > 2)) isAllowed = false;
+                    if (level === "yellow") {
+                        if (slot.red > 0 || slot.yellow >= 2 || (slot.yellow === 1 && slot.green > 1)) isAllowed = false;
+                    }
+                    if (level === "green") {
+                        if ((slot.red === 1 && slot.green >= 2) || (slot.yellow === 2 && slot.green >= 1)) isAllowed = false;
+                    }
+                }
+
+                if (!isAllowed) {
+                    btn.disabled = true;
+                    badge.innerText = "Занято"; 
+                } else {
+                    btn.onclick = function() {
+                        document.querySelectorAll('.slot-btn').forEach(b => b.classList.remove('selected'));
+                        btn.classList.add('selected');
+                        document.getElementById('selectedSlot').value = `${slot.date}|${slot.time}`;
+                        submitBtn.disabled = false;
+                        
+                        if (currentCategory === 'moto') {
+                            const busyBikes = slot.bikes || [];
+                            const allBikes = ['Bajaj Boxer', 'Fuego Rambolor 250', 'Yamaha YBR 125'];
+                            const bikeIds = { 'Bajaj Boxer': 'bike-boxer', 'Fuego Rambolor 250': 'bike-fuego', 'Yamaha YBR 125': 'bike-yamaha' };
+                            
+                            allBikes.forEach(b => {
+                                let card = document.getElementById(bikeIds[b]);
+                                if (card) {
+                                    card.style.opacity = '1';
+                                    card.style.pointerEvents = 'auto';
+                                    card.style.background = 'white';
+                                }
+                            });
+                            
+                            busyBikes.forEach(b => {
+                                if (bikeIds[b] && document.getElementById(bikeIds[b])) {
+                                    let card = document.getElementById(bikeIds[b]);
+                                    card.style.opacity = '0.4';
+                                    card.style.pointerEvents = 'none';
+                                    card.style.background = '#f1f5f9';
+                                    card.classList.remove('active');
+                                }
+                            });
+                            
+                            const freeBikes = allBikes.filter(b => !busyBikes.includes(b));
+                            if (freeBikes.length > 0 && busyBikes.includes(document.getElementById('selectedBike').value)) {
+                                setBike(freeBikes[0]);
+                            }
+                        }
+                    };
+                }
+                container.appendChild(btn);
+            });
+            
+            groupDiv.appendChild(container);
+            slotsBox.appendChild(groupDiv);
+        });
+    }
+    document.getElementById('mainForm').addEventListener('submit', function(e) {
+        e.preventDefault();
+        const status = document.getElementById('status');
+        const btn = document.getElementById('submitBtn');
+        
+        const rawPhone = document.getElementById('phone').value.trim();
+        const digitsCount = rawPhone.replace(/\D/g, "").length;
+
+        if (digitsCount !== 11) {
+            status.style.display = 'block';
+            status.className = 'err';
+            status.innerText = 'Ошибка: Пожалуйста, введите корректный российский номер из 10 цифр!';
+            return;
+        }
+
+        status.style.display = 'block';
+        status.className = '';
+        status.innerText = 'Оформление записи...';
+        btn.disabled = true;
+
+        const [date, time] = document.getElementById('selectedSlot').value.split('|');
+        const name = encodeURIComponent(document.getElementById('name').value.trim());
+        const phone = encodeURIComponent("'" + rawPhone); 
+        const email = encodeURIComponent(document.getElementById('email').value.trim());
+        const type = document.getElementById('type').value;
+        const instructor = encodeURIComponent(document.getElementById('selectedInstructor').value);
+        const level = type === 'moto' ? document.getElementById('level').value : 'none';
+        const bike = type === 'moto' ? encodeURIComponent(document.getElementById('selectedBike').value) : '';
+
+        const oldBookingScript = document.getElementById('jsonp-booking');
+        if(oldBookingScript) oldBookingScript.remove();
+        const script = document.createElement('script');
+        script.id = 'jsonp-booking';
+        script.src = `${API_URL}?action=book&date=${date}&time=${time}&type=${type}&level=${level}&name=${name}&phone=${phone}&email=${email}&bike=${bike}&instructor=${instructor}&callback=handleBookingResponse`;
+        document.body.appendChild(script);
+    });
+
+    function handleBookingResponse(response) {
+        const status = document.getElementById('status');
+        if (response.status === 'success') {
+            status.className = 'ok';
+            status.innerText = response.message;
+            document.getElementById('mainForm').reset();
+            document.getElementById('phone').value = "+7 ";
+            setCategory('moto');
+            loadSlots();
+        } else {
+            status.className = 'err';
+            status.innerText = 'Ошибка: ' + response.message;
+            document.getElementById('submitBtn').disabled = false;
+        }
+    }
+
+    function cancelBooking() {
+        const code = document.getElementById('cancelCode').value.trim();
+        const status = document.getElementById('cancelStatus');
+        if(!code) return;
+        status.style.display = 'block';
+        status.className = '';
+        status.innerText = 'Отмена занятия...';
+
+        const oldCancelScript = document.getElementById('jsonp-cancel');
+        if(oldCancelScript) oldCancelScript.remove();
+        const script = document.createElement('script');
+        script.id = 'jsonp-cancel';
+        script.src = `${API_URL}?action=cancel&bookingId=${encodeURIComponent(code)}&callback=handleCancelResponse`;
+        document.body.appendChild(script);
+    }
+
+    function handleCancelResponse(response) {
+        const status = document.getElementById('cancelStatus');
+        if (response.status === 'success') {
+            status.className = 'ok';
+            status.innerText = response.message;
+            document.getElementById('cancelCode').value = '';
+            loadSlots();
+        } else {
+            status.className = 'err';
+            status.innerText = response.message;
+        }
+    }
+
+    window.onload = loadSlots;
+</script>
+</body>
+</html>
