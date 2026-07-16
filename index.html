@@ -343,7 +343,7 @@
                     let isThisCarBusyByAnyone = globalSlotsData.some(s => 
                         s.date === slot.date && 
                         s.time === slot.time && 
-                        (s.bikes || []).includes(type)
+                        (s.cars || []).includes(type)
                     );
                     
                     if (isThisCarBusyByAnyone) {
