@@ -213,8 +213,17 @@
 
         Object.keys(grouped).forEach(dateStr => {
             let groupDiv = document.createElement('div'); groupDiv.className = 'date-group';
-            let dateParts = dateStr.split('-'); let months = ['янв', 'фев', 'мар', 'апр', 'май', 'июн', 'июл', 'авг', 'сен', 'окт', 'ноя', 'дек'];
-            let header = document.createElement('div'); header.className = 'date-header'; header.innerText = parseInt(dateParts, 10) + ' ' + months[parseInt(dateParts, 10) - 1];
+                        // ИСПРАВЛЕННЫЙ БЛОК ОТОБРАЖЕНИЯ ДАТЫ НА САЙТЕ
+            let dateParts = dateStr.split('-'); // Разрезаем строку "2026-07-20" на части
+            let months = ['янв', 'фев', 'мар', 'апр', 'май', 'июн', 'июл', 'авг', 'сен', 'окт', 'ноя', 'дек'];
+            
+            let day = parseInt(dateParts[2], 10);   // Четко берем день (третья часть)
+            let monthIdx = parseInt(dateParts[1], 10) - 1; // Четко берем месяц (вторая часть)
+            
+            let header = document.createElement('div'); 
+            header.className = 'date-header'; 
+            header.innerText = day + ' ' + months[monthIdx]; // Будет выводить красиво: "20 июл"
+
             groupDiv.appendChild(header);
 
             let container = document.createElement('div'); container.className = 'slot-container';
