@@ -335,19 +335,28 @@
                 let isCarType = (type === "car_granta_manual" || type === "car_logan_manual" || type === "car_logan_auto" || type === "car_murano_auto");
 
                                 // СКВОРЗНАЯ ПРОВЕРКА КОНКРЕТНОЙ МОДЕЛИ МАШИНЫ НА ЭКРАНЕ САЙТА
+                // СКВОРЗНАЯ ПРОВЕРКА КОНКРЕТНОЙ МОДЕЛИ МАШИНЫ (УНИВЕРСАЛЬНАЯ)
                 if (isCarType) {
-                    // 1. Проверяем, не занята ли эта конкретная машина кем-то другим в этот же час
-                    let isThisCarBusyByAnyone = globalSlotsData.some(s => s.date === slot.date && s.time === slot.time && (s.bikes || []).includes(type));
+                    // Вычисляем точный системный ID машины, которую сейчас выбрал ученик
+                    let currentCarId = document.getElementById('type').value;
+                    
+                    // Проверяем, не занята ли ИМЕННО ЭТА модель автомобиля кем-либо в этот час занятий
+                    let isThisCarBusyByAnyone = globalSlotsData.some(s => 
+                        s.date === slot.date && 
+                        s.time === slot.time && 
+                        (s.bikes || []).includes(currentCarId)
+                    );
                     
                     if (isThisCarBusyByAnyone) {
                         isAllowed = false;
                     }
                     
-                    // 2. Проверяем, не занят ли сам выбранный инструктор (чтобы у него не было двух учеников одновременно)
+                    // Дополнительный личный блок: свободен ли сам инструктор
                     if (slot.car > 0 || slot.totalMoto > 0) {
                         isAllowed = false;
                     }
                 }
+
 else if (type === "moto") {
                     if (slot.car > 0 || slot.totalMoto >= 3) isAllowed = false;
                     if (level === "red" && (slot.red > 0 || slot.yellow > 0 || slot.green > 2)) isAllowed = false;
