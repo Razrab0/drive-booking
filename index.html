@@ -380,7 +380,10 @@ else if (type === "moto") {
                         submitBtn.disabled = false;
                         
                         if (currentCategory === 'moto') {
-                            const busyBikes = slot.bikes || [];
+                                                        // ИСПРАВЛЕННАЯ СТРОКА НА ГИТХАБЕ:
+                            // Фильтруем массив, оставляя только реальные мотоциклы (которые не начинаются на car_)
+                            const busyBikes = (slot.bikes || []).filter(b => !b.startsWith('car_'));
+
                             const allBikes = ['Bajaj Boxer', 'Fuego Rambolor 250', 'Yamaha YBR 125'];
                             const bikeIds = { 'Bajaj Boxer': 'bike-boxer', 'Fuego Rambolor 250': 'bike-fuego', 'Yamaha YBR 125': 'bike-yamaha' };
                             
