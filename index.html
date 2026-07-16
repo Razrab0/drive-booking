@@ -338,28 +338,27 @@
                 // СКВОРЗНАЯ ПРОВЕРКА КОНКРЕТНОЙ МОДЕЛИ МАШИНЫ (УНИВЕРСАЛЬНАЯ)
                 // СКВОРЗНАЯ ПРОВЕРКА КОНКРЕТНОЙ МОДЕЛИ МАШИНЫ (СВЕРХСКОРОСТНАЯ)
                 // СКВОРЗНАЯ ПРОВЕРКА КОНКРЕТНОЙ МОДЕЛИ МАШИНЫ (ФИНАЛЬНАЯ ИСПРАВЛЕННАЯ)
+                // 1. СКВОРЗНАЯ ПРОВЕРКА КОНКРЕТНОЙ МОДЕЛИ МАШИНЫ НА ЭКРАНЕ
                 if (isCarType) {
-                    // 1. Проверяем, не занята ли КОНКРЕТНО ЭТА модель автомобиля кем-либо в этот час занятий
+                    // Ищем, не угнал ли КТО-УГОДНО из инструкторов эту конкретную модель машины в этот час
                     let isThisCarBusyByAnyone = globalSlotsData.some(s => 
                         s.date === slot.date && 
                         s.time === slot.time && 
-                        (s.cars || []).includes(type)
+                        (s.bikes || []).includes(type)
                     );
                     
                     if (isThisCarBusyByAnyone) {
                         isAllowed = false;
                     }
-                    
-                    // 2. Проверяем, не занят ли инструктор мотоциклистами (машина + мотик у одного мастера в один час нельзя)
-                    if (slot.totalMoto > 0) {
+                }
+                
+                // 2. УМНАЯ ПРОВЕРКА ДЛЯ МОТОЦИКЛИСТОВ НА ЭКРАНЕ
+                else if (type === "moto") {
+                    // Мотики у Андрея блокируются только если ОН САМ занят машиной или набрал 3 мотоциклистов
+                    if (slot.car > 0 || slot.totalMoto >= 3) {
                         isAllowed = false;
                     }
-                }
-
-
-
-else if (type === "moto") {
-                    if (slot.car > 0 || slot.totalMoto >= 3) isAllowed = false;
+                    
                     if (level === "red" && (slot.red > 0 || slot.yellow > 0 || slot.green > 2)) isAllowed = false;
                     if (level === "yellow") {
                         if (slot.red > 0 || slot.yellow >= 2 || (slot.yellow === 1 && slot.green > 1)) isAllowed = false;
