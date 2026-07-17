@@ -5,6 +5,76 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>Онлайн-запись к автоинструкторам</title>
     <style>
+
+        /* ЖЕСТКИЙ ФИКС ДЛЯ КАРТОЧЕК И ОГРОМНЫХ ФОТОК */
+        .bike-card {
+            display: flex !important;
+            flex-direction: row !important; /* Картинка строго слева, текст справа */
+            align-items: center !important;
+            background: rgba(30, 41, 59, 0.4) !important; 
+            border: 2px solid rgba(255, 255, 255, 0.08) !important;
+            border-radius: 14px !important;
+            padding: 12px !important;
+            gap: 16px !important;
+            transition: 0.2s !important;
+            cursor: pointer !important;
+            text-align: left !important;
+            width: 100% !important;
+            box-sizing: border-box !important;
+            margin-bottom: 12px !important;
+        }
+        .bike-card.active {
+            border-color: #3b82f6 !important; /* Наша синяя неоновая рамка */
+            background: rgba(59, 130, 246, 0.15) !important;
+            box-shadow: 0 0 15px rgba(59, 130, 246, 0.3) !important;
+        }
+        .bike-card.disabled {
+            opacity: 0.3 !important;
+            pointer-events: none !important;
+            background: rgba(15, 23, 42, 0.2) !important;
+        }
+        .bike-img {
+            width: 110px !important;
+            height: 90px !important;
+            object-fit: cover !important; /* Идеально ровно обрезает фотку с асфальтом */
+            border-radius: 10px !important;
+            border: 1px solid rgba(255,255,255,0.1) !important;
+            flex-shrink: 0 !important; /* Запрещает фотке раздуваться */
+        }
+        .bike-info {
+            display: flex !important;
+            flex-direction: column !important;
+            gap: 4px !important;
+            flex: 1 !important;
+        }
+        .bike-title {
+            font-weight: 800 !important;
+            font-size: 15px !important;
+            color: #fff !important;
+            letter-spacing: 0.3px !important;
+        }
+        .bike-details {
+            font-size: 12px !important;
+            margin-top: 2px !important;
+        }
+        .bike-details summary {
+            color: #3b82f6 !important; /* Твой красивый голубой/синий цвет */
+            cursor: pointer !important;
+            font-weight: 700 !important;
+            list-style: none !important;
+            outline: none !important;
+            text-decoration: underline !important;
+            display: inline-block !important;
+        }
+        .bike-details summary::-webkit-details-marker { display: none !important; }
+        .bike-details p {
+            margin: 6px 0 0 0 !important;
+            color: #94a3b8 !important; /* Мягкий серый цвет для описания */
+            line-height: 1.4 !important;
+            font-weight: 500 !important;
+            text-align: left !important;
+        }
+        
                 :root { 
             --bg: #0f172a; 
             --card-bg: rgba(30, 41, 59, 0.7); 
