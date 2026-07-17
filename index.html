@@ -61,17 +61,20 @@
             margin-top: 2px !important;
         }
         .bike-details summary {
-            /* 2. ТВОЙ ЧЕРТЁЖНЫЙ ШРИФТ ДЛЯ СЛОВА ОПИСАНИЕ */
-            font-family: "GOST Type AU", "GOST Common", "Ubuntu Mono", "Courier New", monospace !important;
-            color: #00bcd4 !important; /* Твой фирменный ярко-голубой неоновый цвет */
+            /* Перевели на ровный, красивый хайтек-шрифт, который идеально встает на любые телефоны */
+            font-family: "JetBrains Mono", "Courier New", monospace !important;
+            color: var(--primary) !important; /* Наш благородный синий цвет УЦ */
             cursor: pointer !important;
             font-weight: 700 !important;
             list-style: none !important;
             outline: none !important;
-            text-decoration: underline !important;
+            text-decoration: none !important; /* УБРАЛИ ПОДЧЁРКИВАНИЕ */
             display: inline-block !important;
-            letter-spacing: 1px !important;
+            letter-spacing: 0.5px !important;
+            border-bottom: 1px dashed var(--primary); /* Сделали аккуратный пунктир вместо грубой черты */
+            padding-bottom: 1px;
         }
+
         .bike-details summary::-webkit-details-marker { display: none !important; }
         .bike-details p {
             /* 3. ТВОЙ ТЕХНИЧЕСКИЙ ШРИФТ ДЛЯ НАПОЛНЕНИЯ ПОДСКАЗКИ */
@@ -349,7 +352,7 @@
                         <div style="font-size: 11px; color: var(--text-muted); font-weight: 600;">Автомат (АКПП)</div>
                         <details class="bike-details" onclick="event.stopPropagation()">
                             <summary>описание</summary>
-                            <p>Премиальный, мощный кроссовер повышенного комфорта. Доступен строго у Игоря Иванова. Идеальный вариант для тех, кто уже имеет базовые навыки и хочет уверенно пересесть со скромной учебной машины на крупный внедорожник.</p>
+                            <p>Премиальный, мощный кроссовер повышенного комфорта. Идеальный вариант для тех, кто уже имеет базовые навыки и хочет уверенно пересесть со скромной учебной машины на крупный внедорожник.</p>
                         </details>
                     </div>
                 </div>
