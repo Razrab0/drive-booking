@@ -51,11 +51,11 @@
         .bike-card {
             display: flex !important;
             flex-direction: row !important;
-            align-items: center !important;
+            align-items: stretch !important; /* Растягивает картинку строго по высоте карточки */
             background: #ffffff !important; 
             border: 1px solid #cbd5e1 !important; 
             border-radius: 14px !important;
-            padding: 12px !important;
+            padding: 0 16px 0 0 !important; /* УБРАЛИ ОТСТУП СЛЕВА, СВЕРХУ И СНИЗУ (0), оставили только справа */
             gap: 16px !important;
             transition: 0.2s !important;
             cursor: pointer !important;
@@ -64,26 +64,18 @@
             box-sizing: border-box !important;
             margin-bottom: 12px !important;
             box-shadow: 0 2px 8px rgba(0,0,0,0.02) !important;
+            overflow: hidden !important; /* ОБЯЗАТЕЛЬНО: прячет углы картинки под рамку карточки */
         }
-        .bike-card.active {
-            border-color: var(--primary) !important; 
-            background: #eff6ff !important; 
-            box-shadow: 0 4px 12px rgba(29, 78, 216, 0.1) !important;
-        }
-        .bike-card.disabled {
-            opacity: 0.25 !important;
-            pointer-events: none !important;
-            background: #f8fafc !important;
-            border-color: #e2e8f0 !important;
-        }
+        
         .bike-img {
-            width: 110px !important;
-            height: 90px !important;
+            width: 120px !important;
+            height: 100% !important; /* Картинка занимает всю высоту от края до края */
+            min-height: 95px !important; /* Чтобы карточка не сплющивалась, если описание закрыто */
             object-fit: cover !important; 
-            border-radius: 10px !important;
-            border: 1px solid #e2e8f0 !important;
+            border: none !important; /* УБРАЛИ ВНУТРЕННЮЮ РАМКУ КАРТИНКИ */
             flex-shrink: 0 !important; 
         }
+
         .bike-info {
             display: flex !important;
             flex-direction: column !important;
