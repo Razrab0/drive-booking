@@ -179,43 +179,103 @@
 
         <div id="motoBikesBlock" style="display: block; margin-bottom: 15px;">
             <label>Выберите мотоцикл:</label>
-            <div class="type-switcher" style="grid-template-columns: 1fr; gap: 10px;">
-                <div class="type-tab active" id="bike-boxer" onclick="setBike('Bajaj Boxer')" style="display: flex; align-items: center; gap: 15px; padding: 8px 14px; text-align: left;">
-                    <img src="boxer.jpg" alt="" style="width: 70px; height: 45px; object-fit: cover; border-radius: 6px; border: 1px solid #cbd5e1;">
-                    <div><div style="font-weight: 700; font-size: 15px;">Bajaj Boxer</div></div>
+            <div class="bike-grid">
+                <!-- БОКСЕР -->
+                <div class="bike-card active" id="bike-boxer" onclick="setBike('Bajaj Boxer')">
+                    <img src="boxer.jpg" alt="" class="bike-img">
+                    <div class="bike-info">
+                        <div class="bike-title">BAJAJ BOXER</div>
+                        <details class="bike-details" onclick="event.stopPropagation()">
+                            <summary>описание</summary>
+                            <p>Самый легкий, послушный и предсказуемый мотоцикл. Идеальный выбор для абсолютных новичков и девушек. На нём проще всего научиться плавно трогаться, держать баланс на малом ходу и без страха сдать «восьмерку» на автодроме.</p>
+                        </details>
+                    </div>
                 </div>
-                <div class="type-tab" id="bike-fuego" onclick="setBike('Fuego Rambolor 250')" style="display: flex; align-items: center; gap: 15px; padding: 8px 14px; text-align: left;">
-                    <img src="fuego.jpg" alt="" style="width: 70px; height: 45px; object-fit: cover; border-radius: 6px; border: 1px solid #cbd5e1;">
-                    <div><div style="font-weight: 700; font-size: 15px;">Fuego Rambolor 250</div></div>
+                
+                <!-- ФУЭГО -->
+                <div class="bike-card" id="bike-fuego" onclick="setBike('Fuego Rambolor 250')">
+                    <img src="fuego.jpg" alt="" class="bike-img">
+                    <div class="bike-info">
+                        <div class="bike-title">FUEGO RAMBOLOR 250</div>
+                        <details class="bike-details" onclick="event.stopPropagation()">
+                            <summary>описание</summary>
+                            <p>Стильный, высокий и бодрый скремблер. Отлично подходит для средних учеников и парней высокого роста. У него более резвый характер, плотная подвеска и отличная управляемость. Идеален для отработки скоростного маневрирования.</p>
+                        </details>
+                    </div>
                 </div>
-                <div class="type-tab" id="bike-yamaha" onclick="setBike('Yamaha YBR 125')" style="display: flex; align-items: center; gap: 15px; padding: 8px 14px; text-align: left;">
-                    <img src="yamaha.jpg" alt="" style="width: 70px; height: 45px; object-fit: cover; border-radius: 6px; border: 1px solid #cbd5e1;">
-                    <div><div style="font-weight: 700; font-size: 15px;">Yamaha YBR 125</div></div>
+                
+                <!-- ЯМАХА -->
+                <div class="bike-card" id="bike-yamaha" onclick="setBike('Yamaha YBR 125')">
+                    <img src="yamaha.jpg" alt="" class="bike-img">
+                    <div class="bike-info">
+                        <div class="bike-title">YAMAHA YBR 125</div>
+                        <details class="bike-details" onclick="event.stopPropagation()">
+                            <summary>описание</summary>
+                            <p>Легендарная классика мотошкол. Максимально дружелюбный, юркий и послушный аппарат. На нём одинаково комфортно и делать первые шаги, и оттачивать сложные элементы. Прощает любые мелкие ошибки с газом и сцеплением.</p>
+                        </details>
+                    </div>
                 </div>
             </div>
         </div>
 
+
         <div id="carVehiclesBlock" style="display: none; margin-bottom: 15px;">
             <label>Выберите автомобиль:</label>
-            <div class="type-switcher" style="grid-template-columns: 1fr; gap: 10px;">
-                <div class="type-tab" id="tab-car_granta_manual" onclick="setVehicleType('car_granta_manual')" style="display: flex; align-items: center; gap: 15px; padding: 8px 14px; text-align: left;">
-                    <img src="granta.jpg" alt="" style="width: 70px; height: 45px; object-fit: cover; border-radius: 6px; border: 1px solid #cbd5e1;">
-                    <div><div style="font-weight: 700; font-size: 14px;">Lada Granta</div><div style="font-size: 11px; color: #64748b;">Механика (МКПП)</div></div>
+            <div class="bike-grid">
+                <!-- ГРАНТА -->
+                <div class="bike-card" id="tab-car_granta_manual" onclick="setVehicleType('car_granta_manual')">
+                    <img src="granta.jpg" alt="" class="bike-img">
+                    <div class="bike-info">
+                        <div class="bike-title">LADA GRANTA</div>
+                        <div style="font-size: 11px; color: var(--text-muted); font-weight: 600;">Механика (МКПП)</div>
+                        <details class="bike-details" onclick="event.stopPropagation()">
+                            <summary>описание</summary>
+                            <p>Главный учебный автомобиль на механике. Послушный руль, понятные габариты и мягкое сцепление. Базовый вариант для тех, кто хочет железно научиться щелкать передачи и без проблем сдать официальный экзамен в ГИБДД.</p>
+                        </details>
+                    </div>
                 </div>
-                <div class="type-tab" id="tab-car_logan_manual" onclick="setVehicleType('car_logan_manual')" style="display: flex; align-items: center; gap: 15px; padding: 8px 14px; text-align: left;">
-                    <img src="logan_manual.jpg" alt="" style="width: 70px; height: 45px; object-fit: cover; border-radius: 6px; border: 1px solid #cbd5e1;">
-                    <div><div style="font-weight: 700; font-size: 14px;">Renault Logan</div><div style="font-size: 11px; color: #64748b;">Механика (МКПП)</div></div>
+                
+                <!-- ЛОГАН МКПП -->
+                <div class="bike-card" id="tab-car_logan_manual" onclick="setVehicleType('car_logan_manual')">
+                    <img src="logan_manual.jpg" alt="" class="bike-img">
+                    <div class="bike-info">
+                        <div class="bike-title">RENAULT LOGAN</div>
+                        <div style="font-size: 11px; color: var(--text-muted); font-weight: 600;">Механика (МКПП)</div>
+                        <details class="bike-details" onclick="event.stopPropagation()">
+                            <summary>описание</summary>
+                            <p>Надежная, крепкая и очень выносливая «рабочая лошадка». У Логана отличная обзорность из салона и очень прощающая механическая коробка — заглохнуть на нём надо еще умудриться. Отличный выбор для первых выездов в город.</p>
+                        </details>
+                    </div>
                 </div>
-                <div class="type-tab" id="tab-car_logan_auto" onclick="setVehicleType('car_logan_auto')" style="display: flex; align-items: center; gap: 15px; padding: 8px 14px; text-align: left;">
-                    <img src="logan_auto.jpg" alt="" style="width: 70px; height: 45px; object-fit: cover; border-radius: 6px; border: 1px solid #cbd5e1;">
-                    <div><div style="font-weight: 700; font-size: 14px;">Renault Logan</div><div style="font-size: 11px; color: #64748b;">Автомат (АКПП)</div></div>
+                
+                <!-- ЛОГАН АКПП -->
+                <div class="bike-card" id="tab-car_logan_auto" onclick="setVehicleType('car_logan_auto')">
+                    <img src="logan_auto.jpg" alt="" class="bike-img">
+                    <div class="bike-info">
+                        <div class="bike-title">RENAULT LOGAN</div>
+                        <div style="font-size: 11px; color: var(--text-muted); font-weight: 600;">Автомат (АКПП)</div>
+                        <details class="bike-details" onclick="event.stopPropagation()">
+                            <summary>описание</summary>
+                            <p>Вариант строго для тех, кто учится на категорию «Автомат». Никаких заморочек с педалью сцепления и троганием в горку. Только газ, тормоз и максимальная концентрация на дорожной обстановке и знаках.</p>
+                        </details>
+                    </div>
                 </div>
-                <div class="type-tab" id="tab-car_murano_auto" onclick="setVehicleType('car_murano_auto')" style="display: flex; align-items: center; gap: 15px; padding: 8px 14px; text-align: left;">
-                    <img src="murano.jpg" alt="" style="width: 70px; height: 45px; object-fit: cover; border-radius: 6px; border: 1px solid #cbd5e1;">
-                    <div><div style="font-weight: 700; font-size: 14px;">Nissan Murano</div><div style="font-size: 11px; color: #64748b;">Автомат (АКПП)</div></div>
+                
+                <!-- МУРАНО -->
+                <div class="bike-card" id="tab-car_murano_auto" onclick="setVehicleType('car_murano_auto')">
+                    <img src="murano.jpg" alt="" class="bike-img">
+                    <div class="bike-info">
+                        <div class="bike-title">NISSAN MURANO</div>
+                        <div style="font-size: 11px; color: var(--text-muted); font-weight: 600;">Автомат (АКПП)</div>
+                        <details class="bike-details" onclick="event.stopPropagation()">
+                            <summary>описание</summary>
+                            <p>Премиальный, мощный кроссовер повышенного комфорта. Доступен строго у Игоря Иванова. Идеальный вариант для тех, кто уже имеет базовые навыки и хочет уверенно пересесть со скромной учебной машины на крупный внедорожник.</p>
+                        </details>
+                    </div>
                 </div>
             </div>
         </div>
+
 
         <input type="hidden" id="type" value="moto">
         <input type="hidden" id="selectedBike" value="Bajaj Boxer">
