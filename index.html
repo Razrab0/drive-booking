@@ -239,7 +239,7 @@
                 let isBusyByAnyone = (slot.bikes || []).some(b => b.toString().trim() === targetId.toString().trim());
                 if (isBusyByAnyone) { isAllowed = false; }
 
-                if (isCarType && slot.car > 0) { isAllowed = false; }
+                if (isCarType && (slot.car > 0 || slot.totalMoto > 0)) { isAllowed = false; }
                 if (!isCarType && type === "moto") {
                     if (slot.totalMoto >= 3 || slot.car > 0) isAllowed = false;
                     if (level === "red" && (slot.red > 0 || slot.yellow > 0 || slot.green > 2)) isAllowed = false;
