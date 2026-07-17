@@ -48,38 +48,61 @@
         .err { background: #fef2f2; color: #991b1b; border: 1px solid #fee2e2; }
 
         /* ЖЕСТКИЙ СВЕТЛЫЙ ФИКС ДЛЯ СТРОГИХ КАРТОЧЕК С ТВОИМИ ШРИФТАМИ */
+        /* 🏢 СТРОГИЙ ОБЪЕМНЫЙ ХАЙТЕК С ТЕНЯМИ */
         .bike-card {
+            position: relative !important;
             display: flex !important;
             flex-direction: row !important;
-            align-items: stretch !important; /* Растягивает картинку строго по высоте карточки */
+            align-items: center !important;
             background: #ffffff !important; 
             border: 1px solid #cbd5e1 !important; 
-            border-radius: 14px !important;
-            padding: 0 16px 0 0 !important; /* УБРАЛИ ОТСТУП СЛЕВА, СВЕРХУ И СНИЗУ (0), оставили только справа */
+            border-radius: 16px !important;
+            padding: 10px 16px 10px 10px !important;
             gap: 16px !important;
-            transition: 0.2s !important;
+            transition: all 0.25s ease-in-out !important;
             cursor: pointer !important;
             text-align: left !important;
             width: 100% !important;
             box-sizing: border-box !important;
-            margin-bottom: 12px !important;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.02) !important;
-            overflow: hidden !important; /* ОБЯЗАТЕЛЬНО: прячет углы картинки под рамку карточки */
+            margin-bottom: 14px !important;
+            /* ДОРОГАЯ ОБЪЕМНАЯ ТЕНЬ (Эффект парения модельки) */
+            box-shadow: 0 6px 16px rgba(15, 23, 42, 0.06), 0 1px 3px rgba(15, 23, 42, 0.04) !important;
         }
         
-        .bike-img {
-            width: 120px !important;
-            height: 100% !important; /* Картинка занимает всю высоту от края до края */
-            min-height: 95px !important; /* Чтобы карточка не сплющивалась, если описание закрыто */
-            object-fit: cover !important; 
-            border: none !important; /* УБРАЛИ ВНУТРЕННЮЮ РАМКУ КАРТИНКИ */
-            flex-shrink: 0 !important; 
+        /* ЭФФЕКТ ВЫБРАННОЙ КАРТОЧКИ (СИЛЬНОЕ СВЕЧЕНИЕ И СМЕЩЕНИЕ) */
+        .bike-card.active {
+            border-color: var(--primary) !important; 
+            background: #f0f7ff !important; 
+            transform: translateY(-3px) !important; /* Карточка плавно приподнимается */
+            /* Тень становится глубокой и сочной, как в играх при выборе предмета */
+            box-shadow: 0 12px 24px rgba(29, 78, 216, 0.15), 0 4px 8px rgba(29, 78, 216, 0.05) !important;
         }
-
+        
+        .bike-card.disabled {
+            opacity: 0.25 !important;
+            pointer-events: none !important;
+            box-shadow: none !important;
+            filter: grayscale(100%) !important; /* Занятая техника тухнет и обесцвечивается */
+        }
+        
+        /* ФОТКА-МОДЕЛКА */
+        .bike-img {
+            width: 110px !important;
+            height: 90px !important;
+            object-fit: cover !important; 
+            border-radius: 12px !important;
+            border: 1px solid #e2e8f0 !important;
+            flex-shrink: 0 !important; 
+            transition: 0.25s ease-in-out !important;
+        }
+        .bike-card.active .bike-img {
+            transform: scale(1.02) !important; /* Фотка слегка увеличивается */
+        }
+        
         .bike-info {
             display: flex !important;
             flex-direction: column !important;
-            gap: 4px !important;
+            gap: 2px !important; /* Убрали лишние дыры и пустоту */
             flex: 1 !important;
         }
         .bike-title {
@@ -89,31 +112,40 @@
             color: var(--text) !important; 
             letter-spacing: 0.5px !important;
             text-transform: uppercase !important;
+            margin: 0 !important;
         }
         .bike-details {
             font-size: 12px !important;
-            margin-top: 2px !important;
+            margin: 0 !important;
         }
+        
+        /* СТИЛЬ СЛОВА ОПИСАНИЕ ПО ГОСТУ */
         .bike-details summary {
-            font-family: "JetBrains Mono", "Courier New", monospace !important;
+            font-family: "GOST Type AU", "GOST Common", "Russo One", sans-serif !important;
             color: var(--primary) !important; 
             cursor: pointer !important;
             font-weight: 700 !important;
             list-style: none !important;
             outline: none !important;
-            text-decoration: none !important; /* ЧИСТЫЙ ТЕКСТ БЕЗ ЛИНИЙ И ПУНКТИРОВ */
+            text-decoration: none !important; /* Чисто, без подчеркиваний */
             display: inline-block !important;
             letter-spacing: 0.5px !important;
+            margin-top: -2px !important; /* Поджали вплотную к названию */
+            font-size: 13px !important;
+            text-transform: lowercase !important;
         }
         .bike-details summary::-webkit-details-marker { display: none !important; }
+        
         .bike-details p {
             font-family: "Bahnschrift Light SemiCondensed", "Bahnschrift", sans-serif !important;
             margin: 6px 0 0 0 !important;
             color: #475569 !important; 
             line-height: 1.4 !important;
             font-weight: 500 !important;
+            font-size: 13px !important;
             text-align: left !important;
         }
+
     </style>
 
     </style>
