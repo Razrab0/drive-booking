@@ -56,6 +56,7 @@
             margin-top: 15px;
         }
                 /* 👨‍🏫 ВЕРТИКАЛЬНЫЕ СТИЛЬНЫЕ КАРТОЧКИ ИНСТРУКТОРОВ */
+        /* 👨‍🏫 ВЕРТИКАЛЬНЫЕ КАРТОЧКИ ИНСТРУКТОРОВ ГРАНИЦА К ГРАНИЦЕ */
         .inst-grid {
             display: grid;
             grid-template-columns: 1fr 1fr; /* Ровно две колонки в один ряд */
@@ -64,34 +65,51 @@
         }
         .inst-card {
             display: flex !important;
-            flex-direction: column !important; /* Текст строго ПОД картинкой */
-            align-items: center !important;
-            justify-content: center !important;
+            flex-direction: column !important; /* Картинка сверху, текст снизу */
+            align-items: stretch !important;
+            justify-content: flex-start !important;
             background: #ffffff !important;
             border: 1px solid #cbd5e1 !important;
-            border-radius: 16px !important;
-            padding: 14px 10px !important;
+            border-radius: 14px !important; /* Красивые скругленные углы */
+            padding: 0 0 12px 0 !important; /* УБРАЛИ ОТСТУПЫ СВЕРХУ И ПО БОКАМ (0), оставили только снизу под текстом */
             cursor: pointer !important;
             transition: 0.2s ease-in-out !important;
             box-shadow: 0 4px 12px rgba(15, 23, 42, 0.02) !important;
             text-align: center !important;
             box-sizing: border-box !important;
+            overflow: hidden !important; /* ОБЯЗАТЕЛЬНО: прячет углы фотки под рамку карточки */
         }
         .inst-card.active {
             border-color: var(--primary) !important;
-            background: #eff6ff !important; /* Мягкий синий фон при выборе */
+            background: #eff6ff !important; /* Мягкий синий фон карточки */
             box-shadow: 0 4px 12px rgba(29, 78, 216, 0.1) !important;
         }
         .inst-img {
-            width: 75px !important;
-            height: 75px !important;
-            object-fit: cover !important;
-            border-radius: 5% !important; /* Сделали аватарки идеально круглыми */
-            border: 2px solid #e2e8f0 !important;
-            margin-bottom: 8px !important;
+            width: 100% !important; /* Картинка занимает всю ширину от края до края */
+            height: 110px !important; /* Фиксированная высота верхней зоны */
+            object-fit: cover !important; /* Фотка сидит идеально ровно без полей */
+            border: none !important; /* УБРАЛИ ВНУТРЕННЮЮ РАМКУ */
+            margin-bottom: 10px !important;
             background: #f1f5f9; /* Временный фон, пока нет фоток */
-            transition: 0.2s !important;
+            flex-shrink: 0 !important;
         }
+        .inst-name {
+            font-family: "Eras Bold ITC", "Eras Demi ITC", "Arial Black", sans-serif !important;
+            font-weight: 900 !important;
+            font-size: 13px !important;
+            color: var(--text) !important;
+            letter-spacing: 0.3px !important;
+            margin-bottom: 2px !important;
+            padding: 0 6px !important; /* Защита, чтобы длинное имя не липло к краям */
+        }
+        .inst-spec {
+            font-family: "Bahnschrift Light SemiCondensed", "Bahnschrift", sans-serif !important;
+            font-size: 11px !important;
+            color: var(--text-muted) !important;
+            font-weight: 500 !important;
+            padding: 0 6px !important;
+        }
+
         .inst-card.active .inst-img {
             border-color: var(--primary) !important; /* Ободок аватарки синеет */
         }
