@@ -48,115 +48,98 @@
         .err { background: #fef2f2; color: #991b1b; border: 1px solid #fee2e2; }
 
         /* ЖЕСТКИЙ СВЕТЛЫЙ ФИКС ДЛЯ СТРОГИХ КАРТОЧЕК С ТВОИМИ ШРИФТАМИ */
-        /* 🏢 СТРОГИЙ ОБЪЕМНЫЙ ХАЙТЕК С ТЕНЯМИ */
-        /* 🏢 ИГРОВОЙ ГАРАЖ: МОДЕЛЬКИ ВЫПРЫГИВАЮТ ИЗ РАМОК */
+        /* 🏢 ИДЕАЛЬНЫЙ СВЕТЛЫЙ АВТОМОБИЛЬНЫЙ МИНИМАЛИЗМ ДЛЯ КАРТОЧЕК */
+        .bike-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 12px;
+            margin-top: 15px;
+        }
         .bike-card {
             display: flex !important;
             flex-direction: row !important;
             align-items: center !important;
-            background: transparent !important; /* Сама общая плашка прозрачная */
-            border: none !important; /* Убрали общую рамку */
-            padding: 0 !important;
+            background: #ffffff !important; 
+            border: 1px solid #cbd5e1 !important; 
+            border-radius: 14px !important;
+            padding: 0 16px 0 0 !important; /* Фотка прижата к краям */
             gap: 16px !important;
-            transition: all 0.25s ease-in-out !important;
+            transition: 0.2s ease-in-out !important;
             cursor: pointer !important;
             text-align: left !important;
             width: 100% !important;
             box-sizing: border-box !important;
-            margin-bottom: 20px !important;
-            overflow: visible !important; /* Чтобы руль и колеса свободно парили */
+            margin-bottom: 12px !important;
+            box-shadow: 0 4px 12px rgba(15, 23, 42, 0.03) !important;
+            overflow: hidden !important; /* Скругляет углы фотки вместе с карточкой */
         }
-        
-        /* ФОТКА-МОДЕЛКА СЛЕВА НА БЕЛОМ ФОНЕ С РОДНОЙ ТЕНЬЮ */
-        .bike-img {
-            width: 140px !important; /* Сделали побольше, чтобы байк было круто видно */
-            height: 110px !important;
-            object-fit: contain !important; /* Запрещаем обрезать колеса и зеркала */
-            background: transparent !important; 
-            border: none !important;
-            flex-shrink: 0 !important;
-            transition: 0.25s ease-in-out !important;
+        .bike-card.active {
+            border-color: var(--primary) !important; 
+            background: #eff6ff !important; 
+            box-shadow: 0 4px 12px rgba(29, 78, 216, 0.1) !important;
         }
-        /* Интерактивный эффект: при клике на карточку мотик плавно покачивается */
-        .bike-card.active .bike-img {
-            transform: scale(1.05) rotate(-1deg) translateY(-2px) !important;
-        }
-        
-        /* ✉️ БЕЛАЯ СТИЛЬНАЯ РАМКА ДЛЯ ТЕКСТА СПРАВА (КАК НА МАКЕТЕ) */
-        .bike-info {
-            display: flex !important;
-            flex-direction: column !important;
-            align-items: center !important; /* Центрируем текст внутри рамки */
-            justify-content: center !important;
-            background: #ffffff !important; /* Чистый белый фон внутри рамки */
-            border: 1px solid #cbd5e1 !important; /* Серая аккуратная обводка */
-            border-radius: 16px !important; /* Красивые скругленные углы */
-            padding: 16px !important;
-            flex: 1 !important;
-            box-shadow: 0 4px 12px rgba(15, 23, 42, 0.03) !important; /* Легкая тень */
-            transition: 0.25s ease-in-out !important;
-            min-height: 110px !important;
-            box-sizing: border-box !important;
-        }
-        
-        /* ЭФФЕКТ ВЫБРАННОЙ РАМКИ */
-        .bike-card.active .bike-info {
-            border-color: var(--primary) !important; /* Рамка синеет фирменным цветом УЦ */
-            background: #eff6ff !important; /* Внутренний фон мягко заливается синевой */
-            box-shadow: 0 6px 16px rgba(29, 78, 216, 0.1) !important;
-        }
-        
-        /* ЗАНЯТАЯ ТЕХНИКА ПЛАВНО КАТАПУЛЬТИРУЕТСЯ В СЕРЫЙ ЦВЕТ */
         .bike-card.disabled {
             opacity: 0.25 !important;
             pointer-events: none !important;
-            filter: grayscale(100%) !important;
+            background: #f8fafc !important;
+            border-color: #e2e8f0 !important;
         }
-        
+        .bike-img {
+            width: 120px !important;
+            height: 100% !important; 
+            min-height: 95px !important; 
+            object-fit: cover !important; /* Фотка сидит идеально ровно без полей */
+            border: none !important;
+            flex-shrink: 0 !important; 
+        }
+        .bike-info {
+            display: flex !important;
+            flex-direction: column !important;
+            gap: 2px !important; /* Сжали дыры */
+            flex: 1 !important;
+            padding: 10px 0 !important; /* Дали воздуха сверху и снизу текста */
+        }
         .bike-title {
             font-family: "Eras Bold ITC", "Eras Demi ITC", "Arial Black", sans-serif !important;
             font-weight: 900 !important;
-            font-size: 18px !important;
-            color: var(--text) !important;
+            font-size: 17px !important;
+            color: var(--text) !important; 
             letter-spacing: 0.5px !important;
             text-transform: uppercase !important;
-            margin: 0 0 2px 0 !important;
-            text-align: center !important;
+            margin: 0 !important;
         }
         .bike-details {
             font-size: 12px !important;
-            margin: 0 0 4px 0 !important;
-            text-align: center !important;
-            width: 100% !important;
+            margin: 0 !important;
         }
         
-        /* СЛОВО ОПИСАНИЕ ПО ГОСТУ ПО ЦЕНТРУ И ПО ВЫШЕ */
+        /* 📐 СЛОВО ОПИСАНИЕ ПО ГОСТУ ПРИЖАТО К НАЗВАНИЮ */
         .bike-details summary {
             font-family: "GOST Type AU", "GOST Common", "Russo One", sans-serif !important;
-            color: var(--primary) !important;
+            color: var(--primary) !important; 
             cursor: pointer !important;
             font-weight: 700 !important;
             list-style: none !important;
             outline: none !important;
-            text-decoration: none !important;
+            text-decoration: none !important; /* Чисто, без линий */
             display: inline-block !important;
             letter-spacing: 0.5px !important;
+            margin-top: -2px !important; 
             font-size: 13px !important;
             text-transform: lowercase !important;
-            text-align: center !important;
-            margin-top: -2px !important;
         }
         .bike-details summary::-webkit-details-marker { display: none !important; }
         
         .bike-details p {
             font-family: "Bahnschrift Light SemiCondensed", "Bahnschrift", sans-serif !important;
-            margin: 8px 0 0 0 !important;
-            color: #475569 !important;
+            margin: 6px 0 0 0 !important;
+            color: #475569 !important; 
             line-height: 1.4 !important;
             font-weight: 500 !important;
             font-size: 13px !important;
-            text-align: center !important; /* Текст подсказки тоже строго по центру */
+            text-align: left !important; /* Описание читается слева направо */
         }
+
 
     </style>
 
