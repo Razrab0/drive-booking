@@ -55,6 +55,62 @@
             gap: 12px;
             margin-top: 15px;
         }
+                /* 👨‍🏫 ВЕРТИКАЛЬНЫЕ СТИЛЬНЫЕ КАРТОЧКИ ИНСТРУКТОРОВ */
+        .inst-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr; /* Ровно две колонки в один ряд */
+            gap: 12px;
+            margin-bottom: 20px;
+        }
+        .inst-card {
+            display: flex !important;
+            flex-direction: column !important; /* Текст строго ПОД картинкой */
+            align-items: center !important;
+            justify-content: center !important;
+            background: #ffffff !important;
+            border: 1px solid #cbd5e1 !important;
+            border-radius: 16px !important;
+            padding: 14px 10px !important;
+            cursor: pointer !important;
+            transition: 0.2s ease-in-out !important;
+            box-shadow: 0 4px 12px rgba(15, 23, 42, 0.02) !important;
+            text-align: center !important;
+            box-sizing: border-box !important;
+        }
+        .inst-card.active {
+            border-color: var(--primary) !important;
+            background: #eff6ff !important; /* Мягкий синий фон при выборе */
+            box-shadow: 0 4px 12px rgba(29, 78, 216, 0.1) !important;
+        }
+        .inst-img {
+            width: 75px !important;
+            height: 75px !important;
+            object-fit: cover !important;
+            border-radius: 50% !important; /* Сделали аватарки идеально круглыми */
+            border: 2px solid #e2e8f0 !important;
+            margin-bottom: 8px !important;
+            background: #f1f5f9; /* Временный фон, пока нет фоток */
+            transition: 0.2s !important;
+        }
+        .inst-card.active .inst-img {
+            border-color: var(--primary) !important; /* Ободок аватарки синеет */
+        }
+        .inst-name {
+            font-family: "Eras Bold ITC", "Eras Demi ITC", "Arial Black", sans-serif !important;
+            font-weight: 900 !important;
+            font-size: 13px !important;
+            color: var(--text) !important;
+            letter-spacing: 0.3px !important;
+            margin-bottom: 2px !important;
+        }
+        .inst-spec {
+            font-family: "Bahnschrift Light SemiCondensed", "Bahnschrift", sans-serif !important;
+            font-size: 11px !important;
+            color: var(--text-muted) !important;
+            font-weight: 500 !important;
+        }
+
+        
         .bike-card {
             display: flex !important;
             flex-direction: row !important;
@@ -157,10 +213,22 @@
         <input type="tel" id="phone" required value="+7 " placeholder="+7 (900) 000-00-00">
 
         <label>Выберите инструктора:</label>
-        <div class="type-switcher" style="grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 15px;">
-            <div class="type-tab active" id="inst-igor" onclick="setInstructor('Игорь Иванов')">👨‍🏫 Игорь Иванов</div>
-            <div class="type-tab" id="inst-andrey" onclick="setInstructor('Андрей Гришин')">👨‍🏫 Андрей Гришин</div>
+        <div class="inst-grid">
+            <!-- КАРТОЧКА 1: ИГОРЬ -->
+            <div class="inst-card active" id="inst-igor" onclick="setInstructor('Игорь Иванов')">
+                <img src="igor.jpg" alt="👨‍🏫" class="inst-img">
+                <div class="inst-name">ИГОРЬ ИВАНОВ</div>
+                <div class="inst-spec">Категории: А, В</div>
+            </div>
+            
+            <!-- КАРТОЧКА 2: АНДРЕЙ -->
+            <div class="inst-card" id="inst-andrey" onclick="setInstructor('Андрей Гришин')">
+                <img src="andrey.jpg" alt="👨‍🏫" class="inst-img">
+                <div class="inst-name">АНДРЕЙ ГРИШИН</div>
+                <div class="inst-spec">Категории: А, В (кроме Мурано)</div>
+            </div>
         </div>
+
 
         <label>Категория обучения:</label>
         <div class="type-switcher" style="grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 15px;">
