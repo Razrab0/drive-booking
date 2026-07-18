@@ -57,45 +57,35 @@
 
 
         .slot-btn:disabled { background: #f8fafc; border-color: #e2e8f0; color: #cbd5e1; cursor: not-allowed; font-weight: 500; }
-        button.submit-btn { 
-            width: 100%; 
-            background: var(--primary); 
-            color: white; 
-            border: none; 
-            padding: 16px; 
-            border-radius: 12px; 
-            font-size: 16px; 
-            cursor: pointer; 
-            margin-top: 28px; 
-            font-weight: 800; 
-            transition: 0.2s; 
-            position: relative; 
-            overflow: hidden; 
-        }
-        button.submit-btn:disabled { background: #cbd5e1; color: #94a3b8; cursor: not-allowed; }
-        
-        /* Перекрашиваем кнопку в цвет асфальта при старте загрузки */
-        /* Силовой фикс: заставляем кнопку быть тёмной, даже когда она disabled в режиме загрузки */
-        button.submit-btn.loading-start,
-        button.submit-btn.loading-start:disabled {
-            background: #1e293b !important; /* Цвет асфальта */
-            color: transparent !important; /* Прячем текст намертво */
-            border: 2px solid #334155 !important;
-            opacity: 1 !important; /* Убираем блеклость заблокированной кнопки */
-            cursor: wait !important;
-        }
-        
-        /* Рисуем машинку поверх заблокированной кнопки загрузки */
-        button.submit-btn.loading-start::after,
-        button.submit-btn.loading-start:disabled::after {
-            content: "🚗💨" !important;
-            position: absolute !important;
-            top: 50% !important;
-            left: -50px !important;
-            transform: translateY(-50%) scaleX(-1) !important; /* Разворот капотом вправо */
-            font-size: 24px !important;
+        /* 1. КНОПКА АКТИВНА: Когда время ВЫБРАНО, она становится яркой, синей и сочной */
+        button.submit-btn, 
+        button#submitBtn { 
             display: block !important;
-            animation: driveCar 2s linear infinite !important; /* Поехали! */
+            width: 100% !important; 
+            background: #1d4ed8 !important; /* Насыщенный синий цвет */
+            color: #ffffff !important; /* Белый читаемый текст */
+            border: none !important; 
+            padding: 16px !important; 
+            border-radius: 12px !important; 
+            font-size: 16px !important; 
+            cursor: pointer !important; 
+            margin-top: 28px !important; 
+            font-weight: 800 !important; 
+            transition: 0.2s ease-in-out !important; 
+            box-shadow: 0 4px 12px rgba(29, 78, 216, 0.2) !important;
+            text-align: center !important;
+            opacity: 1 !important;
+            position: relative !important;
+        }
+
+        /* 2. КНОПКА ВЫКЛЮЧЕНА: Когда время ЕЩЕ НЕ ВЫБРАНО, она становится заметной серой */
+        button.submit-btn:disabled, 
+        button#submitBtn:disabled { 
+            background: #cbd5e1 !important; /* Четкий серый цвет (не белый!) */
+            color: #64748b !important; /* Читаемый темно-серый текст */
+            cursor: not-allowed !important;
+            box-shadow: none !important;
+            opacity: 0.8 !important;
         }
 
 
