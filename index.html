@@ -39,15 +39,21 @@
         .slot-btn { padding: 16px; border: 1px solid #34d399; background: var(--success-bg); color: var(--success); border-radius: 12px; cursor: pointer; font-size: 15px; font-weight: 800; text-align: left; display: flex; justify-content: space-between; align-items: center; width: 100%; box-sizing: border-box; transition: 0.2s; }
         /* Красивое выделение выбранного времени с четким текстом */
         /* Кнопка становится синей, а весь текст внутри неё — строго белым */
-        .slot-btn.selected { 
-            background: var(--primary) !important; 
-            border-color: var(--primary) !important; 
-            box-shadow: 0 4px 12px rgba(29, 78, 216, 0.2) !important;
+        /* ЖЕСТКИЙ ФИКС ВЫБРАННОГО ВРЕМЕНИ */
+        .slot-container .slot-btn.selected { 
+            background: #1d4ed8 !important; /* Насыщенный синий фон кнопки */
+            border-color: #1d4ed8 !important; /* Синяя рамка */
+            color: #ffffff !important; /* Белый цвет текста */
+            box-shadow: 0 4px 12px rgba(29, 78, 216, 0.25) !important;
         }
-        /* Фикс: заставляем весь текст и значки внутри выбранной кнопки стать белыми */
-        .slot-btn.selected * {
+
+        /* Заставляем абсолютно всё внутри выбранной кнопки времени стать белым */
+        .slot-container .slot-btn.selected,
+        .slot-container .slot-btn.selected span,
+        .slot-container .slot-btn.selected * {
             color: #ffffff !important;
         }
+
 
 
         .slot-btn:disabled { background: #f8fafc; border-color: #e2e8f0; color: #cbd5e1; cursor: not-allowed; font-weight: 500; }
