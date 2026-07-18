@@ -184,11 +184,18 @@
             box-shadow: 0 4px 12px rgba(15, 23, 42, 0.03) !important;
             overflow: hidden !important; /* Скругляет углы фотки вместе с карточкой */
         }
+        /* Неоновое свечение активной карточки транспорта */
         .bike-card.active {
-            border-color: var(--primary) !important; 
-            background: #eff6ff !important; 
-            box-shadow: 0 4px 12px rgba(29, 78, 216, 0.1) !important;
+            border-color: #0088ff !important; 
+            background: #f8fafc !important; 
+            box-shadow: 0 0 12px rgba(0, 136, 255, 0.3) !important;
         }
+
+        /* ЖЕСТКИЙ ФИКС ДЛЯ МУРАНО: Если JS приказывает скрыть карточку, CSS больше не будет спорить и мешать */
+        #tab-car_murano_auto[style*="display: none"] {
+            display: none !important;
+        }
+
         .bike-card.disabled {
             opacity: 0.25 !important;
             pointer-events: none !important;
