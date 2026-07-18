@@ -463,18 +463,20 @@
             box-sizing: border-box !important;
         }
         .inst-name {
-            font-family: "Eras Bold ITC", "Eras Demi ITC", "Arial Black", sans-serif !important;
-            font-weight: 900 !important;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif !important;
+            font-weight: 800 !important;
             font-size: 13px !important;
-            color: var(--text) !important;
-            letter-spacing: 0.3px !important;
-            margin-bottom: 2px !important;
+            color: #0f172a !important; 
+            letter-spacing: -0.2px !important;
+            text-transform: uppercase !important; 
+            margin: 0 0 4px 0 !important;
         }
         .inst-spec {
-            font-family: "Bahnschrift Light SemiCondensed", "Bahnschrift", sans-serif !important;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif !important;
             font-size: 11px !important;
-            color: var(--text-muted) !important;
-            font-weight: 500 !important;
+            color: #64748b !important; 
+            font-weight: 600 !important;
+            margin: 0 !important;
         }
 
 
@@ -582,18 +584,31 @@
 <div class="box">
     <h2> Запись на вождение </h2>
     <form id="mainForm">
+        <label>Ваше Имя и Фамилия:</label>
+        <input type="text" id="name" required placeholder="Иван Иванов">
+        <label>Email:</label>
+        <input type="email" id="email" placeholder="example@gmail.com">
+        <label>Телефон:</label>
+        <input type="tel" id="phone" required value="+7 " placeholder="+7 (900) 000-00-00">
+
+        <!-- БЛОК ИНСТРУКТОРОВ -->
+        <!-- БЛОК ИНСТРУКТОРОВ -->
         <label>Выберите инструктора:</label>
         <div class="inst-grid">
             <div class="inst-card active" id="inst-igor" onclick="setInstructor('Игорь Иванов')">
                 <img src="igor.jpg" alt="👨‍🏫" class="inst-img">
-                <div class="inst-name">ИГОРЬ ИВАНОВ</div>
-                <div class="inst-spec">Категории: А, В</div>
+                <div class="inst-info-block">
+                    <div class="inst-name">Игорь Иванов</div>
+                    <div class="inst-spec">Категории: А, В</div>
+                </div>
             </div>
             
             <div class="inst-card" id="inst-andrey" onclick="setInstructor('Андрей Гришин')">
                 <img src="andrey.jpg" alt="👨‍🏫" class="inst-img">
-                <div class="inst-name">АНДРЕЙ ГРИШИН</div>
-                <div class="inst-spec">Категории: А, В</div>
+                <div class="inst-info-block">
+                    <div class="inst-name">Андрей Гришин</div>
+                    <div class="inst-spec">Категории: А, В</div>
+                </div>
             </div>
         </div>
 
@@ -603,6 +618,7 @@
             <div class="type-tab" id="tab-cat-car" onclick="setCategory('car')">🚗 Автомобили</div>
         </div>
 
+        <div id="motoBikesBlock">
             <label>Выберите мотоцикл:</label>
             <div class="bike-grid">
                 <div class="bike-card active" id="bike-boxer" onclick="setBike('Bajaj Boxer')">
@@ -611,7 +627,7 @@
                         <div class="bike-title">BAJAJ BOXER</div>
                         <details class="bike-details" onclick="event.stopPropagation()">
                             <summary>описание</summary>
-                            <p>Самый легкий, послушный и предсказуемый мотоцикл. Идеальный выбор для absoluteных новичков и девушек. На нём проще всего научиться плавно трогаться, держать баланс на малом ходу и без страха сдать «восьмерку» на автодроме.</p>
+                            <p>Самый легкий, послушный и предсказуемый мотоцикл. Идеальный выбор для абсолютных новичков и девушек. На нём проще всего научиться плавно трогаться, держать баланс на малом ходу и без страха сдать «восьмерку» на автодроме.</p>
                         </details>
                     </div>
                 </div>
@@ -640,6 +656,7 @@
             </div>
         </div>
 
+        <div id="carVehiclesBlock" style="display: none;">
             <label>Выберите автомобиль:</label>
             <div class="bike-grid">
                 <div class="bike-card" id="tab-car_granta_manual" onclick="setVehicleType('car_granta_manual')">
@@ -696,15 +713,22 @@
         <input type="hidden" id="selectedBike" value="Bajaj Boxer">
         <input type="hidden" id="selectedInstructor" value="Игорь Иванов">
         
+        <!-- БЛОК ВЫБОРА УРОВНЯ С НЕЙТРАЛЬНЫМ СТАРТОМ -->
+        <div id="motoLevelBlock">
             <label>Ваш уровень подготовки:</label>
-            <div class="level-grid">
-                <div class="level-card active" id="lvl-green" onclick="setLevel('green')"><span>🟢</span> Уверенно катаюсь</div>
-                <div class="level-card" id="lvl-yellow" onclick="setLevel('yellow')"><span>🟡</span> Я средний</div>
-                <div class="level-card" id="lvl-red" onclick="setLevel('red')"><span>🔴</span> Я новичок</div>
+            <div class="level-custom-container" id="levelContainerBox">
+                <div class="level-bike-photo-box">
+                    <img src="moto_grey.jpg" id="levelBikeImg" alt="Мотоцикл">
+                </div>
+                <select class="level-select-dropdown" id="levelSelectMenu" onchange="syncSelectLevel(this.value)">
+                    <option value="" disabled selected hidden>Укажите свой уровень</option>
+                    <option value="green">🟢 Уверенно катаюсь</option>
+                    <option value="yellow">🟡 Я средний</option>
+                    <option value="red">🔴 Я новичок</option>
+                </select>
             </div>
-            <input type="hidden" id="level" value="green">
+            <input type="hidden" id="level" value="">
         </div>
-
 
 
         <label style="margin-bottom: 2px;">Выберите доступное время у этого инструктора:</label>
@@ -980,56 +1004,6 @@
         } else { status.className = 'err'; status.innerText = 'Ошибка: ' + response.message; btn.disabled = false; }
     };
 
-    /* УЛЬТИМАТИВНАЯ ПЕРЕЗАПИСЬ: СВЕРХБЫСТРОЕ ПЕРЕКЛЮЧЕНИЕ ВШИТЫХ КАРТИНОК И ЧИСТЫЙ СЕЛЕКТ */
-    window.setLevel = function(l) {
-        if (!l) return;
-        document.getElementById('level').value = l;
-        
-        const selectMenu = document.getElementById('levelSelectMenu');
-        if (selectMenu) selectMenu.value = l;
-        
-        const container = document.getElementById('levelContainerBox');
-        if (container) { container.className = 'level-custom-container geo-' + l; }
-        
-        const bikeImg = document.getElementById('levelBikeImg');
-        if (bikeImg) {
-            // Вшитые ультра-легкие векторные изображения твоих мотоциклов без рамок
-            if (l === 'green') {
-                bikeImg.style.setProperty('background-image', 'url("data:image/svg+xml,%3Csvg xmlns=\'http://w3.org\' viewBox=\'0 0 24 24\'%3E%3Cpath fill=\'%2300c853\' d=\'M19.5 14c-1.38 0-2.5 1.12-2.5 2.5s1.12 2.5 2.5 2.5s2.5-1.12 2.5-2.5s-1.12-2.5-2.5-2.5zm0 4c-.83 0-1.5-.67-1.5-1.5s.67-1.5 1.5-1.5s1.5 .67 1.5 1.5s-.67 1.5-1.5 1.5zM4.5 14c-1.38 0-2.5 1.12-2.5 2.5S3.12 19 4.5 19S7 17.88 7 16.5S5.88 14 4.5 14zm0 4c-.83 0-1.5-.67-1.5-1.5S3.67 15 4.5 15S6 15.67 6 16.5S5.33 18 4.5 18zm13.1-6.43l-1.9-3.17c-.26-.43-.72-.7-1.22-.7H11.5v-1c0-.55-.45-1-1-1H9c-.55 0-1 .45-1 1v1H5c-.55 0-1 .45-1 1v1c0 .55.45 1 1 1h.59l1.45 3.63c.27.67.92 1.12 1.64 1.12h4.64c.26 0 .5-.11.68-.3l1.83-1.83c1-.26 1.83-.93 2.27-1.85z\'/%3E%3C/svg%3E")', 'important');
-            }
-            if (l === 'yellow') {
-                bikeImg.style.setProperty('background-image', 'url("data:image/svg+xml,%3Csvg xmlns=\'http://w3.org\' viewBox=\'0 0 24 24\'%3E%3Cpath fill=\'%23ffd600\' d=\'M19.5 14c-1.38 0-2.5 1.12-2.5 2.5s1.12 2.5 2.5 2.5s2.5-1.12 2.5-2.5s-1.12-2.5-2.5-2.5zm0 4c-.83 0-1.5-.67-1.5-1.5s.67-1.5 1.5-1.5s1.5 .67 1.5 1.5s-.67 1.5-1.5 1.5zM4.5 14c-1.38 0-2.5 1.12-2.5 2.5S3.12 19 4.5 19S7 17.88 7 16.5S5.88 14 4.5 14zm0 4c-.83 0-1.5-.67-1.5-1.5S3.67 15 4.5 15S6 15.67 6 16.5S5.33 18 4.5 18zm13.1-6.43l-1.9-3.17c-.26-.43-.72-.7-1.22-.7H11.5v-1c0-.55-.45-1-1-1H9c-.55 0-1 .45-1 1v1H5c-.55 0-1 .45-1 1v1c0 .55.45 1 1 1h.59l1.45 3.63c.27.67.92 1.12 1.64 1.12h4.64c.26 0 .5-.11.68-.3l1.83-1.83c1-.26 1.83-.93 2.27-1.85z\'/%3E%3C/svg%3E")', 'important');
-            }
-            if (l === 'red') {
-                bikeImg.style.setProperty('background-image', 'url("data:image/svg+xml,%3Csvg xmlns=\'http://w3.org\' viewBox=\'0 0 24 24\'%3E%3Cpath fill=\'%23ff1744\' d=\'M19.5 14c-1.38 0-2.5 1.12-2.5 2.5s1.12 2.5 2.5 2.5s2.5-1.12 2.5-2.5s-1.12-2.5-2.5-2.5zm0 4c-.83 0-1.5-.67-1.5-1.5s.67-1.5 1.5-1.5s1.5 .67 1.5 1.5s-.67 1.5-1.5 1.5zM4.5 14c-1.38 0-2.5 1.12-2.5 2.5S3.12 19 4.5 19S7 17.88 7 16.5S5.88 14 4.5 14zm0 4c-.83 0-1.5-.67-1.5-1.5S3.67 15 4.5 15S6 15.67 6 16.5S5.33 18 4.5 18zm13.1-6.43l-1.9-3.17c-.26-.43-.72-.7-1.22-.7H11.5v-1c0-.55-.45-1-1-1H9c-.55 0-1 .45-1 1v1H5c-.55 0-1 .45-1 1v1c0 .55.45 1 1 1h.59l1.45 3.63c.27.67.92 1.12 1.64 1.12h4.64c.26 0 .5-.11.68-.3l1.83-1.83c1-.26 1.83-.93 2.27-1.85z\'/%3E%3C/svg%3E")', 'important');
-            }
-        }
-        updateInterface();
-    };
-
-    window.syncSelectLevel = function(val) {
-        setLevel(val);
-    };
-
-    window.handleBookingResponse = function(response) {
-        const status = document.getElementById('status');
-        const btn = document.getElementById('submitBtn');
-        btn.classList.remove('loading-active');
-        btn.innerText = 'Подтвердить запись';
-        if (response.status === 'success') {
-            status.className = 'ok'; status.innerText = response.message; document.getElementById('mainForm').reset();
-            document.getElementById('phone').value = "+7 "; setCategory('moto'); loadSlots();
-            
-            const container = document.getElementById('levelContainerBox');
-            if (container) container.className = 'level-custom-container';
-            
-            const bikeImg = document.getElementById('levelBikeImg');
-            if (bikeImg) {
-                bikeImg.style.setProperty('background-image', 'url("data:image/webp;base64,UklGRmYAAABXRUJQVlA4IFYAAAAwAQCdASptAEYAPm00lUekIqIhInVJwIANiWUAasLbeFwG69fofIscN9D63bXbIseN+h8ixw36HyLHDfofIscN9D63bXbIscN9D63bXbIscN9D63bXbIscN9D63bXbIsAAA/v2bAAAAAA==")', 'important');
-            }
-            document.getElementById('level').value = "";
-        } else { status.className = 'err'; status.innerText = 'Ошибка: ' + response.message; btn.disabled = false; }
-    };
     
 </script>
 </body>
