@@ -33,40 +33,121 @@
         .level-grid { display: grid; grid-template-columns: 1fr; gap: 10px; }
         .level-card { padding: 14px; border: 1px solid var(--border); border-radius: 12px; cursor: pointer; display: flex; align-items: center; gap: 12px; font-weight: 600; font-size: 14px; background: #fff; color: var(--text-muted); transition: 0.2s; }
         .level-card.active { border-color: var(--primary); background: #eff6ff; color: var(--primary); }
-        .date-group { margin-top: 20px; }
-        .date-header { font-size: 12px; font-weight: 800; color: var(--primary); text-transform: uppercase; letter-spacing: 1px; margin-bottom: 10px; padding-bottom: 6px; border-bottom: 1px solid var(--border); }
-        .slot-container { display: grid; grid-template-columns: 1fr; gap: 10px; }
-        .slot-btn { padding: 16px; border: 1px solid #34d399; background: var(--success-bg); color: var(--success); border-radius: 12px; cursor: pointer; font-size: 15px; font-weight: 800; text-align: left; display: flex; justify-content: space-between; align-items: center; width: 100%; box-sizing: border-box; transition: 0.2s; }
-        /* Красивое выделение выбранного времени с четким текстом */
-        /* Кнопка становится синей, а весь текст внутри неё — строго белым */
-        /* ЖЕСТКИЙ ФИКС ВЫБРАННОГО ВРЕМЕНИ */
-        .slot-container .slot-btn.selected { 
-            background: #1d4ed8 !important; /* Насыщенный синий фон кнопки */
-            border-color: #1d4ed8 !important; /* Синяя рамка */
-            color: #ffffff !important; /* Белый цвет текста */
-            box-shadow: 0 4px 12px rgba(29, 78, 216, 0.25) !important;
+        /* 📅 ГОРИЗОНТАЛЬНАЯ ЛЕНТА ДНЕЙ НЕДЕЛИ */
+        .date-tabs-container {
+            display: flex !important;
+            gap: 8px !important;
+            overflow-x: auto !important; /* Листается пальцем по горизонтали */
+            padding: 4px 0 12px 0 !important;
+            margin-top: 15px !important;
+            width: 100% !important;
+            box-sizing: border-box !important;
+            scrollbar-width: none !important; /* Прячем ползунок в Firefox */
+        }
+        .date-tabs-container::-webkit-scrollbar { display: none !important; } /* Прячем ползунок в Chrome/Safari */
+
+        .date-tab-item {
+            flex: 0 0 65px !important; /* Фиксированная ширина каждого дня */
+            padding: 10px 4px !important;
+            background: #ffffff !important;
+            border: 1px solid #e2e8f0 !important;
+            border-radius: 12px !important;
+            text-align: center !important;
+            cursor: pointer !important;
+            transition: 0.2s ease-in-out !important;
+        }
+        /* Стиль для активного выбранного дня */
+        .date-tab-item.active {
+            background: #1d4ed8 !important; /* Благородный синий */
+            border-color: #1d4ed8 !important;
+            box-shadow: 0 4px 12px rgba(29, 78, 216, 0.15) !important;
+        }
+        .date-tab-item .tab-day { font-size: 14px; font-weight: 800; color: #0f172a; transition: 0.2s; }
+        .date-tab-item .tab-month { font-size: 11px; font-weight: 600; color: #64748b; text-transform: lowercase; margin-top: 2px; transition: 0.2s; }
+        
+        /* Меняем цвет текста внутри активного дня */
+        .date-tab-item.active .tab-day,
+        .date-tab-item.active .tab-month { color: #ffffff !important; }
+
+        /* 🕐 СЕТКА СЛОВ ВРЕМЕНИ ДЛЯ ВЫБРАННОГО ДНЯ (В 3 Колонки) */
+        .slot-container { 
+            display: grid !important; 
+            grid-template-columns: 1fr 1fr 1fr !important; /* Ровно три аккуратные колонки */
+            gap: 10px !important; 
+            margin-top: 15px !important;
+            display: none; /* По умолчанию скрыты, включаются через JS */
+        }
+        .slot-container.active-day-slots {
+            display: grid !important;
+        }
+        
+        /* Сами кнопочки времени — спокойные, светлые, без агрессивного зеленого */
+        .slot-btn { 
+            padding: 12px 6px !important; 
+            border: 1px solid #cbd5e1 !important; 
+            background: #ffffff !important; 
+            color: #0f172a !important; 
+            border-radius: 10px !important; 
+            cursor: pointer !important; 
+            font-size: 14px !important; 
+            font-weight: 700 !important; 
+            text-align: center !important; 
+            display: flex !important; 
+            flex-direction: column !important;
+            align-items: center !important;
+            justify-content: center !important;
+            gap: 2px !important;
+            width: 100% !important; 
+            box-sizing: border-box !important; 
+            transition: 0.2s ease-in-out !important; 
+        }
+        .slot-btn span:last-child {
+            font-size: 10px !important;
+            font-weight: 600 !important;
+            color: #64748b !important;
         }
 
-        /* Заставляем абсолютно всё внутри выбранной кнопки времени стать белым */
-        .slot-container .slot-btn.selected,
-        .slot-container .slot-btn.selected span,
-        .slot-container .slot-btn.selected * {
-            color: #ffffff !important;
+        /* Выбранное время — сочное, синее, текст горит белым */
+        .slot-btn.selected { 
+            background: #1d4ed8 !important; 
+            color: #ffffff !important; 
+            border-color: #1d4ed8 !important; 
+            box-shadow: 0 4px 12px rgba(29, 78, 216, 0.2) !important;
+        }
+        .slot-btn.selected span:last-child { color: rgba(255, 255, 255, 0.8) !important; }
+
+        /* Занятое время — блеклое, серое, не кликается */
+        .slot-btn:disabled { 
+            background: #f1f5f9 !important; 
+            border-color: #e2e8f0 !important; 
+            color: #94a3b8 !important; 
+            cursor: not-allowed !important; 
+        }
+        .slot-btn:disabled span:last-child { color: #cbd5e1 !important; }
+
+        /* Убираем шахматку у кнопки, возвращаем лаконичную серую / синюю */
+        button.submit-btn, button#submitBtn { 
+            display: block !important;
+            width: 100% !important; 
+            background: #1d4ed8 !important; 
+            color: #ffffff !important; 
+            border: none !important; 
+            padding: 16px !important; 
+            border-radius: 12px !important; 
+            font-size: 16px !important; 
+            cursor: pointer !important; 
+            margin-top: 28px !important; 
+            font-weight: 800 !important; 
+            transition: 0.2s ease-in-out !important; 
+            box-shadow: 0 4px 12px rgba(29, 78, 216, 0.15) !important;
+        }
+        button.submit-btn:disabled { 
+            background: #cbd5e1 !important; 
+            color: #64748b !important; 
+            cursor: not-allowed !important;
+            box-shadow: none !important;
         }
 
-
-
-        .slot-btn:disabled { background: #f8fafc; border-color: #e2e8f0; color: #cbd5e1; cursor: not-allowed; font-weight: 500; }
-        /* 1. КНОПКА АКТИВНА: Когда время ВЫБРАНО, она становится яркой, синей и сочной */
-        /* 1. КНОПКА АКТИВНА: Время выбрано, кнопка синяя */
-        /* 1. КНОПКА АКТИВНА: Время выбрано (Строгий угольно-чёрный, цвет финиша) */
-        /* 1. КНОПКА АКТИВНА: Время выбрано (Гоночный стиль с финишной лентой внизу) */
-        /* 1. КНОПКА АКТИВНА: Легкий серый цвет с аккуратным финишем внутри */
-        /* 1. КНОПКА АКТИВНА: Полностью в шахматный гоночный флаг */
-        /* 1. КНОПКА АКТИВНА: Контрастный гоночный флаг (Темно-серый асфальт + белый) */
-        /* 1. КНОПКА АКТИВНА: Плотный, сочный гоночный флаг (Темный графит + чистый белый) */
-        /* 1. КНОПКА АКТИВНА: Элегантный матовый гоночный флаг */
-        /* 1. КНОПКА АКТИВНА: Идеальный баланс — легкая, благородная серая шахматка */
         button.submit-btn, button#submitBtn { 
             display: block !important;
             width: 100% !important; 
