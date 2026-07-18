@@ -462,80 +462,6 @@
             width: 100% !important;
             box-sizing: border-box !important;
         }
-        /* 📅 УРОВНИ ПОДГОТОВКИ: Горизонтальный ряд для фото и списка */
-        .level-custom-container {
-            display: flex !important;
-            flex-direction: row !important;
-            align-items: center !important;
-            gap: 16px !important;
-            margin-top: 12px !important;
-            width: 100% !important;
-            box-sizing: border-box !important;
-        }
-
-        /* Полностью чистый бокс для мотоцикла — без рамок, фонов и теней */
-        .level-bike-photo-box {
-            width: 110px !important; 
-            height: 70px !important; 
-            overflow: hidden !important;
-            flex-shrink: 0 !important;
-            background: transparent !important;
-            border: none !important;
-            box-shadow: none !important;
-        }
-
-        .level-bike-photo-box div#levelBikeImg {
-            width: 100% !important;
-            height: 100% !important;
-            display: block !important;
-            background-size: contain !important;
-            background-repeat: no-repeat !important;
-            background-position: center !important;
-            transition: background-image 0.15s ease-in-out !important;
-            
-            /* СЕРЫЙ МОТОЦИКЛ ПО УМОЛЧАНИЮ */
-            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://w3.org' viewBox='0 0 24 24'%3E%3Cpath fill='%2394a3b8' d='M19.5 14c-1.38 0-2.5 1.12-2.5 2.5s1.12 2.5 2.5 2.5s2.5-1.12 2.5-2.5s-1.12-2.5-2.5-2.5zm0 4c-.83 0-1.5-.67-1.5-1.5s.67-1.5 1.5-1.5s1.5 .67 1.5 1.5s-.67 1.5-1.5 1.5zM4.5 14c-1.38 0-2.5 1.12-2.5 2.5S3.12 19 4.5 19S7 17.88 7 16.5S5.88 14 4.5 14zm0 4c-.83 0-1.5-.67-1.5-1.5S3.67 15 4.5 15S6 15.67 6 16.5S5.33 18 4.5 18zm13.1-6.43l-1.9-3.17c-.26-.43-.72-.7-1.22-.7H11.5v-1c0-.55-.45-1-1-1H9c-.55 0-1 .45-1 1v1H5c-.55 0-1 .45-1 1v1c0 .55.45 1 1 1h.59l1.45 3.63c.27.67.92 1.12 1.64 1.12h4.64c.26 0 .5-.11.68-.3l1.83-1.83c1-.26 1.83-.93 2.27-1.85z'/%3E%3C/svg%3E") !important;
-        }
-
-        /* Выпадающее меню: строгий нейтральный черно-белый стиль */
-        select.level-select-dropdown {
-            flex-grow: 1 !important;
-            padding: 15px 16px !important;
-            border: 1px solid #cbd5e1 !important;
-            border-radius: 12px !important;
-            font-size: 15px !important;
-            font-weight: 700 !important;
-            background-color: #ffffff !important;
-            color: #0f172a !important;
-            cursor: pointer !important;
-            transition: 0.25s ease-in-out !important;
-            box-sizing: border-box !important;
-            outline: none !important;
-            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://w3.org' viewBox='0 0 24 24' fill='%2394a3b8'%3E%3Cpath d='M7 10l5 5 5-5z'/%3E%3C/svg%3E") !important;
-            background-repeat: no-repeat !important;
-            background-position: right 14px center !important;
-            background-size: 20px !important;
-            -webkit-appearance: none !important;
-            -moz-appearance: none !important;
-        }
-
-        select.level-select-dropdown option[value=""] {
-            color: #94a3b8 !important;
-            font-weight: 400 !important;
-        }
-
-        /* 🔥 ПАКЕТНАЯ ПАСТЕЛЬНАЯ ЗАЛИВКА ТАБЛИЧКИ ПОСЛЕ ВЫБОРА */
-        .level-custom-container.geo-green select.level-select-dropdown { background-color: #f0fdf4 !important; color: #166534 !important; border-color: #15803d !important; }
-        .level-custom-container.geo-yellow select.level-select-dropdown { background-color: #fffbeb !important; color: #92400e !important; border-color: #b45309 !important; }
-        .level-custom-container.geo-red select.level-select-dropdown { background-color: #fef2f2 !important; color: #991b1b !important; border-color: #b91c1c !important; }
-
-        /* 👨‍🏫 ИНСТРУКТОРЫ: Красивая подпись под фото */
-        .inst-info-block {
-            padding: 8px 6px 12px 6px !important; 
-            text-align: center !important;
-            width: 100% !important;
-            box-sizing: border-box !important;
-        }
         .inst-name {
             font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif !important;
             font-weight: 800 !important;
@@ -552,7 +478,6 @@
             font-weight: 600 !important;
             margin: 0 !important;
         }
-
 
 
         
@@ -666,6 +591,8 @@
         <label>Телефон:</label>
         <input type="tel" id="phone" required value="+7 " placeholder="+7 (900) 000-00-00">
 
+        <!-- БЛОК ИНСТРУКТОРОВ -->
+        <!-- БЛОК ИНСТРУКТОРОВ -->
         <label>Выберите инструктора:</label>
         <div class="inst-grid">
             <div class="inst-card active" id="inst-igor" onclick="setInstructor('Игорь Иванов')">
@@ -684,7 +611,6 @@
                 </div>
             </div>
         </div>
-
 
         <label>Категория обучения:</label>
         <div class="type-switcher" style="grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 15px;">
@@ -792,18 +718,17 @@
             <label>Ваш уровень подготовки:</label>
             <div class="level-custom-container" id="levelContainerBox">
                 <div class="level-bike-photo-box">
-                    <div id="levelBikeImg"></div>
+                    <img src="moto_grey.jpg" id="levelBikeImg" alt="Мотоцикл">
                 </div>
                 <select class="level-select-dropdown" id="levelSelectMenu" onchange="syncSelectLevel(this.value)">
-                    <option value="" disabled selected hidden>Укажите свой уровень (выбрать) ▼</option>
-                    <option value="green">Уверенно катаюсь</option>
-                    <option value="yellow">Я средний</option>
-                    <option value="red">Я новичок</option>
+                    <option value="" disabled selected hidden>Укажите свой уровень</option>
+                    <option value="green">🟢 Уверенно катаюсь</option>
+                    <option value="yellow">🟡 Я средний</option>
+                    <option value="red">🔴 Я новичок</option>
                 </select>
             </div>
             <input type="hidden" id="level" value="">
         </div>
-
 
 
         <label style="margin-bottom: 2px;">Выберите доступное время у этого инструктора:</label>
@@ -1079,49 +1004,6 @@
         } else { status.className = 'err'; status.innerText = 'Ошибка: ' + response.message; btn.disabled = false; }
     };
 
-    /* УЛЬТИМАТИВНАЯ ПЕРЕЗАПИСЬ ФУНКЦИЙ ДЛЯ НАДЁЖНОЙ РАБОТЫ */
-    window.setLevel = function(l) {
-        if (!l) return;
-        document.getElementById('level').value = l;
-        
-        const selectMenu = document.getElementById('levelSelectMenu');
-        if (selectMenu) selectMenu.value = l;
-        
-        const container = document.getElementById('levelContainerBox');
-        if (container) { container.className = 'level-custom-container geo-' + l; }
-        
-        const bikeImg = document.getElementById('levelBikeImg');
-        if (bikeImg) {
-            if (l === 'green') bikeImg.style.setProperty('background-image', 'url("data:image/svg+xml,%3Csvg xmlns=\'http://w3.org\' viewBox=\'0 0 24 24\'%3E%3Cpath fill=\'%2300c853\' d=\'M19.5 14c-1.38 0-2.5 1.12-2.5 2.5s1.12 2.5 2.5 2.5s2.5-1.12 2.5-2.5s-1.12-2.5-2.5-2.5zm0 4c-.83 0-1.5-.67-1.5-1.5s.67-1.5 1.5-1.5s1.5 .67 1.5 1.5s-.67 1.5-1.5 1.5zM4.5 14c-1.38 0-2.5 1.12-2.5 2.5S3.12 19 4.5 19S7 17.88 7 16.5S5.88 14 4.5 14zm0 4c-.83 0-1.5-.67-1.5-1.5S3.67 15 4.5 15S6 15.67 6 16.5S5.33 18 4.5 18zm13.1-6.43l-1.9-3.17c-.26-.43-.72-.7-1.22-.7H11.5v-1c0-.55-.45-1-1-1H9c-.55 0-1 .45-1 1v1H5c-.55 0-1 .45-1 1v1c0 .55.45 1 1 1h.59l1.45 3.63c.27.67.92 1.12 1.64 1.12h4.64c.26 0 .5-.11.68-.3l1.83-1.83c1-.26 1.83-.93 2.27-1.85z\'/%3E%3C/svg%3E")', 'important');
-            if (l === 'yellow') bikeImg.style.setProperty('background-image', 'url("data:image/svg+xml,%3Csvg xmlns=\'http://w3.org\' viewBox=\'0 0 24 24\'%3E%3Cpath fill=\'%23ffd600\' d=\'M19.5 14c-1.38 0-2.5 1.12-2.5 2.5s1.12 2.5 2.5 2.5s2.5-1.12 2.5-2.5s-1.12-2.5-2.5-2.5zm0 4c-.83 0-1.5-.67-1.5-1.5s.67-1.5 1.5-1.5s1.5 .67 1.5 1.5s-.67 1.5-1.5 1.5zM4.5 14c-1.38 0-2.5 1.12-2.5 2.5S3.12 19 4.5 19S7 17.88 7 16.5S5.88 14 4.5 14zm0 4c-.83 0-1.5-.67-1.5-1.5S3.67 15 4.5 15S6 15.67 6 16.5S5.33 18 4.5 18zm13.1-6.43l-1.9-3.17c-.26-.43-.72-.7-1.22-.7H11.5v-1c0-.55-.45-1-1-1H9c-.55 0-1 .45-1 1v1H5c-.55 0-1 .45-1 1v1c0 .55.45 1 1 1h.59l1.45 3.63c.27.67.92 1.12 1.64 1.12h4.64c.26 0 .5-.11.68-.3l1.83-1.83c1-.26 1.83-.93 2.27-1.85z\'/%3E%3C/svg%3E")', 'important');
-            if (l === 'red') bikeImg.style.setProperty('background-image', 'url("data:image/svg+xml,%3Csvg xmlns=\'http://w3.org\' viewBox=\'0 0 24 24\'%3E%3Cpath fill=\'%23ff1744\' d=\'M19.5 14c-1.38 0-2.5 1.12-2.5 2.5s1.12 2.5 2.5 2.5s2.5-1.12 2.5-2.5s-1.12-2.5-2.5-2.5zm0 4c-.83 0-1.5-.67-1.5-1.5s.67-1.5 1.5-1.5s1.5 .67 1.5 1.5s-.67 1.5-1.5 1.5zM4.5 14c-1.38 0-2.5 1.12-2.5 2.5S3.12 19 4.5 19S7 17.88 7 16.5S5.88 14 4.5 14zm0 4c-.83 0-1.5-.67-1.5-1.5S3.67 15 4.5 15S6 15.67 6 16.5S5.33 18 4.5 18zm13.1-6.43l-1.9-3.17c-.26-.43-.72-.7-1.22-.7H11.5v-1c0-.55-.45-1-1-1H9c-.55 0-1 .45-1 1v1H5c-.55 0-1 .45-1 1v1c0 .55.45 1 1 1h.59l1.45 3.63c.27.67.92 1.12 1.64 1.12h4.64c.26 0 .5-.11.68-.3l1.83-1.83c1-.26 1.83-.93 2.27-1.85z\'/%3E%3C/svg%3E")', 'important');
-        }
-        updateInterface();
-    };
-
-    window.syncSelectLevel = function(val) {
-        setLevel(val);
-    };
-
-    window.handleBookingResponse = function(response) {
-        const status = document.getElementById('status');
-        const btn = document.getElementById('submitBtn');
-        btn.classList.remove('loading-active');
-        btn.innerText = 'Подтвердить запись';
-        if (response.status === 'success') {
-            status.className = 'ok'; status.innerText = response.message; document.getElementById('mainForm').reset();
-            document.getElementById('phone').value = "+7 "; setCategory('moto'); loadSlots();
-            
-            const container = document.getElementById('levelContainerBox');
-            if (container) container.className = 'level-custom-container';
-            
-            const bikeImg = document.getElementById('levelBikeImg');
-            if (bikeImg) {
-                bikeImg.style.setProperty('background-image', 'url("data:image/svg+xml,%3Csvg xmlns=\'http://w3.org\' viewBox=\'0 0 24 24\'%3E%3Cpath fill=\'%2394a3b8\' d=\'M19.5 14c-1.38 0-2.5 1.12-2.5 2.5s1.12 2.5 2.5 2.5s2.5-1.12 2.5-2.5s-1.12-2.5-2.5-2.5zm0 4c-.83 0-1.5-.67-1.5-1.5s.67-1.5 1.5-1.5s1.5 .67 1.5 1.5s-.67 1.5-1.5 1.5zM4.5 14c-1.38 0-2.5 1.12-2.5 2.5S3.12 19 4.5 19S7 17.88 7 16.5S5.88 14 4.5 14zm0 4c-.83 0-1.5-.67-1.5-1.5S3.67 15 4.5 15S6 15.67 6 16.5S5.33 18 4.5 18zm13.1-6.43l-1.9-3.17c-.26-.43-.72-.7-1.22-.7H11.5v-1c0-.55-.45-1-1-1H9c-.55 0-1 .45-1 1v1H5c-.55 0-1 .45-1 1v1c0 .55.45 1 1 1h.59l1.45 3.63c.27.67.92 1.12 1.64 1.12h4.64c.26 0 .5-.11.68-.3l1.83-1.83c1-.26 1.83-.93 2.27-1.85z\'/%3E%3C/svg%3E")', 'important');
-            }
-            document.getElementById('level').value = "";
-        } else { status.className = 'err'; status.innerText = 'Ошибка: ' + response.message; btn.disabled = false; }
-    };
     
 </script>
 </body>
