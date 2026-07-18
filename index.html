@@ -65,41 +65,59 @@
         /* 1. КНОПКА АКТИВНА: Полностью в шахматный гоночный флаг */
         /* 1. КНОПКА АКТИВНА: Контрастный гоночный флаг (Темно-серый асфальт + белый) */
         /* 1. КНОПКА АКТИВНА: Плотный, сочный гоночный флаг (Темный графит + чистый белый) */
+        /* 1. КНОПКА АКТИВНА: Элегантный матовый гоночный флаг */
         button.submit-btn, button#submitBtn { 
             display: block !important;
             width: 100% !important; 
-            background-color: #ffffff !important;
-            /* Заменили цвет клеток на сочный темно-графитовый (#2d3748) */
-            background-image: linear-gradient(45deg, #2d3748 25%, transparent 25%, transparent 75%, #2d3748 75%, #2d3748), 
-                              linear-gradient(45deg, #2d3748 25%, transparent 25%, transparent 75%, #2d3748 75%, #2d3748) !important;
-            background-size: 30px 30px !important; 
-            background-position: 0 0, 15px 15px !important;
             
-            color: #ffffff !important; 
-            border: 3px solid #2d3748 !important; /* Толстая четкая рамка в цвет темных клеток */
+            /* Смягченный серо-графитовый оттенок клеток */
+            background-color: #ffffff !important;
+            background-image: linear-gradient(45deg, #475569 25%, transparent 25%, transparent 75%, #475569 75%, #475569), 
+                              linear-gradient(45deg, #475569 25%, transparent 25%, transparent 75%, #475569 75%, #475569) !important;
+            background-size: 28px 28px !important; 
+            background-position: 0 0, 14px 14px !important;
+            
+            color: #1e293b !important; /* Серьезный темно-серый благородный цвет текста */
+            border: 1px solid #cbd5e1 !important; /* Тонкая аккуратная рамка, как у полей формы */
             padding: 16px !important; 
-            border-radius: 14px !important; /* Слегка увеличили скругление под стать карточкам */
-            font-size: 16px !important; 
+            border-radius: 12px !important; 
+            font-size: 15px !important; 
             cursor: pointer !important; 
             margin-top: 28px !important; 
-            font-weight: 900 !important; 
+            font-weight: 800 !important; 
             text-transform: uppercase !important; 
-            letter-spacing: 0.8px !important;
+            letter-spacing: 0.5px !important;
             transition: 0.2s ease-in-out !important; 
-            box-shadow: 0 6px 18px rgba(45, 55, 72, 0.2) !important; /* Более глубокая тень */
+            box-shadow: 0 4px 12px rgba(15, 23, 42, 0.05) !important; /* Легкая воздушная тень */
             text-align: center !important;
             position: relative !important;
             opacity: 1 !important;
-            /* Жирная темная обводка вокруг букв, чтобы текст намертво читался на белом фоне */
-            text-shadow: 1px 1px 2px #1a202c, -1px -1px 2px #1a202c, 1px -1px 2px #1a202c, -1px 1px 2px #1a202c !important;
+            
+            /* Убрали жесткую обводку букв. Теперь под текстом лежит мягкое белое свечение */
+            text-shadow: 0 0 4px #ffffff, 0 0 8px #ffffff !important;
+        }
+
+        /* Наложение легкого матового эффекта поверх узора */
+        button.submit-btn::before, button#submitBtn::before {
+            content: "" !important;
+            position: absolute !important;
+            top: 0 !important; left: 0 !important; width: 100% !important; height: 100% !important;
+            background: rgba(255, 255, 255, 0.4) !important; /* Приглушает узор, делая его пастельным */
+            pointer-events: none !important;
+            z-index: 1 !important;
+        }
+
+        /* Заставляем текст всегда быть поверх матового слоя */
+        button.submit-btn span, button#submitBtn, button.submit-btn {
+            z-index: 2 !important;
         }
 
         button.submit-btn:hover, button#submitBtn:hover {
-            box-shadow: 0 8px 22px rgba(45, 55, 72, 0.3) !important;
-            filter: brightness(0.92) !important;
+            box-shadow: 0 6px 16px rgba(15, 23, 42, 0.08) !important;
+            background-color: #f8fafc !important;
         }
 
-        /* 2. КНОПКА ВЫКЛЮЧЕНА: Время еще не выбрано (Остается базовой спокойной серой, узор спрятан) */
+        /* 2. КНОПКА ВЫКЛЮЧЕНА: Время еще не выбрано (Узор полностью гаснет, кнопка обычная серая) */
         button.submit-btn:disabled, button#submitBtn:disabled { 
             background-image: none !important; 
             background: #cbd5e1 !important; 
@@ -110,16 +128,19 @@
             box-shadow: none !important;
             opacity: 0.7 !important;
         }
+        button.submit-btn:disabled::before, button#submitBtn:disabled::before {
+            display: none !important;
+        }
 
-        /* 3. КНОПКА В РЕЖИМЕ ЗАГРУЗКИ: При отправке узор темнеет еще сильнее */
+        /* 3. КНОПКА В РЕЖИМЕ ЗАГРУЗКИ */
         button.submit-btn.loading-active:disabled, button#submitBtn.loading-active:disabled {
-            background-image: linear-gradient(45deg, #1a202c 25%, transparent 25%, transparent 75%, #1a202c 75%, #1a202c), 
-                              linear-gradient(45deg, #1a202c 25%, transparent 25%, transparent 75%, #1a202c 75%, #1a202c) !important;
-            background-color: #2d3748 !important;
-            color: rgba(255, 255, 255, 0.7) !important;
-            opacity: 0.95 !important;
+            background-image: none !important;
+            background: #cbd5e1 !important;
+            color: #475569 !important;
+            opacity: 0.9 !important;
             cursor: wait !important;
         }
+
 
 
 
