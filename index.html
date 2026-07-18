@@ -62,62 +62,64 @@
         /* 1. КНОПКА АКТИВНА: Время выбрано (Строгий угольно-чёрный, цвет финиша) */
         /* 1. КНОПКА АКТИВНА: Время выбрано (Гоночный стиль с финишной лентой внизу) */
         /* 1. КНОПКА АКТИВНА: Легкий серый цвет с аккуратным финишем внутри */
+        /* 1. КНОПКА АКТИВНА: Полностью в шахматный гоночный флаг */
         button.submit-btn, button#submitBtn { 
             display: block !important;
             width: 100% !important; 
-            background: #e2e8f0 !important; /* Приятный мягкий серый фон */
-            color: #0f172a !important; /* Строгий темный читаемый текст */
-            border: 1px solid #cbd5e1 !important; 
+            /* Создаем крупную приглушенную шахматку (серо-белую, не бьющую по глазам) */
+            background-color: #ffffff !important;
+            background-image: linear-gradient(45deg, #e2e8f0 25%, transparent 25%, transparent 75%, #e2e8f0 75%, #e2e8f0), 
+                              linear-gradient(45deg, #e2e8f0 25%, transparent 25%, transparent 75%, #e2e8f0 75%, #e2e8f0) !important;
+            background-size: 30px 30px !important; /* Крупный размер квадратов, как на фото */
+            background-position: 0 0, 15px 15px !important;
+            
+            color: #0f172a !important; /* Темный строгий текст */
+            border: 2px solid #cbd5e1 !important; 
             padding: 16px !important; 
             border-radius: 12px !important; 
             font-size: 16px !important; 
             cursor: pointer !important; 
             margin-top: 28px !important; 
-            font-weight: 800 !important; 
+            font-weight: 900 !important; /* Делаем шрифт максимально жирным, чтобы выделялся */
+            text-transform: uppercase !important; /* Переводим в заглавные буквы для строгости */
+            letter-spacing: 0.5px !important;
             transition: 0.2s ease-in-out !important; 
-            box-shadow: 0 4px 12px rgba(15, 23, 42, 0.05) !important;
+            box-shadow: 0 4px 12px rgba(15, 23, 42, 0.08) !important;
             text-align: center !important;
             position: relative !important;
-            overflow: hidden !important;
             opacity: 1 !important;
+            /* Легкая белая тень под текстом, чтобы буквы идеально читались на фоне узора */
+            text-shadow: 1px 1px 0px #ffffff, -1px -1px 0px #ffffff, 1px -1px 0px #ffffff, -1px 1px 0px #ffffff !important;
         }
 
-        /* Аккуратная внутренняя гоночная полоса прямо над текстом */
-        button.submit-btn::before, button#submitBtn::before {
-            content: "" !important;
-            position: absolute !important;
-            top: 0 !important;
-            left: 0 !important;
-            width: 100% !important;
-            height: 4px !important; /* Тонкая и аккуратная */
-            background-color: #ffffff !important;
-            background-image: linear-gradient(45deg, #000000 25%, transparent 25%, transparent 75%, #000000 75%, #000000), 
-                              linear-gradient(45deg, #000000 25%, transparent 25%, transparent 75%, #000000 75%, #000000) !important;
-            background-size: 8px 8px !important;
-            background-position: 0 0, 4px 4px !important;
-            opacity: 0.15 !important; /* Сделали ее блеклой и ненавязчивой */
+        /* Маленький эффект при наведении мышки на активную кнопку */
+        button.submit-btn:hover, button#submitBtn:hover {
+            box-shadow: 0 6px 16px rgba(15, 23, 42, 0.12) !important;
+            filter: brightness(0.97) !important;
         }
 
-        /* 2. КНОПКА ВЫКЛЮЧЕНА: Время еще не выбрано (Более бледная, узор скрыт) */
+        /* 2. КНОПКА ВЫКЛЮЧЕНА: Время еще не выбрано (Узор полностью гаснет и становится просто серым) */
         button.submit-btn:disabled, button#submitBtn:disabled { 
-            background: #f1f5f9 !important; 
-            color: #94a3b8 !important; 
-            border-color: #e2e8f0 !important;
+            background-image: none !important; /* Убираем шахматку, пока не выбрано время */
+            background: #cbd5e1 !important; 
+            color: #64748b !important; 
+            border-color: #cbd5e1 !important;
+            text-shadow: none !important;
             cursor: not-allowed !important;
             box-shadow: none !important;
             opacity: 0.7 !important;
         }
-        button.submit-btn:disabled::before, button#submitBtn:disabled::before {
-            display: none !important; 
-        }
 
-        /* 3. КНОПКА В РЕЖИМЕ ЗАГРУЗКИ: Текст меняется, кнопка спокойно замирает */
+        /* 3. КНОПКА В РЕЖИМЕ ЗАГРУЗКИ: Когда нажали, шахматка замирает и слегка темнеет */
         button.submit-btn.loading-active:disabled, button#submitBtn.loading-active:disabled {
-            background: #cbd5e1 !important;
+            background-image: linear-gradient(45deg, #cbd5e1 25%, transparent 25%, transparent 75%, #cbd5e1 75%, #cbd5e1), 
+                              linear-gradient(45deg, #cbd5e1 25%, transparent 25%, transparent 75%, #cbd5e1 75%, #cbd5e1) !important;
+            background-color: #f1f5f9 !important;
             color: #475569 !important;
             opacity: 0.9 !important;
             cursor: wait !important;
         }
+
 
 
 
