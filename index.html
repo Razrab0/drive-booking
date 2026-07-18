@@ -68,22 +68,28 @@
         }
         button.submit-btn:disabled { background: #cbd5e1; color: #94a3b8; cursor: not-allowed; }
         
+        /* Перекрашиваем кнопку в цвет асфальта при старте загрузки */
         button.submit-btn.loading-start {
-            color: rgba(255, 255, 255, 0.2) !important; 
-            background: #1e293b !important; 
+            background: #1e293b !important; /* Насыщенный цвет трассы */
+            color: transparent !important; /* Полностью прячем исходный текст кнопки */
+            border: 2px solid #334155 !important;
             cursor: wait !important;
+            pointer-events: none !important;
         }
         
+        /* Создаем и разворачиваем машинку */
         button.submit-btn.loading-start::after {
             content: "🚗💨" !important;
             position: absolute !important;
-            left: 0;
-            top: 50%;
-            /* scaleX(-1) разворачивает машинку капотом направо, а translateY ровняет по высоте */
+            top: 50% !important;
+            left: -50px !important;
+            /* Разворачиваем капот вправо и выравниваем по центру */
             transform: translateY(-50%) scaleX(-1) !important;
-            font-size: 20px !important;
-            animation: driveCar 2.5s linear infinite !important; 
+            font-size: 24px !important; /* Чуть увеличили размер */
+            display: block !important;
+            animation: driveCar 2s linear infinite !important; /* Машинка едет чуть быстрее */
         }
+
         
         @keyframes driveCar {
             0% { left: -40px; }
