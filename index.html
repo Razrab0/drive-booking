@@ -985,14 +985,46 @@ function handleBookingResponse(response) {
 
 
 
+    /* НАДЕЖНАЯ ФУНКЦИЯ ОТМЕНЫ ЗАНЯТИЯ ПО КОДУ */
     function cancelBooking() {
-        const code = document.getElementById('cancelCode').value.trim(); const status = document.getElementById('cancelStatus'); if(!code) return;
-        status.style.display = 'block'; status.className = ''; status.innerText = 'Отмена занятия...';
-        const oldScript = document.getElementById('jsonp-cancel'); if(oldScript) oldScript.remove();
-        const script = document.createElement('script'); script.id = 'jsonp-cancel';
-        script.src = `${API_URL}?action=cancel&bookingId=${encodeURIComponent(code)}&callback=handleCancelResponse`;
+        // Ищем поле, куда пользователь вводит 6 цифр кода бронирования
+        const codeInput = document.getElementById('cancelCode') || document.querySelector('input[placeholder*="кода"], input[id*="code"]');
+        if (!codeInput || !codeInput.value.trim()) { 
+            alert('Пожалуйста, введите шестизначный код отмены!'); 
+            return; 
+        }
+        
+        const code = codeInput.value.trim();
+        const status = document.getElementById('status');
+        if (status) {
+            status.className = '';
+            status.innerText = 'Проверка кода отмены...';
+        }
+
+        // Блокируем кнопку на время запроса, чтобы не слать дубли
+        const cancelBtn = document.querySelector('.cancel-btn');
+        if (cancelBtn) cancelBtn.disabled = true;
+
+        // Строго прописываем action=cancel для твоего Гугл-скрипта
+        const url = 'https://script.google.com/macros/s/AKfycbyL1B-vFY8UsCeO-wm8hcPc37I83j33jWpwFbY7Xct_AHpY9rBCT_8GR-gS1jS7Vatc/exec' 
+            + '?action=cancel&code=' + encodeURIComponent(code) + '&callback=handleBookingResponse';
+
+        // Безопасный вызов через JSONP
+        const oldScript = document.getElementById('jsonp-cancel-script');
+        if (oldScript) oldScript.remove();
+
+        const script = document.createElement('script');
+        script.id = 'jsonp-cancel-script';
+        script.src = url;
+        
+        script.onerror = function() {
+            if (status) { status.className = 'err'; status.innerText = 'Ошибка сети. Попробуйте еще раз.'; }
+            if (cancelBtn) cancelBtn.disabled = false;
+        };
+
         document.body.appendChild(script);
     }
+
 
     function handleCancelResponse(response) {
         const status = document.getElementById('cancelStatus');
