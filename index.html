@@ -39,8 +39,45 @@
         .slot-btn { padding: 16px; border: 1px solid #34d399; background: var(--success-bg); color: var(--success); border-radius: 12px; cursor: pointer; font-size: 15px; font-weight: 800; text-align: left; display: flex; justify-content: space-between; align-items: center; width: 100%; box-sizing: border-box; transition: 0.2s; }
         .slot-btn.selected { background: var(--primary) !important; color: white !important; border-color: var(--primary) !important; }
         .slot-btn:disabled { background: #f8fafc; border-color: #e2e8f0; color: #cbd5e1; cursor: not-allowed; font-weight: 500; }
-        button.submit-btn { width: 100%; background: var(--primary); color: white; border: none; padding: 16px; border-radius: 12px; font-size: 16px; cursor: pointer; margin-top: 28px; font-weight: 800; transition: 0.2s; }
+        button.submit-btn { 
+            width: 100%; 
+            background: var(--primary); 
+            color: white; 
+            border: none; 
+            padding: 16px; 
+            border-radius: 12px; 
+            font-size: 16px; 
+            cursor: pointer; 
+            margin-top: 28px; 
+            font-weight: 800; 
+            transition: 0.2s; 
+            position: relative; 
+            overflow: hidden; 
+        }
         button.submit-btn:disabled { background: #cbd5e1; color: #94a3b8; cursor: not-allowed; }
+        
+        button.submit-btn.loading-start {
+            color: rgba(255, 255, 255, 0.2) !important; 
+            background: #1e293b !important; 
+            cursor: wait !important;
+        }
+        
+        button.submit-btn.loading-start::after {
+            content: "🚗💨" !important;
+            position: absolute !important;
+            left: 0;
+            top: 50%;
+            /* scaleX(-1) разворачивает машинку капотом направо, а translateY ровняет по высоте */
+            transform: translateY(-50%) scaleX(-1) !important;
+            font-size: 20px !important;
+            animation: driveCar 2.5s linear infinite !important; 
+        }
+        
+        @keyframes driveCar {
+            0% { left: -40px; }
+            100% { left: 100%; }
+        }
+
         button.cancel-btn { width: 100%; background: transparent; color: var(--danger); border: 1px solid #fee2e2; padding: 14px; border-radius: 12px; font-size: 15px; cursor: pointer; margin-top: 12px; font-weight: 700; transition: 0.2s; }
         button.cancel-btn:hover { background: #fef2f2; }
         #status, #cancelStatus { margin-top: 15px; padding: 14px; border-radius: 12px; text-align: center; display: none; font-weight: 700; font-size: 14px; }
@@ -507,7 +544,11 @@
         if (document.getElementById('phone').value.replace(/\D/g, "").length !== 11) {
             status.style.display = 'block'; status.className = 'err'; status.innerText = 'Ошибка: Введите 10 цифр телефона!'; return;
         }
-        status.style.display = 'block'; status.className = ''; status.innerText = 'Оформление записи...'; btn.disabled = true;
+        status.style.display = 'block'; status.className = ''; status.innerText = 'Оформление записи...'; 
+        
+        btn.disabled = true;
+        btn.classList.add('loading-start'); /* Включаем машинку */
+        
         const [date, time] = document.getElementById('selectedSlot').value.split('|');
         const name = encodeURIComponent(document.getElementById('name').value.trim());
         const phone = encodeURIComponent("'" + document.getElementById('phone').value.trim());
@@ -522,6 +563,7 @@
         document.body.appendChild(script);
     });
 
+
     function handleBookingResponse(response) {
         const status = document.getElementById('status');
         if (response.status === 'success') {
@@ -529,6 +571,7 @@
             document.getElementById('phone').value = "+7 "; setCategory('moto'); loadSlots();
         } else { status.className = 'err'; status.innerText = 'Ошибка: ' + response.message; document.getElementById('submitBtn').disabled = false; }
     }
+
 
     function cancelBooking() {
         const code = document.getElementById('cancelCode').value.trim(); const status = document.getElementById('cancelStatus'); if(!code) return;
