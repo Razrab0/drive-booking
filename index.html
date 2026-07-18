@@ -60,10 +60,11 @@
         /* 1. КНОПКА АКТИВНА: Когда время ВЫБРАНО, она становится яркой, синей и сочной */
         /* 1. КНОПКА АКТИВНА: Время выбрано, кнопка синяя */
         /* 1. КНОПКА АКТИВНА: Время выбрано (Строгий угольно-чёрный, цвет финиша) */
+        /* 1. КНОПКА АКТИВНА: Время выбрано (Гоночный стиль с финишной лентой внизу) */
         button.submit-btn, button#submitBtn { 
             display: block !important;
             width: 100% !important; 
-            background: #1e293b !important; /* Благородный темный графит */
+            background: #1e293b !important; /* Угольный фон */
             color: #ffffff !important; 
             border: none !important; 
             padding: 16px !important; 
@@ -73,13 +74,29 @@
             margin-top: 28px !important; 
             font-weight: 800 !important; 
             transition: 0.2s ease-in-out !important; 
-            box-shadow: 0 4px 12px rgba(15, 23, 42, 0.1) !important;
+            box-shadow: 0 4px 12px rgba(15, 23, 42, 0.2) !important;
             text-align: center !important;
             position: relative !important;
+            overflow: hidden !important;
             opacity: 1 !important;
         }
 
-        /* 2. КНОПКА ВЫКЛЮЧЕНА: Время еще не выбрано (Спокойный серый) */
+        /* Тонкая шахматная финишная полоса на нижней грани активной кнопки */
+        button.submit-btn::before, button#submitBtn::before {
+            content: "" !important;
+            position: absolute !important;
+            bottom: 0 !important;
+            left: 0 !important;
+            width: 100% !important;
+            height: 6px !important;
+            background-color: #ffffff !important;
+            background-image: linear-gradient(45deg, #000000 25%, transparent 25%, transparent 75%, #000000 75%, #000000), 
+                              linear-gradient(45deg, #000000 25%, transparent 25%, transparent 75%, #000000 75%, #000000) !important;
+            background-size: 12px 12px !important;
+            background-position: 0 0, 6px 6px !important;
+        }
+
+        /* 2. КНОПКА ВЫКЛЮЧЕНА: Время еще не выбрано (Спокойный серый, финиш скрыт) */
         button.submit-btn:disabled, button#submitBtn:disabled { 
             background: #cbd5e1 !important; 
             color: #64748b !important; 
@@ -87,14 +104,20 @@
             box-shadow: none !important;
             opacity: 0.8 !important;
         }
+        button.submit-btn:disabled::before, button#submitBtn:disabled::before {
+            display: none !important; /* Прячем финишный узор, пока кнопка выключена */
+        }
 
-        /* 3. КНОПКА В РЕЖИМЕ ЗАГРУЗКИ: Нажали записаться (Чуть блекнет, показывая процесс) */
+        /* 3. КНОПКА В РЕЖИМЕ ЗАГРУЗКИ: Вся кнопка становится шахматным флагом, а текст пишется на черной подложке */
         button.submit-btn.loading-active:disabled, button#submitBtn.loading-active:disabled {
-            background: #0f172a !important; /* Глубокий черный */
-            color: rgba(255, 255, 255, 0.6) !important; 
-            opacity: 0.9 !important;
+            background-color: #ffffff !important;
+            background-image: linear-gradient(45deg, #1e293b 25%, transparent 25%, transparent 75%, #1e293b 75%, #1e293b), 
+                              linear-gradient(45deg, #1e293b 25%, transparent 25%, transparent 75%, #1e293b 75%, #1e293b) !important;
+            background-size: 20px 20px !important;
+            background-position: 0 0, 10px 10px !important;
+            color: #ffffff !important;
+            opacity: 1 !important;
             cursor: wait !important;
-            box-shadow: none !important;
         }
 
 
