@@ -126,93 +126,53 @@
         .slot-btn:disabled span:last-child { color: #cbd5e1 !important; }
 
         /* Убираем шахматку у кнопки, возвращаем лаконичную серую / синюю */
+        /* 1. КНОПКА АКТИВНА: Благородный полуночный синий (В цвет выбранного времени) */
         button.submit-btn, button#submitBtn { 
             display: block !important;
             width: 100% !important; 
-            background: #1d4ed8 !important; 
+            background: #1d4ed8 !important; /* Тот самый глубокий синий */
             color: #ffffff !important; 
             border: none !important; 
-            padding: 16px !important; 
-            border-radius: 12px !important; 
-            font-size: 16px !important; 
-            cursor: pointer !important; 
-            margin-top: 28px !important; 
-            font-weight: 800 !important; 
-            transition: 0.2s ease-in-out !important; 
-            box-shadow: 0 4px 12px rgba(29, 78, 216, 0.15) !important;
-        }
-        button.submit-btn:disabled { 
-            background: #cbd5e1 !important; 
-            color: #64748b !important; 
-            cursor: not-allowed !important;
-            box-shadow: none !important;
-        }
-
-        button.submit-btn, button#submitBtn { 
-            display: block !important;
-            width: 100% !important; 
-            box-sizing: border-box !important;
-            
-            background-color: #ffffff !important;
-            /* Взяли идеальный промежуточный серый цвет (#cbd5e1), который темнее первого, но не тяжелый */
-            background-image: linear-gradient(45deg, #cbd5e1 25%, transparent 25%, transparent 75%, #cbd5e1 75%, #cbd5e1), 
-                              linear-gradient(45deg, #cbd5e1 25%, transparent 25%, transparent 75%, #cbd5e1 75%, #cbd5e1) !important;
-            background-size: 28px 28px !important; 
-            background-position: 0 0, 14px 14px !important;
-            
-            color: #0f172a !important; /* Строгий темный цвет букв для взрослого минимализма */
-            border: 1px solid #cbd5e1 !important; /* Тонкий аккуратный контур в тон узору */
             padding: 16px !important; 
             border-radius: 12px !important; 
             font-size: 15px !important; 
             cursor: pointer !important; 
             margin-top: 28px !important; 
-            font-weight: 800 !important; 
+            font-weight: 700 !important; 
             text-transform: uppercase !important; 
             letter-spacing: 0.5px !important;
             transition: 0.2s ease-in-out !important; 
-            box-shadow: 0 4px 12px rgba(15, 23, 42, 0.05) !important;
+            box-shadow: 0 4px 12px rgba(29, 78, 216, 0.15) !important;
             text-align: center !important;
             position: relative !important;
             opacity: 1 !important;
-            
-            /* Мягкое белое свечение под буквами, чтобы узор не мешал чтению текста */
-            text-shadow: 0 0 4px #ffffff, 0 0 8px #ffffff !important;
-        }
-
-        button.submit-btn:hover, button#submitBtn:hover {
-            box-shadow: 0 6px 16px rgba(15, 23, 42, 0.08) !important;
-            filter: brightness(0.97) !important; /* Легкий благородный отклик при наведении */
-        }
-
-        /* 2. КНОПКА ВЫКЛЮЧЕНА: Время еще не выбрано (Узор полностью гаснет, кнопка бледная серая) */
-        button.submit-btn:disabled, button#submitBtn:disabled { 
-            background-image: none !important; 
-            background: #f1f5f9 !important; /* Очень легкий дефолтный фон */
-            color: #94a3b8 !important; 
-            border-color: #e2e8f0 !important;
             text-shadow: none !important;
+        }
+
+        /* Мягкий отклик кнопки при наведении */
+        button.submit-btn:hover, button#submitBtn:hover {
+            background: #1e40af !important; /* Чуть темнее при наведении */
+            box-shadow: 0 6px 16px rgba(29, 78, 216, 0.25) !important;
+        }
+
+        /* 2. КНОПКА ВЫКЛЮЧЕНА: Аккуратный блекло-серый минимализм (Когда время не выбрано) */
+        button.submit-btn:disabled, button#submitBtn:disabled { 
+            background: #f1f5f9 !important; 
+            color: #94a3b8 !important; 
+            border: 1px solid #e2e8f0 !important;
             cursor: not-allowed !important;
             box-shadow: none !important;
+            text-shadow: none !important;
             opacity: 0.7 !important;
         }
 
-        /* 3. КНОПКА В РЕЖИМЕ ЗАГРУЗКИ: Нажали «Записать», узор замирает */
+        /* 3. КНОПКА В РЕЖИМЕ ЗАГРУЗКИ: Текст сменяется на статус, кнопка мягко замирает */
         button.submit-btn.loading-active:disabled, button#submitBtn.loading-active:disabled {
-            background-image: linear-gradient(45deg, #cbd5e1 25%, transparent 25%, transparent 75%, #cbd5e1 75%, #cbd5e1), 
-                              linear-gradient(45deg, #cbd5e1 25%, transparent 25%, transparent 75%, #cbd5e1 75%, #cbd5e1) !important;
-            background-color: #ffffff !important;
-            color: #64748b !important;
-            opacity: 0.85 !important;
+            background: #1e3a8a !important; /* Глубокий темный тон */
+            color: rgba(255, 255, 255, 0.6) !important;
+            opacity: 0.9 !important;
             cursor: wait !important;
         }
-
-
-
-
-
-
-
 
         button.cancel-btn { width: 100%; background: transparent; color: var(--danger); border: 1px solid #fee2e2; padding: 14px; border-radius: 12px; font-size: 15px; cursor: pointer; margin-top: 12px; font-weight: 700; transition: 0.2s; }
         button.cancel-btn:hover { background: #fef2f2; }
