@@ -61,12 +61,13 @@
         /* 1. КНОПКА АКТИВНА: Время выбрано, кнопка синяя */
         /* 1. КНОПКА АКТИВНА: Время выбрано (Строгий угольно-чёрный, цвет финиша) */
         /* 1. КНОПКА АКТИВНА: Время выбрано (Гоночный стиль с финишной лентой внизу) */
+        /* 1. КНОПКА АКТИВНА: Легкий серый цвет с аккуратным финишем внутри */
         button.submit-btn, button#submitBtn { 
             display: block !important;
             width: 100% !important; 
-            background: #1e293b !important; /* Угольный фон */
-            color: #ffffff !important; 
-            border: none !important; 
+            background: #e2e8f0 !important; /* Приятный мягкий серый фон */
+            color: #0f172a !important; /* Строгий темный читаемый текст */
+            border: 1px solid #cbd5e1 !important; 
             padding: 16px !important; 
             border-radius: 12px !important; 
             font-size: 16px !important; 
@@ -74,51 +75,50 @@
             margin-top: 28px !important; 
             font-weight: 800 !important; 
             transition: 0.2s ease-in-out !important; 
-            box-shadow: 0 4px 12px rgba(15, 23, 42, 0.2) !important;
+            box-shadow: 0 4px 12px rgba(15, 23, 42, 0.05) !important;
             text-align: center !important;
             position: relative !important;
             overflow: hidden !important;
             opacity: 1 !important;
         }
 
-        /* Тонкая шахматная финишная полоса на нижней грани активной кнопки */
+        /* Аккуратная внутренняя гоночная полоса прямо над текстом */
         button.submit-btn::before, button#submitBtn::before {
             content: "" !important;
             position: absolute !important;
-            bottom: 0 !important;
+            top: 0 !important;
             left: 0 !important;
             width: 100% !important;
-            height: 6px !important;
+            height: 4px !important; /* Тонкая и аккуратная */
             background-color: #ffffff !important;
             background-image: linear-gradient(45deg, #000000 25%, transparent 25%, transparent 75%, #000000 75%, #000000), 
                               linear-gradient(45deg, #000000 25%, transparent 25%, transparent 75%, #000000 75%, #000000) !important;
-            background-size: 12px 12px !important;
-            background-position: 0 0, 6px 6px !important;
+            background-size: 8px 8px !important;
+            background-position: 0 0, 4px 4px !important;
+            opacity: 0.15 !important; /* Сделали ее блеклой и ненавязчивой */
         }
 
-        /* 2. КНОПКА ВЫКЛЮЧЕНА: Время еще не выбрано (Спокойный серый, финиш скрыт) */
+        /* 2. КНОПКА ВЫКЛЮЧЕНА: Время еще не выбрано (Более бледная, узор скрыт) */
         button.submit-btn:disabled, button#submitBtn:disabled { 
-            background: #cbd5e1 !important; 
-            color: #64748b !important; 
+            background: #f1f5f9 !important; 
+            color: #94a3b8 !important; 
+            border-color: #e2e8f0 !important;
             cursor: not-allowed !important;
             box-shadow: none !important;
-            opacity: 0.8 !important;
+            opacity: 0.7 !important;
         }
         button.submit-btn:disabled::before, button#submitBtn:disabled::before {
-            display: none !important; /* Прячем финишный узор, пока кнопка выключена */
+            display: none !important; 
         }
 
-        /* 3. КНОПКА В РЕЖИМЕ ЗАГРУЗКИ: Вся кнопка становится шахматным флагом, а текст пишется на черной подложке */
+        /* 3. КНОПКА В РЕЖИМЕ ЗАГРУЗКИ: Текст меняется, кнопка спокойно замирает */
         button.submit-btn.loading-active:disabled, button#submitBtn.loading-active:disabled {
-            background-color: #ffffff !important;
-            background-image: linear-gradient(45deg, #1e293b 25%, transparent 25%, transparent 75%, #1e293b 75%, #1e293b), 
-                              linear-gradient(45deg, #1e293b 25%, transparent 25%, transparent 75%, #1e293b 75%, #1e293b) !important;
-            background-size: 20px 20px !important;
-            background-position: 0 0, 10px 10px !important;
-            color: #ffffff !important;
-            opacity: 1 !important;
+            background: #cbd5e1 !important;
+            color: #475569 !important;
+            opacity: 0.9 !important;
             cursor: wait !important;
         }
+
 
 
         button.cancel-btn { width: 100%; background: transparent; color: var(--danger); border: 1px solid #fee2e2; padding: 14px; border-radius: 12px; font-size: 15px; cursor: pointer; margin-top: 12px; font-weight: 700; transition: 0.2s; }
