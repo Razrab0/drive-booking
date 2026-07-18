@@ -101,17 +101,23 @@
         }
         
         /* Рисуем бегущую машинку на трассе */
+        /* Железобетонный фикс: рисуем машинку настоящей картинкой */
         button.submit-btn.loading-active:disabled::after,
         button#submitBtn.loading-active:disabled::after {
-            content: "🚗💨" !important;
+            content: "" !important;
             position: absolute !important;
             top: 50% !important;
-            left: -50px !important;
-            transform: translateY(-50%) scaleX(-1) !important; /* Поворот капотом вправо */
-            font-size: 24px !important;
+            left: -60px !important;
+            transform: translateY(-50%) !important; /* Центрируем по высоте */
+            width: 32px !important; /* Задаем четкую ширину машинки */
+            height: 32px !important; /* Задаем точную высоту */
             display: block !important;
+            /* Вставляем четкую векторную гоночную машинку, которая гарантированно отобразится везде */
+            background: url("data:image/svg+xml,%3Csvg xmlns='http://w3.org' viewBox='0 0 24 24'%3E%3Cpath fill='%23ef4444' d='M19 8.5c.83 0 1.5.67 1.5 1.5v3c0 .83-.67 1.5-1.5 1.5h-1c0 1.38-1.12 2.5-2.5 2.5S13 15.88 13 14.5H9c0 1.38-1.12 2.5-2.5 2.5S4 15.88 4 14.5H3c-.55 0-1-.45-1-1v-2c0-1.1.9-2 2-2h1.17c.56-1.44 1.94-2.5 3.58-2.5h5.5c1.64 0 3.02 1.06 3.58 2.5H19zm-12.5 7c.55 0 1-.45 1-1s-.45-1-1-1s-1 .45-1 1s.45 1 1 1zm9 0c.55 0 1-.45 1-1s-.45-1-1-1s-1 .45-1 1s.45 1 1 1z'/%3E%3C/svg%3E") no-repeat center center !important;
+            background-size: contain !important;
             animation: driveCar 2s linear infinite !important; /* Поехали! */
         }
+
         
         /* Анимация движения слева направо */
         /* Бесконечный заезд по кругу без остановок */
