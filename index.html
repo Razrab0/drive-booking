@@ -58,12 +58,13 @@
 
         .slot-btn:disabled { background: #f8fafc; border-color: #e2e8f0; color: #cbd5e1; cursor: not-allowed; font-weight: 500; }
         /* 1. КНОПКА АКТИВНА: Когда время ВЫБРАНО, она становится яркой, синей и сочной */
+        /* 1. КНОПКА АКТИВНА: Время выбрано, кнопка синяя */
         button.submit-btn, 
         button#submitBtn { 
             display: block !important;
             width: 100% !important; 
-            background: #1d4ed8 !important; /* Насыщенный синий цвет */
-            color: #ffffff !important; /* Белый читаемый текст */
+            background: #1d4ed8 !important; 
+            color: #ffffff !important; 
             border: none !important; 
             padding: 16px !important; 
             border-radius: 12px !important; 
@@ -76,16 +77,46 @@
             text-align: center !important;
             opacity: 1 !important;
             position: relative !important;
+            overflow: hidden !important; /* Чтобы машинка не вылетала за края */
         }
 
-        /* 2. КНОПКА ВЫКЛЮЧЕНА: Когда время ЕЩЕ НЕ ВЫБРАНО, она становится заметной серой */
+        /* 2. КНОПКА ВЫКЛЮЧЕНА: Время еще не выбрано, кнопка серая */
         button.submit-btn:disabled, 
         button#submitBtn:disabled { 
-            background: #cbd5e1 !important; /* Четкий серый цвет (не белый!) */
-            color: #64748b !important; /* Читаемый темно-серый текст */
+            background: #cbd5e1 !important; 
+            color: #64748b !important; 
             cursor: not-allowed !important;
             box-shadow: none !important;
             opacity: 0.8 !important;
+        }
+
+        /* 3. КНОПКА В РЕЖИМЕ ЗАГРУЗКИ: Превращается в темный асфальт, текст исчезает */
+        button.submit-btn.loading-active:disabled,
+        button#submitBtn.loading-active:disabled {
+            background: #1e293b !important; /* Цвет асфальта */
+            color: transparent !important; /* Скрываем текст намертво */
+            border: none !important;
+            opacity: 1 !important;
+            cursor: wait !important;
+        }
+        
+        /* Рисуем бегущую машинку на трассе */
+        button.submit-btn.loading-active:disabled::after,
+        button#submitBtn.loading-active:disabled::after {
+            content: "🚗💨" !important;
+            position: absolute !important;
+            top: 50% !important;
+            left: -50px !important;
+            transform: translateY(-50%) scaleX(-1) !important; /* Поворот капотом вправо */
+            font-size: 24px !important;
+            display: block !important;
+            animation: driveCar 2s linear infinite !important; /* Поехали! */
+        }
+        
+        /* Анимация движения слева направо */
+        @keyframes driveCar {
+            0% { left: -50px; }
+            100% { left: 100%; }
         }
 
 
@@ -571,7 +602,7 @@
         status.style.display = 'block'; status.className = ''; status.innerText = 'Оформление записи...'; 
         
         btn.disabled = true;
-        btn.classList.add('loading-start'); /* Включаем машинку */
+        btn.classList.add('loading-active'); /* ВКЛЮЧАЕМ ТРАССУ И МАШИНКУ */
         
         const [date, time] = document.getElementById('selectedSlot').value.split('|');
         const name = encodeURIComponent(document.getElementById('name').value.trim());
@@ -588,12 +619,18 @@
     });
 
 
+
     function handleBookingResponse(response) {
         const status = document.getElementById('status');
+        const btn = document.getElementById('submitBtn');
+        
+        /* ВЫКЛЮЧАЕМ МАШИНКУ, возвращаем кнопку в обычный вид */
+        btn.classList.remove('loading-active'); 
+        
         if (response.status === 'success') {
             status.className = 'ok'; status.innerText = response.message; document.getElementById('mainForm').reset();
             document.getElementById('phone').value = "+7 "; setCategory('moto'); loadSlots();
-        } else { status.className = 'err'; status.innerText = 'Ошибка: ' + response.message; document.getElementById('submitBtn').disabled = false; }
+        } else { status.className = 'err'; status.innerText = 'Ошибка: ' + response.message; btn.disabled = false; }
     }
 
 
