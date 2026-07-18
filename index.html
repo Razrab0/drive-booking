@@ -64,20 +64,21 @@
         /* 1. КНОПКА АКТИВНА: Легкий серый цвет с аккуратным финишем внутри */
         /* 1. КНОПКА АКТИВНА: Полностью в шахматный гоночный флаг */
         /* 1. КНОПКА АКТИВНА: Контрастный гоночный флаг (Темно-серый асфальт + белый) */
+        /* 1. КНОПКА АКТИВНА: Плотный, сочный гоночный флаг (Темный графит + чистый белый) */
         button.submit-btn, button#submitBtn { 
             display: block !important;
             width: 100% !important; 
             background-color: #ffffff !important;
-            /* Сделали серые клетки гораздо темнее и плотнее (#64748b - цвет мокрого асфальта) */
-            background-image: linear-gradient(45deg, #64748b 25%, transparent 25%, transparent 75%, #64748b 75%, #64748b), 
-                              linear-gradient(45deg, #64748b 25%, transparent 25%, transparent 75%, #64748b 75%, #64748b) !important;
+            /* Заменили цвет клеток на сочный темно-графитовый (#2d3748) */
+            background-image: linear-gradient(45deg, #2d3748 25%, transparent 25%, transparent 75%, #2d3748 75%, #2d3748), 
+                              linear-gradient(45deg, #2d3748 25%, transparent 25%, transparent 75%, #2d3748 75%, #2d3748) !important;
             background-size: 30px 30px !important; 
             background-position: 0 0, 15px 15px !important;
             
-            color: #ffffff !important; /* Текст сделали БЕЛЫМ, чтобы он круто контрастировал с темной шахматкой */
-            border: 2px solid #475569 !important; 
+            color: #ffffff !important; 
+            border: 3px solid #2d3748 !important; /* Толстая четкая рамка в цвет темных клеток */
             padding: 16px !important; 
-            border-radius: 12px !important; 
+            border-radius: 14px !important; /* Слегка увеличили скругление под стать карточкам */
             font-size: 16px !important; 
             cursor: pointer !important; 
             margin-top: 28px !important; 
@@ -85,17 +86,17 @@
             text-transform: uppercase !important; 
             letter-spacing: 0.8px !important;
             transition: 0.2s ease-in-out !important; 
-            box-shadow: 0 6px 16px rgba(15, 23, 42, 0.15) !important;
+            box-shadow: 0 6px 18px rgba(45, 55, 72, 0.2) !important; /* Более глубокая тень */
             text-align: center !important;
             position: relative !important;
             opacity: 1 !important;
-            /* Аккуратная темная обводка вокруг белых букв, чтобы они не терялись на белых клетках флага */
-            text-shadow: 1px 1px 2px #0f172a, -1px -1px 2px #0f172a, 1px -1px 2px #0f172a, -1px 1px 2px #0f172a !important;
+            /* Жирная темная обводка вокруг букв, чтобы текст намертво читался на белом фоне */
+            text-shadow: 1px 1px 2px #1a202c, -1px -1px 2px #1a202c, 1px -1px 2px #1a202c, -1px 1px 2px #1a202c !important;
         }
 
         button.submit-btn:hover, button#submitBtn:hover {
-            box-shadow: 0 8px 20px rgba(15, 23, 42, 0.22) !important;
-            filter: brightness(0.9) !important; /* При наведении кнопка становится чуть глубже */
+            box-shadow: 0 8px 22px rgba(45, 55, 72, 0.3) !important;
+            filter: brightness(0.92) !important;
         }
 
         /* 2. КНОПКА ВЫКЛЮЧЕНА: Время еще не выбрано (Остается базовой спокойной серой, узор спрятан) */
@@ -112,13 +113,14 @@
 
         /* 3. КНОПКА В РЕЖИМЕ ЗАГРУЗКИ: При отправке узор темнеет еще сильнее */
         button.submit-btn.loading-active:disabled, button#submitBtn.loading-active:disabled {
-            background-image: linear-gradient(45deg, #334155 25%, transparent 25%, transparent 75%, #334155 75%, #334155), 
-                              linear-gradient(45deg, #334155 25%, transparent 25%, transparent 75%, #334155 75%, #334155) !important;
-            background-color: #475569 !important;
+            background-image: linear-gradient(45deg, #1a202c 25%, transparent 25%, transparent 75%, #1a202c 75%, #1a202c), 
+                              linear-gradient(45deg, #1a202c 25%, transparent 25%, transparent 75%, #1a202c 75%, #1a202c) !important;
+            background-color: #2d3748 !important;
             color: rgba(255, 255, 255, 0.7) !important;
             opacity: 0.95 !important;
             cursor: wait !important;
         }
+
 
 
 
