@@ -69,26 +69,29 @@
         button.submit-btn:disabled { background: #cbd5e1; color: #94a3b8; cursor: not-allowed; }
         
         /* Перекрашиваем кнопку в цвет асфальта при старте загрузки */
-        button.submit-btn.loading-start {
-            background: #1e293b !important; /* Насыщенный цвет трассы */
-            color: transparent !important; /* Полностью прячем исходный текст кнопки */
+        /* Силовой фикс: заставляем кнопку быть тёмной, даже когда она disabled в режиме загрузки */
+        button.submit-btn.loading-start,
+        button.submit-btn.loading-start:disabled {
+            background: #1e293b !important; /* Цвет асфальта */
+            color: transparent !important; /* Прячем текст намертво */
             border: 2px solid #334155 !important;
+            opacity: 1 !important; /* Убираем блеклость заблокированной кнопки */
             cursor: wait !important;
-            pointer-events: none !important;
         }
         
-        /* Создаем и разворачиваем машинку */
-        button.submit-btn.loading-start::after {
+        /* Рисуем машинку поверх заблокированной кнопки загрузки */
+        button.submit-btn.loading-start::after,
+        button.submit-btn.loading-start:disabled::after {
             content: "🚗💨" !important;
             position: absolute !important;
             top: 50% !important;
             left: -50px !important;
-            /* Разворачиваем капот вправо и выравниваем по центру */
-            transform: translateY(-50%) scaleX(-1) !important;
-            font-size: 24px !important; /* Чуть увеличили размер */
+            transform: translateY(-50%) scaleX(-1) !important; /* Разворот капотом вправо */
+            font-size: 24px !important;
             display: block !important;
-            animation: driveCar 2s linear infinite !important; /* Машинка едет чуть быстрее */
+            animation: driveCar 2s linear infinite !important; /* Поехали! */
         }
+
 
         
         @keyframes driveCar {
