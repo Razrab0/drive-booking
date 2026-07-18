@@ -30,9 +30,87 @@
         .type-switcher { display: grid; grid-template-columns: 1fr; gap: 10px; margin-bottom: 5px; }
         .type-tab { padding: 14px; border: 1px solid var(--border); background: #fff; border-radius: 12px; font-weight: 700; font-size: 15px; cursor: pointer; text-align: center; transition: 0.2s; color: var(--text-muted); display: flex; align-items: center; justify-content: center; }
         .type-tab.active { border-color: var(--primary) !important; background: #eff6ff !important; color: var(--primary) !important; }
-        .level-grid { display: grid; grid-template-columns: 1fr; gap: 10px; }
-        .level-card { padding: 14px; border: 1px solid var(--border); border-radius: 12px; cursor: pointer; display: flex; align-items: center; gap: 12px; font-weight: 600; font-size: 14px; background: #fff; color: var(--text-muted); transition: 0.2s; }
-        .level-card.active { border-color: var(--primary); background: #eff6ff; color: var(--primary); }
+        /* Общий контейнер для уровней подготовки */
+        .level-grid { 
+            display: flex !important; 
+            flex-direction: column !important; 
+            gap: 10px !important; 
+            margin-top: 10px !important;
+        }
+
+        /* Базовый вид карточки уровня (спокойный минимализм) */
+        .level-card { 
+            padding: 16px !important; 
+            border: 1px solid #cbd5e1 !important; 
+            border-radius: 14px !important; 
+            cursor: pointer !important; 
+            display: flex !important; 
+            align-items: center !important; 
+            gap: 14px !important; 
+            font-weight: 700 !important; 
+            font-size: 14px !important; 
+            background: #ffffff !important; 
+            color: #475569 !important; 
+            transition: 0.25s ease-in-out !important; 
+            box-sizing: border-box !important;
+            width: 100% !important;
+        }
+        
+        /* Прячем старые круглые текстовые смайлики-светофоры */
+        .level-card span { display: none !important; }
+
+        /* Встраиваем аккуратную иконку мотоцикла вместо смайлика */
+        .level-card::before {
+            content: "" !important;
+            width: 24px !important;
+            height: 24px !important;
+            display: inline-block !important;
+            flex-shrink: 0 !important;
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://w3.org' viewBox='0 0 24 24'%3E%3Cpath fill='%2394a3b8' d='M19.5 14c-1.38 0-2.5 1.12-2.5 2.5s1.12 2.5 2.5 2.5s2.5-1.12 2.5-2.5s-1.12-2.5-2.5-2.5zm0 4c-.83 0-1.5-.67-1.5-1.5s.67-1.5 1.5-1.5s1.5 .67 1.5 1.5s-.67 1.5-1.5 1.5zM4.5 14c-1.38 0-2.5 1.12-2.5 2.5S3.12 19 4.5 19S7 17.88 7 16.5S5.88 14 4.5 14zm0 4c-.83 0-1.5-.67-1.5-1.5S3.67 15 4.5 15S6 15.67 6 16.5S5.33 18 4.5 18zm13.1-6.43l-1.9-3.17c-.26-.43-.72-.7-1.22-.7H11.5v-1c0-.55-.45-1-1-1H9c-.55 0-1 .45-1 1v1H5c-.55 0-1 .45-1 1v1c0 .55.45 1 1 1h.59l1.45 3.63c.27.67.92 1.12 1.64 1.12h4.64c.26 0 .5-.11.68-.3l1.83-1.83c1-.26 1.83-.93 2.27-1.85z'/%3E%3C/svg%3E") !important;
+            background-size: contain !important;
+            background-repeat: no-repeat !important;
+            background-position: center !important;
+            transition: 0.25s ease-in-out !important;
+        }
+
+        /* 🔥 ЭФФЕКТЫ ДЛЯ АКТИВНЫХ КАРТОЧЕК ПРИ НАЖАТИИ */
+        
+        /* 🟢 Уровень: Профи (Мягкий зеленый фон + яркий контур + неоновое свечение) */
+        #lvl-green.active {
+            border-color: #10b981 !important; /* Яркий контур */
+            background: #f0fdf4 !important; /* Мягкий фон */
+            color: #14532d !important;
+            box-shadow: 0 0 14px rgba(16, 185, 129, 0.25) !important; /* Зеленый неон */
+        }
+        #lvl-green.active::before {
+            /* Окрашиваем сам силуэт мотоцикла в зеленый */
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://w3.org' viewBox='0 0 24 24'%3E%3Cpath fill='%2310b981' d='M19.5 14c-1.38 0-2.5 1.12-2.5 2.5s1.12 2.5 2.5 2.5s2.5-1.12 2.5-2.5s-1.12-2.5-2.5-2.5zm0 4c-.83 0-1.5-.67-1.5-1.5s.67-1.5 1.5-1.5s1.5 .67 1.5 1.5s-.67 1.5-1.5 1.5zM4.5 14c-1.38 0-2.5 1.12-2.5 2.5S3.12 19 4.5 19S7 17.88 7 16.5S5.88 14 4.5 14zm0 4c-.83 0-1.5-.67-1.5-1.5S3.67 15 4.5 15S6 15.67 6 16.5S5.33 18 4.5 18zm13.1-6.43l-1.9-3.17c-.26-.43-.72-.7-1.22-.7H11.5v-1c0-.55-.45-1-1-1H9c-.55 0-1 .45-1 1v1H5c-.55 0-1 .45-1 1v1c0 .55.45 1 1 1h.59l1.45 3.63c.27.67.92 1.12 1.64 1.12h4.64c.26 0 .5-.11.68-.3l1.83-1.83c1-.26 1.83-.93 2.27-1.85z'/%3E%3C/svg%3E") !important;
+        }
+
+        /* 🟡 Уровень: Средний (Мягкий желтый фон + сочный контур + желтое свечение) */
+        #lvl-yellow.active {
+            border-color: #f59e0b !important;
+            background: #fffbeb !important;
+            color: #78350f !important;
+            box-shadow: 0 0 14px rgba(245, 158, 11, 0.25) !important; /* Желтый неон */
+        }
+        #lvl-yellow.active::before {
+            /* Окрашиваем силуэт мотоцикла в желтый */
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://w3.org' viewBox='0 0 24 24'%3E%3Cpath fill='%23f59e0b' d='M19.5 14c-1.38 0-2.5 1.12-2.5 2.5s1.12 2.5 2.5 2.5s2.5-1.12 2.5-2.5s-1.12-2.5-2.5-2.5zm0 4c-.83 0-1.5-.67-1.5-1.5s.67-1.5 1.5-1.5s1.5 .67 1.5 1.5s-.67 1.5-1.5 1.5zM4.5 14c-1.38 0-2.5 1.12-2.5 2.5S3.12 19 4.5 19S7 17.88 7 16.5S5.88 14 4.5 14zm0 4c-.83 0-1.5-.67-1.5-1.5S3.67 15 4.5 15S6 15.67 6 16.5S5.33 18 4.5 18zm13.1-6.43l-1.9-3.17c-.26-.43-.72-.7-1.22-.7H11.5v-1c0-.55-.45-1-1-1H9c-.55 0-1 .45-1 1v1H5c-.55 0-1 .45-1 1v1c0 .55.45 1 1 1h.59l1.45 3.63c.27.67.92 1.12 1.64 1.12h4.64c.26 0 .5-.11.68-.3l1.83-1.83c1-.26 1.83-.93 2.27-1.85z'/%3E%3C/svg%3E") !important;
+        }
+
+        /* 🔴 Уровень: Новичок (Мягкий красный фон + красный контур + красное свечение) */
+        #lvl-red.active {
+            border-color: #ef4444 !important;
+            background: #fef2f2 !important;
+            color: #991b1b !important;
+            box-shadow: 0 0 14px rgba(239, 68, 68, 0.25) !important; /* Красный неон */
+        }
+        #lvl-red.active::before {
+            /* Окрашиваем силуэт мотоцикла в красный */
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://w3.org' viewBox='0 0 24 24'%3E%3Cpath fill='%23ef4444' d='M19.5 14c-1.38 0-2.5 1.12-2.5 2.5s1.12 2.5 2.5 2.5s2.5-1.12 2.5-2.5s-1.12-2.5-2.5-2.5zm0 4c-.83 0-1.5-.67-1.5-1.5s.67-1.5 1.5-1.5s1.5 .67 1.5 1.5s-.67 1.5-1.5 1.5zM4.5 14c-1.38 0-2.5 1.12-2.5 2.5S3.12 19 4.5 19S7 17.88 7 16.5S5.88 14 4.5 14zm0 4c-.83 0-1.5-.67-1.5-1.5S3.67 15 4.5 15S6 15.67 6 16.5S5.33 18 4.5 18zm13.1-6.43l-1.9-3.17c-.26-.43-.72-.7-1.22-.7H11.5v-1c0-.55-.45-1-1-1H9c-.55 0-1 .45-1 1v1H5c-.55 0-1 .45-1 1v1c0 .55.45 1 1 1h.59l1.45 3.63c.27.67.92 1.12 1.64 1.12h4.64c.26 0 .5-.11.68-.3l1.83-1.83c1-.26 1.83-.93 2.27-1.85z'/%3E%3C/svg%3E") !important;
+        }
+
         /* 📅 ГОРИЗОНТАЛЬНАЯ ЛЕНТА ДНЕЙ НЕДЕЛИ */
         .date-tabs-container {
             display: flex !important;
