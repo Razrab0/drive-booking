@@ -38,12 +38,17 @@
         .slot-container { display: grid; grid-template-columns: 1fr; gap: 10px; }
         .slot-btn { padding: 16px; border: 1px solid #34d399; background: var(--success-bg); color: var(--success); border-radius: 12px; cursor: pointer; font-size: 15px; font-weight: 800; text-align: left; display: flex; justify-content: space-between; align-items: center; width: 100%; box-sizing: border-box; transition: 0.2s; }
         /* Красивое выделение выбранного времени с четким текстом */
+        /* Кнопка становится синей, а весь текст внутри неё — строго белым */
         .slot-btn.selected { 
-            background: #eff6ff !important; /* Мягкий синий фон */
-            color: #0088ff !important; /* Яркий синий читаемый текст */
-            border-color: #0088ff !important; /* Четкий синий контур */
-            box-shadow: 0 0 10px rgba(0, 136, 255, 0.15) !important; /* Легкое неоновое свечение */
+            background: var(--primary) !important; 
+            border-color: var(--primary) !important; 
+            box-shadow: 0 4px 12px rgba(29, 78, 216, 0.2) !important;
         }
+        /* Фикс: заставляем весь текст и значки внутри выбранной кнопки стать белыми */
+        .slot-btn.selected * {
+            color: #ffffff !important;
+        }
+
 
         .slot-btn:disabled { background: #f8fafc; border-color: #e2e8f0; color: #cbd5e1; cursor: not-allowed; font-weight: 500; }
         button.submit-btn { 
