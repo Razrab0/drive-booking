@@ -581,6 +581,17 @@
             box-shadow: none !important;
             background: transparent !important;
         }
+
+        /* Убираем кружок-эмодзи внутри выбранного значения списка */
+        select.level-select-dropdown {
+            text-indent: 0px !important;
+        }
+        /* Прячем эмодзи-кружок в закрытом состоянии селекта, сдвигая текст влево */
+        select.level-select-dropdown {
+            text-indent: 24px !important; /* Сдвигает текст вправо на ширину кружка */
+            margin-left: 0 !important;
+        }
+        
     </style>
 
     </style>
