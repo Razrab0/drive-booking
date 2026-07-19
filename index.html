@@ -733,10 +733,9 @@
         <div id="motoLevelBlock">
             <label>Ваш уровень подготовки:</label>
             <div class="level-custom-container" id="levelContainerBox">
-                <div class="level-bike-photo-box">
-                    <img src="moto_grey.jpg" id="levelBikeImg" alt="Мотоцикл" style="width: 110px; height: 70px; object-fit: contain; border: none !important; box-shadow: none !important; background: transparent !important;">
-
-                </div>
+                <!-- Картинка стоит напрямую в контейнере, без рамок и обёрток -->
+                <img src="moto_grey.jpg" id="levelBikeImg" alt="Мотоцикл" style="width: 110px; height: 70px; object-fit: contain; border: none !important; box-shadow: none !important; background: transparent !important; flex-shrink: 0;">
+                
                 <select class="level-select-dropdown" id="levelSelectMenu" onchange="syncSelectLevel(this.value)" required>
                     <option value="" disabled selected hidden>Укажите свой уровень (выбрать) ▼</option>
                     <option value="green">Уверенно катаюсь</option>
@@ -744,7 +743,6 @@
                     <option value="red">Я новичок</option>
                 </select>
             </div>
-            <!-- Пустое поле при старте для жесткой проверки обязательности -->
             <input type="hidden" id="level" value="">
         </div>
 
