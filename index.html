@@ -733,16 +733,17 @@
         <div id="motoLevelBlock">
             <label>Ваш уровень подготовки:</label>
             <div class="level-custom-container" id="levelContainerBox">
-                <img src="moto_grey.jpg" id="levelBikeImg" alt="Мотоцикл" style="width: 110px; height: 70px; object-fit: contain;">
-
-                <select class="level-select-dropdown" id="levelSelectMenu" onchange="syncSelectLevel(this.value)">
+                <div class="level-bike-photo-box">
+                    <img src="moto_grey.jpg" id="levelBikeImg" alt="Мотоцикл" style="width: 110px; height: 70px; object-fit: contain;">
+                </div>
+                <select class="level-select-dropdown" id="levelSelectMenu" onchange="syncSelectLevel(this.value)" required>
                     <option value="" disabled selected hidden>Укажите свой уровень (выбрать) ▼</option>
                     <option value="green">Уверенно катаюсь</option>
                     <option value="yellow">Я средний</option>
                     <option value="red">Я новичок</option>
-
                 </select>
             </div>
+            <!-- Пустое поле при старте для жесткой проверки обязательности -->
             <input type="hidden" id="level" value="">
         </div>
 
@@ -1034,6 +1035,7 @@ function handleBookingResponse(response) {
     window.onload = loadSlots;
 
     /* УЛЬТИМАТИВНАЯ ПЕРЕЗАПИСЬ ДЛЯ ЧИСТОГО ДИЗАЙНА СЕЛЕКТА */
+    /* ⚙️ ЖЕЛЕЗНАЯ ЛОГИКА: ОБЯЗАТЕЛЬНЫЙ ВЫБОР УРОВНЯ И СТРАХОВКА КАЛЕНДАРЯ */
     window.setLevel = function(l) {
         if (!l) return;
         document.getElementById('level').value = l;
@@ -1041,11 +1043,9 @@ function handleBookingResponse(response) {
         const selectMenu = document.getElementById('levelSelectMenu');
         if (selectMenu) selectMenu.value = l;
         
-        // Включаем свечение ТОЛЬКО для таблички выпадающего списка
         const container = document.getElementById('levelContainerBox');
         if (container) { container.className = 'level-custom-container geo-' + l; }
         
-        // Меняем исключительно саму картинку мотоцикла
         const bikeImg = document.getElementById('levelBikeImg');
         if (bikeImg) {
             if (l === 'green') bikeImg.src = 'moto_green.jpg';
@@ -1058,6 +1058,65 @@ function handleBookingResponse(response) {
     window.syncSelectLevel = function(val) {
         setLevel(val);
     };
+
+    window.handleBookingResponse = function(response) {
+        const status = document.getElementById('status');
+        const btn = document.getElementById('submitBtn');
+        if (btn) { btn.classList.remove('loading-active'); btn.innerText = 'Подтвердить запись'; }
+        
+        if (response.status === 'success') {
+            status.className = 'ok'; status.innerText = response.message;
+            
+            // Если это была ЗАПИСЬ, полностью сбрасываем форму в дефолт
+            if (response.message && !response.message.toLowerCase().includes('отменен') && !response.message.toLowerCase().includes('удален')) {
+                document.getElementById('mainForm').reset();
+                document.getElementById('phone').value = "+7 ";
+                if (typeof setCategory === 'function') setCategory('moto');
+                if (typeof loadSlots === 'function') loadSlots();
+                
+                const container = document.getElementById('levelContainerBox');
+                if (container) container.className = 'level-custom-container';
+                const bikeImg = document.getElementById('levelBikeImg');
+                if (bikeImg) bikeImg.src = 'moto_grey.jpg';
+                document.getElementById('level').value = "";
+            } else {
+                // Если это была ОТМЕНА, чистим только поле кода брони
+                const cancelInput = document.getElementById('cancelCode') || document.querySelector('input[placeholder*="кода"], input[id*="code"]');
+                if (cancelInput) cancelInput.value = '';
+                if (typeof loadSlots === 'function') loadSlots();
+            }
+        } else { 
+            status.className = 'err'; status.innerText = 'Ошибка: ' + response.message; 
+            if (btn) btn.disabled = false; 
+            const cancelBtn = document.querySelector('.cancel-btn');
+            if (cancelBtn) cancelBtn.disabled = false;
+        }
+    };
+
+    /* УМНЫЙ ХАК ДЛЯ ПРЕДОТВРАЩЕНИЯ КРЕША updateInterface */
+    const originalUpdateInterface = window.updateInterface;
+    window.updateInterface = function() {
+        const levelInput = document.getElementById('level');
+        if (!levelInput) return;
+        
+        let originalValue = levelInput.value;
+        
+        // Хитрый трюк: если уровень пустой, временно притворяемся "green", чтобы рассчитать свободное время
+        if (!originalValue) { levelInput.value = 'green'; }
+        
+        if (typeof originalUpdateInterface === 'function') {
+            originalUpdateInterface();
+        }
+        
+        // Сразу возвращаем пустоту обратно, чтобы форма оставалась незаполненной для пользователя
+        if (!originalValue) { 
+            levelInput.value = ''; 
+            // Жестко блокируем кнопку отправки формы, пока пользователь сам не выберет уровень!
+            const submitBtn = document.getElementById('submitBtn');
+            if (submitBtn) submitBtn.disabled = true;
+        }
+    };
+
     
 </script>
 </body>
