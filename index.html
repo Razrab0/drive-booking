@@ -387,20 +387,34 @@
     }
 
     function cancelBooking() {
-        const code = document.getElementById('cancelCode').value.trim(); const status = document.getElementById('cancelStatus'); if(!code) return;
-        status.style.display = 'block'; status.className = ''; status.innerText = 'Отмена занятия...';
-        const oldScript = document.getElementById('jsonp-cancel'); if(oldScript) oldScript.remove();
-        const script = document.createElement('script'); script.id = 'jsonp-cancel';
-        script.src = `${API_URL}?action=cancel&id=${encodeURIComponent(code)}&callback=handleCancelResponse`;
+        const code = document.getElementById('cancelCode').value.trim();
+        const status = document.getElementById('cancelStatus');
+        if (!code) return;
+        status.style.display = 'block';
+        status.className = '';
+        status.innerText = 'Отмена занятия...';
+        const oldScript = document.getElementById('jsonp-cancel');
+        if (oldScript) oldScript.remove();
+        const script = document.createElement('script');
+        script.id = 'jsonp-cancel';
+        script.src = API_URL + '?action=cancel&id=' + encodeURIComponent(code) + '&callback=handleCancelResponse';
         document.body.appendChild(script);
     }
 
     function handleCancelResponse(response) {
         const status = document.getElementById('cancelStatus');
-        if (response.status === 'success') { status.className = 'ok'; status.innerText = response.message; document.getElementById('cancelCode').value = ''; loadSlots(); } 
-        else { status.className = 'err'; status.innerText = response.message; }
+        if (response.status === 'success') {
+            status.className = 'ok';
+            status.innerText = response.message;
+            document.getElementById('cancelCode').value = '';
+            loadSlots();
+        } else {
+            status.className = 'err';
+            status.innerText = response.message;
+        }
     }
     window.onload = loadSlots;
 </script>
 </body>
 </html>
+
