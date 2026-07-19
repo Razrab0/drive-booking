@@ -342,43 +342,22 @@
             groupDiv.appendChild(container); slotsBox.appendChild(groupDiv);
         });
 
+        // Карточки машин и мотиков теперь ВСЕГДА остаются активными и красивыми!
         const carIds = { 'car_granta_manual': 'tab-car_granta_manual', 'car_logan_manual': 'tab-car_logan_manual', 'car_logan_auto': 'tab-car_logan_auto', 'car_murano_auto': 'tab-car_murano_auto' };
-        Object.values(carIds).forEach(id => { if(document.getElementById(id)) document.getElementById(id).classList.remove('active', 'disabled'); });
-        if (carIds[type] && document.getElementById(carIds[type])) document.getElementById(carIds[type]).classList.add('active');
-        
-        if (instructorSlots.length > 0) {
-            const selSlotVal = document.getElementById('selectedSlot').value;
-            if (selSlotVal) {
-                const [selDate, selTime] = selSlotVal.split('|');
-                const currentHourData = globalSlotsData.find(s => s.date === selDate && s.time === selTime);
-                if (currentHourData) {
-                    (currentHourData.bikes || []).forEach(b => {
-                        if (carIds[b] && document.getElementById(carIds[b])) {
-                            document.getElementById(carIds[b]).classList.add('disabled');
-                            document.getElementById(carIds[b]).classList.remove('active');
-                        }
-                    });
-                }
-            }
+        Object.values(carIds).forEach(id => { if(document.getElementById(id)) document.getElementById(id).classList.remove('disabled'); });
+        if (carIds[type] && document.getElementById(carIds[type])) {
+            Object.values(carIds).forEach(id => { if(document.getElementById(id)) document.getElementById(id).classList.remove('active'); });
+            document.getElementById(carIds[type]).classList.add('active');
         }
         
         const bikeIds = { 'Bajaj Boxer': 'bike-boxer', 'Fuego Rambolor 250': 'bike-fuego', 'Yamaha YBR 125': 'bike-yamaha' };
         Object.values(bikeIds).forEach(id => { if(document.getElementById(id)) document.getElementById(id).classList.remove('disabled'); });
-        if (instructorSlots.length > 0) {
-            const selSlotVal = document.getElementById('selectedSlot').value;
-            if (selSlotVal) {
-                const [selDate, selTime] = selSlotVal.split('|');
-                const currentHourData = globalSlotsData.find(s => s.date === selDate && s.time === selTime);
-                if (currentHourData) {
-                    (currentHourData.bikes || []).forEach(b => {
-                        if (bikeIds[b] && document.getElementById(bikeIds[b])) {
-                            document.getElementById(bikeIds[b]).classList.add('disabled');
-                            document.getElementById(bikeIds[b]).classList.remove('active');
-                        }
-                    });
-                }
-            }
+        if (bikeIds[selectedBike] && document.getElementById(bikeIds[selectedBike]) && currentCategory === 'moto') {
+            Object.values(bikeIds).forEach(id => { if(document.getElementById(id)) document.getElementById(id).classList.remove('active'); });
+            document.getElementById(bikeIds[selectedBike]).classList.add('active');
         }
+    }
+
     }
 
     document.getElementById('mainForm').addEventListener('submit', function(e) {
