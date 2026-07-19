@@ -1115,6 +1115,26 @@ function handleBookingResponse(response) {
             if (submitBtn) submitBtn.disabled = true;
         }
     };
+    /* ПРИНУДИТЕЛЬНАЯ ПЕРЕЗАПИСЬ КНОПКИ ОТМЕНЫ */
+    window.cancelBooking = function() {
+        const code = document.getElementById('cancelCode') ? document.getElementById('cancelCode').value : '';
+        if (!code) { alert('Введите код отмены!'); return; }
+        
+        const status = document.getElementById('status');
+        if (status) { status.className = ''; status.innerText = 'Отмена занятия...'; }
+        
+        // Жестко привязали action=cancel, чтобы бэкенд не путал её с записью
+        const url = 'https://google.com' 
+            + '?action=cancel&code=' + encodeURIComponent(code) + '&callback=handleBookingResponse';
+        
+        const oldScript = document.getElementById('jsonp-cancel-script');
+        if (oldScript) oldScript.remove();
+        
+        const script = document.createElement('script');
+        script.id = 'jsonp-cancel-script'; 
+        script.src = url;
+        document.body.appendChild(script);
+    };
 
     
 </script>
