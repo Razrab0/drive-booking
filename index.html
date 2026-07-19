@@ -364,7 +364,13 @@
             status.style.display = 'block'; status.className = 'err'; status.innerText = 'Ошибка: Введите 10 цифр телефона!'; return;
         }
         status.style.display = 'block'; status.className = ''; status.innerText = 'Оформление записи...'; btn.disabled = true;
+        
         const [date, time] = document.getElementById('selectedSlot').value.split('|');
+        
+        // ФИКС ФОРМАТА ДАТЫ: Переводим ГГГГ-ММ-ДД в ДД.ММ.ГГГГ для старого Гугл-скрипта
+        const [year, month, day] = date.split('-');
+        const formattedDate = day + '.' + month + '.' + year;
+        
         const name = encodeURIComponent(document.getElementById('name').value.trim());
         const phone = encodeURIComponent("'" + document.getElementById('phone').value.trim());
         const email = encodeURIComponent(document.getElementById('email').value.trim()); const type = document.getElementById('type').value;
@@ -374,9 +380,10 @@
 
         const oldScript = document.getElementById('jsonp-booking'); if(oldScript) oldScript.remove();
         const script = document.createElement('script'); script.id = 'jsonp-booking';
-        script.src = `${API_URL}?action=book&date=${date}&time=${time}&type=${type}&level=${level}&name=${name}&phone=${phone}&email=${email}&bike=${bike}&instructor=${instructor}&callback=handleBookingResponse`;
+        script.src = API_URL + '?action=book&date=' + formattedDate + '&time=' + time + '&type=' + type + '&level=' + level + '&name=' + name + '&phone=' + phone + '&email=' + email + '&bike=' + bike + '&instructor=' + instructor + '&callback=handleBookingResponse';
         document.body.appendChild(script);
     });
+
 
     function handleBookingResponse(response) {
         const status = document.getElementById('status');
