@@ -218,8 +218,7 @@
     <div id="cancelStatus"></div>
 </div>
 <script>
-    const API_URL = 'https://script.google.com/macros/s/AKfycbyL1B-vFY8UsCeO-wm8hcPc37I83j33jWpwFbY7Xct_AHpY9rBCT_8GR-gS1jS7Vatc/exec';
-    
+    const API_URL = 'https://google.com';
     let globalSlotsData = []; let currentCategory = 'moto';
 
     document.getElementById('phone').addEventListener('input', function(e) {
@@ -261,9 +260,7 @@
         document.getElementById('type').value = v;
         const carIds = { 'car_granta_manual': 'tab-car_granta_manual', 'car_logan_manual': 'tab-car_logan_manual', 'car_logan_auto': 'tab-car_logan_auto', 'car_murano_auto': 'tab-car_murano_auto' };
         Object.values(carIds).forEach(id => { if(document.getElementById(id)) document.getElementById(id).classList.remove('active'); });
-        if(carIds[v] && document.getElementById(carIds[v])) {
-            document.getElementById(carIds[v]).classList.add('active');
-        }
+        if(carIds[v] && document.getElementById(carIds[v])) document.getElementById(carIds[v]).classList.add('active');
         updateInterface();
     }
 
@@ -306,8 +303,10 @@
 
         Object.keys(grouped).forEach(dateStr => {
             let groupDiv = document.createElement('div'); groupDiv.className = 'date-group';
-            let dateParts = dateStr.split('-'); let months = ['янв', 'фев', 'мар', 'апр', 'май', 'июн', 'июл', 'авг', 'сен', 'окт', 'ноя', 'дек'];
-            let day = parseInt(dateParts[10]); let monthIdx = parseInt(dateParts[10]) - 1;
+            let dateParts = dateStr.split('-'); 
+            let months = ['янв', 'фев', 'мар', 'апр', 'май', 'июн', 'июл', 'авг', 'сен', 'окт', 'ноя', 'дек'];
+            let day = parseInt(dateParts[2], 10); 
+            let monthIdx = parseInt(dateParts[1], 10) - 1;
             let header = document.createElement('div'); header.className = 'date-header'; header.innerText = day + ' ' + months[monthIdx];
             groupDiv.appendChild(header);
 
