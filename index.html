@@ -3,25 +3,23 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Онлайн-запись к автоинструкторам</title>
+    <title>Запись на вождение</title>
+    <link href="https://googleapis.com" rel="stylesheet">
     <style>
-
-        /* ЖЕСТКИЙ ФИКС ДЛЯ КАРТОЧЕК И ОГРОМНЫХ ФОТОК */
-            <style>
         :root { 
             --bg: #f1f5f9; 
             --card-bg: #ffffff; 
-            --border: #e2e8f0; 
+            --border: #cbd5e1; 
             --primary: #1d4ed8; 
             --primary-glow: rgba(29, 78, 216, 0.1);
-            --success: #059669; 
-            --success-bg: #ecfdf5; 
+            --success: #065f46; 
+            --success-bg: #d1fae5; 
             --danger: #dc2626; 
             --text: #0f172a; 
             --text-muted: #475569; 
         }
         body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; background: var(--bg); color: var(--text); margin: 0; padding: 15px; display: flex; flex-direction: column; align-items: center; min-height: 100vh; box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
-        .box { background: var(--card-bg); padding: 24px; border-radius: 20px; width: 100%; max-width: 440px; margin-bottom: 20px; box-sizing: border-box; border: 1px solid var(--border); box-shadow: 0 4px 20px rgba(15, 23, 42, 0.05); }
+        .box { background: var(--card-bg); padding: 24px; border-radius: 20px; width: 100%; max-width: 440px; margin-bottom: 20px; box-sizing: border-box; border: 1px solid #e2e8f0; box-shadow: 0 4px 20px rgba(15, 23, 42, 0.04); }
         h2 { font-size: 22px; font-weight: 800; text-align: center; margin: 0 0 24px 0; color: var(--text); letter-spacing: -0.5px; }
         h3 { font-size: 18px; margin: 0 0 15px 0; color: var(--text); text-align: center; }
         label { font-size: 13px; font-weight: 700; display: block; margin: 20px 0 8px; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.5px; }
@@ -36,9 +34,14 @@
         .date-group { margin-top: 20px; }
         .date-header { font-size: 12px; font-weight: 800; color: var(--primary); text-transform: uppercase; letter-spacing: 1px; margin-bottom: 10px; padding-bottom: 6px; border-bottom: 1px solid var(--border); }
         .slot-container { display: grid; grid-template-columns: 1fr; gap: 10px; }
-        .slot-btn { padding: 16px; border: 1px solid #34d399; background: var(--success-bg); color: var(--success); border-radius: 12px; cursor: pointer; font-size: 15px; font-weight: 800; text-align: left; display: flex; justify-content: space-between; align-items: center; width: 100%; box-sizing: border-box; transition: 0.2s; }
-        .slot-btn.selected { background: var(--primary) !important; color: white !important; border-color: var(--primary) !important; }
-        .slot-btn:disabled { background: #f8fafc; border-color: #e2e8f0; color: #cbd5e1; cursor: not-allowed; font-weight: 500; }
+        
+        .slot-btn { padding: 16px; border: 1px solid #34d399 !important; background: var(--success-bg) !important; color: var(--success) !important; border-radius: 12px; cursor: pointer; font-size: 15px; font-weight: 800; text-align: left; display: flex; justify-content: space-between; align-items: center; width: 100%; box-sizing: border-box; transition: 0.2s; }
+        .slot-btn span { color: var(--success) !important; }
+        .slot-btn.selected { background: var(--primary) !important; border-color: var(--primary) !important; box-shadow: 0 4px 12px rgba(29, 78, 216, 0.2) !important; }
+        .slot-btn.selected span { color: #ffffff !important; }
+        .slot-btn:disabled { background: #f8fafc !important; border-color: #e2e8f0 !important; color: #cbd5e1 !important; cursor: not-allowed; font-weight: 500; }
+        .slot-btn:disabled span { color: #cbd5e1 !important; }
+        
         button.submit-btn { width: 100%; background: var(--primary); color: white; border: none; padding: 16px; border-radius: 12px; font-size: 16px; cursor: pointer; margin-top: 28px; font-weight: 800; transition: 0.2s; }
         button.submit-btn:disabled { background: #cbd5e1; color: #94a3b8; cursor: not-allowed; }
         button.cancel-btn { width: 100%; background: transparent; color: var(--danger); border: 1px solid #fee2e2; padding: 14px; border-radius: 12px; font-size: 15px; cursor: pointer; margin-top: 12px; font-weight: 700; transition: 0.2s; }
@@ -47,163 +50,29 @@
         .ok { background: #ecfdf5; color: #065f46; border: 1px solid #a7f3d0; }
         .err { background: #fef2f2; color: #991b1b; border: 1px solid #fee2e2; }
 
-        /* ЖЕСТКИЙ СВЕТЛЫЙ ФИКС ДЛЯ СТРОГИХ КАРТОЧЕК С ТВОИМИ ШРИФТАМИ */
-        /* 🏢 ИДЕАЛЬНЫЙ СВЕТЛЫЙ АВТОМОБИЛЬНЫЙ МИНИМАЛИЗМ ДЛЯ КАРТОЧЕК */
-        .bike-grid {
-            display: grid;
-            grid-template-columns: 1fr;
-            gap: 12px;
-            margin-top: 15px;
-        }
-                /* 👨‍🏫 ВЕРТИКАЛЬНЫЕ СТИЛЬНЫЕ КАРТОЧКИ ИНСТРУКТОРОВ */
-        .inst-grid {
-            display: grid;
-            grid-template-columns: 1fr 1fr; /* Ровно две колонки в один ряд */
-            gap: 12px;
-            margin-bottom: 20px;
-        }
-        .inst-card {
-            display: flex !important;
-            flex-direction: column !important; /* Текст строго ПОД картинкой */
-            align-items: center !important;
-            justify-content: center !important;
-            background: #ffffff !important;
-            border: 1px solid #cbd5e1 !important;
-            border-radius: 16px !important;
-            padding: 14px 10px !important;
-            cursor: pointer !important;
-            transition: 0.2s ease-in-out !important;
-            box-shadow: 0 4px 12px rgba(15, 23, 42, 0.02) !important;
-            text-align: center !important;
-            box-sizing: border-box !important;
-        }
-        .inst-card.active {
-            border-color: var(--primary) !important;
-            background: #eff6ff !important; /* Мягкий синий фон при выборе */
-            box-shadow: 0 4px 12px rgba(29, 78, 216, 0.1) !important;
-        }
-        .inst-img {
-            width: 75px !important;
-            height: 75px !important;
-            object-fit: cover !important;
-            border-radius: 5% !important; /* Сделали аватарки идеально круглыми */
-            border: 2px solid #e2e8f0 !important;
-            margin-bottom: 8px !important;
-            background: #f1f5f9; /* Временный фон, пока нет фоток */
-            transition: 0.2s !important;
-        }
-        .inst-card.active .inst-img {
-            border-color: var(--primary) !important; /* Ободок аватарки синеет */
-        }
-        .inst-name {
-            font-family: "Eras Bold ITC", "Eras Demi ITC", "Arial Black", sans-serif !important;
-            font-weight: 900 !important;
-            font-size: 13px !important;
-            color: var(--text) !important;
-            letter-spacing: 0.3px !important;
-            margin-bottom: 2px !important;
-        }
-        .inst-spec {
-            font-family: "Bahnschrift Light SemiCondensed", "Bahnschrift", sans-serif !important;
-            font-size: 11px !important;
-            color: var(--text-muted) !important;
-            font-weight: 500 !important;
-        }
-
-        
-        .bike-card {
-            display: flex !important;
-            flex-direction: row !important;
-            align-items: center !important;
-            background: #ffffff !important; 
-            border: 1px solid #cbd5e1 !important; 
-            border-radius: 14px !important;
-            padding: 0 16px 0 0 !important; /* Фотка прижата к краям */
-            gap: 16px !important;
-            transition: 0.2s ease-in-out !important;
-            cursor: pointer !important;
-            text-align: left !important;
-            width: 100% !important;
-            box-sizing: border-box !important;
-            margin-bottom: 12px !important;
-            box-shadow: 0 4px 12px rgba(15, 23, 42, 0.03) !important;
-            overflow: hidden !important; /* Скругляет углы фотки вместе с карточкой */
-        }
-        .bike-card.active {
-            border-color: var(--primary) !important; 
-            background: #eff6ff !important; 
-            box-shadow: 0 4px 12px rgba(29, 78, 216, 0.1) !important;
-        }
-        .bike-card.disabled {
-            opacity: 0.25 !important;
-            pointer-events: none !important;
-            background: #f8fafc !important;
-            border-color: #e2e8f0 !important;
-        }
-        .bike-img {
-            width: 120px !important;
-            height: 100% !important; 
-            min-height: 95px !important; 
-            object-fit: cover !important; /* Фотка сидит идеально ровно без полей */
-            border: none !important;
-            flex-shrink: 0 !important; 
-        }
-        .bike-info {
-            display: flex !important;
-            flex-direction: column !important;
-            gap: 2px !important; /* Сжали дыры */
-            flex: 1 !important;
-            padding: 10px 0 !important; /* Дали воздуха сверху и снизу текста */
-        }
-        .bike-title {
-            font-family: "Eras Bold ITC", "Eras Demi ITC", "Arial Black", sans-serif !important;
-            font-weight: 900 !important;
-            font-size: 17px !important;
-            color: var(--text) !important; 
-            letter-spacing: 0.5px !important;
-            text-transform: uppercase !important;
-            margin: 0 !important;
-        }
-        .bike-details {
-            font-size: 12px !important;
-            margin: 0 !important;
-        }
-        
-        /* 📐 СЛОВО ОПИСАНИЕ ПО ГОСТУ ПРИЖАТО К НАЗВАНИЮ */
-        .bike-details summary {
-            font-family: "GOST Type AU", "GOST Common", "Russo One", sans-serif !important;
-            color: var(--primary) !important; 
-            cursor: pointer !important;
-            font-weight: 700 !important;
-            list-style: none !important;
-            outline: none !important;
-            text-decoration: none !important; /* Чисто, без линий */
-            display: inline-block !important;
-            letter-spacing: 0.5px !important;
-            margin-top: -2px !important; 
-            font-size: 13px !important;
-            text-transform: lowercase !important;
-        }
+        .bike-grid { display: grid; grid-template-columns: 1fr; gap: 12px; margin-top: 15px; }
+        .bike-card { display: flex !important; flex-direction: row !important; align-items: center !important; background: #ffffff !important; border: 1px solid var(--border) !important; border-radius: 14px !important; padding: 0 16px 0 0 !important; gap: 16px !important; transition: 0.2s ease-in-out !important; cursor: pointer !important; text-align: left !important; width: 100% !important; box-sizing: border-box !important; margin-bottom: 12px !important; box-shadow: 0 4px 12px rgba(15, 23, 42, 0.03) !important; overflow: hidden !important; }
+        .bike-card.active { border-color: var(--primary) !important; background: #eff6ff !important; box-shadow: 0 4px 12px rgba(29, 78, 216, 0.1) !important; }
+        .bike-card.disabled { opacity: 0.25 !important; pointer-events: none !important; background: #f8fafc !important; border-color: #e2e8f0 !important; }
+        .bike-img { width: 120px !important; height: 100% !important; min-height: 95px !important; object-fit: cover !important; border: none !important; flex-shrink: 0 !important; }
+        .bike-info { display: flex !important; flex-direction: column !important; gap: 2px !important; flex: 1 !important; padding: 10px 0 !important; }
+        .bike-title { font-family: "Eras Bold ITC", "Eras Demi ITC", "Arial Black", sans-serif !important; font-weight: 900 !important; font-size: 17px !important; color: var(--text) !important; letter-spacing: 0.5px !important; text-transform: uppercase !important; margin: 0 !important; }
+        .bike-details { font-size: 12px !important; margin: 0 !important; }
+        .bike-details summary { font-family: "JetBrains Mono", "Courier New", monospace !important; color: var(--primary) !important; cursor: pointer !important; font-weight: 700 !important; list-style: none !important; outline: none !important; text-decoration: none !important; display: inline-block !important; letter-spacing: 0.5px !important; margin-top: -2px !important; font-size: 13px !important; text-transform: lowercase !important; }
         .bike-details summary::-webkit-details-marker { display: none !important; }
-        
-        .bike-details p {
-            font-family: "Bahnschrift Light SemiCondensed", "Bahnschrift", sans-serif !important;
-            margin: 6px 0 0 0 !important;
-            color: #475569 !important; 
-            line-height: 1.4 !important;
-            font-weight: 500 !important;
-            font-size: 13px !important;
-            text-align: left !important; /* Описание читается слева направо */
-        }
+        .bike-details p { font-family: "Bahnschrift Light SemiCondensed", "Bahnschrift", sans-serif !important; margin: 6px 0 0 0 !important; color: #475569 !important; line-height: 1.4 !important; font-weight: 500 !important; font-size: 13px !important; text-align: left !important; }
 
-
-    </style>
-
+        .inst-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 20px; }
+        .inst-card { display: flex !important; flex-direction: column !important; align-items: stretch !important; justify-content: flex-start !important; background: #ffffff !important; border: 1px solid var(--border) !important; border-radius: 14px !important; padding: 0 0 12px 0 !important; cursor: pointer !important; transition: 0.2s ease-in-out !important; box-shadow: 0 4px 12px rgba(15, 23, 42, 0.02) !important; text-align: center !important; box-sizing: border-box !important; overflow: hidden !important; }
+        .inst-card.active { border-color: var(--primary) !important; background: #eff6ff !important; box-shadow: 0 4px 12px rgba(29, 78, 216, 0.1) !important; }
+        .inst-img { width: 100% !important; height: 110px !important; object-fit: cover !important; border: none !important; margin-bottom: 10px !important; background: #f1f5f9; flex-shrink: 0 !important; }
+        .inst-name { font-family: "Eras Bold ITC", "Eras Demi ITC", "Arial Black", sans-serif !important; font-weight: 900 !important; font-size: 13px !important; color: var(--text) !important; letter-spacing: 0.3px !important; margin-bottom: 2px !important; padding: 0 6px !important; }
+        .inst-spec { font-family: "Bahnschrift Light SemiCondensed", "Bahnschrift", sans-serif !important; font-size: 11px !important; color: var(--text-muted) !important; font-weight: 500 !important; padding: 0 6px !important; }
     </style>
 </head>
 <body>
 <div class="box">
-    <h2> Запись на вождение </h2>
+    <h2>📅 Запись на вождение</h2>
     <form id="mainForm">
         <label>Ваше Имя и Фамилия:</label>
         <input type="text" id="name" required placeholder="Иван Иванов">
@@ -214,21 +83,17 @@
 
         <label>Выберите инструктора:</label>
         <div class="inst-grid">
-            <!-- КАРТОЧКА 1: ИГОРЬ -->
             <div class="inst-card active" id="inst-igor" onclick="setInstructor('Игорь Иванов')">
                 <img src="igor.jpg" alt="👨‍🏫" class="inst-img">
                 <div class="inst-name">ИГОРЬ ИВАНОВ</div>
                 <div class="inst-spec">Категории: А, В</div>
             </div>
-            
-            <!-- КАРТОЧКА 2: АНДРЕЙ -->
             <div class="inst-card" id="inst-andrey" onclick="setInstructor('Андрей Гришин')">
                 <img src="andrey.jpg" alt="👨‍🏫" class="inst-img">
                 <div class="inst-name">АНДРЕЙ ГРИШИН</div>
-                <div class="inst-spec">Категории: А, В</div>
+                <div class="inst-spec">Категории: А, В (кроме Мурано)</div>
             </div>
         </div>
-
 
         <label>Категория обучения:</label>
         <div class="type-switcher" style="grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 15px;">
@@ -236,10 +101,10 @@
             <div class="type-tab" id="tab-cat-car" onclick="setCategory('car')">🚗 Автомобили</div>
         </div>
 
+        <!-- БЛОК МОТОЦИКЛОВ -->
         <div id="motoBikesBlock" style="display: block; margin-bottom: 15px;">
             <label>Выберите мотоцикл:</label>
             <div class="bike-grid">
-                <!-- БОКСЕР -->
                 <div class="bike-card active" id="bike-boxer" onclick="setBike('Bajaj Boxer')">
                     <img src="boxer.jpg" alt="" class="bike-img">
                     <div class="bike-info">
@@ -250,8 +115,6 @@
                         </details>
                     </div>
                 </div>
-                
-                <!-- ФУЭГО -->
                 <div class="bike-card" id="bike-fuego" onclick="setBike('Fuego Rambolor 250')">
                     <img src="fuego.jpg" alt="" class="bike-img">
                     <div class="bike-info">
@@ -262,8 +125,6 @@
                         </details>
                     </div>
                 </div>
-                
-                <!-- ЯМАХА -->
                 <div class="bike-card" id="bike-yamaha" onclick="setBike('Yamaha YBR 125')">
                     <img src="yamaha.jpg" alt="" class="bike-img">
                     <div class="bike-info">
@@ -277,11 +138,10 @@
             </div>
         </div>
 
-
+        <!-- БЛОК АВТОМОБИЛЕЙ -->
         <div id="carVehiclesBlock" style="display: none; margin-bottom: 15px;">
             <label>Выберите автомобиль:</label>
             <div class="bike-grid">
-                <!-- ГРАНТА -->
                 <div class="bike-card" id="tab-car_granta_manual" onclick="setVehicleType('car_granta_manual')">
                     <img src="granta.jpg" alt="" class="bike-img">
                     <div class="bike-info">
@@ -293,8 +153,6 @@
                         </details>
                     </div>
                 </div>
-                
-                <!-- ЛОГАН МКПП -->
                 <div class="bike-card" id="tab-car_logan_manual" onclick="setVehicleType('car_logan_manual')">
                     <img src="logan_manual.jpg" alt="" class="bike-img">
                     <div class="bike-info">
@@ -306,8 +164,6 @@
                         </details>
                     </div>
                 </div>
-                
-                <!-- ЛОГАН АКПП -->
                 <div class="bike-card" id="tab-car_logan_auto" onclick="setVehicleType('car_logan_auto')">
                     <img src="logan_auto.jpg" alt="" class="bike-img">
                     <div class="bike-info">
@@ -319,8 +175,6 @@
                         </details>
                     </div>
                 </div>
-                
-                <!-- МУРАНО -->
                 <div class="bike-card" id="tab-car_murano_auto" onclick="setVehicleType('car_murano_auto')">
                     <img src="murano.jpg" alt="" class="bike-img">
                     <div class="bike-info">
@@ -328,17 +182,17 @@
                         <div style="font-size: 11px; color: var(--text-muted); font-weight: 600;">Автомат (АКПП)</div>
                         <details class="bike-details" onclick="event.stopPropagation()">
                             <summary>описание</summary>
-                            <p>Премиальный, мощный кроссовер повышенного комфорта. Идеальный вариант для тех, кто уже имеет базовые навыки и хочет уверенно пересесть со скромной учебной машины на крупный внедорожник.</p>
+                            <p>Премиальный, мощный кроссовер повышенного комфорта. Отличный вариант для тех, кто уже имеет базовые навыки и хочет уверенно пересесть со скромной учебной машины на крупный внедорожник.</p>
                         </details>
                     </div>
                 </div>
             </div>
         </div>
 
-
         <input type="hidden" id="type" value="moto">
         <input type="hidden" id="selectedBike" value="Bajaj Boxer">
         <input type="hidden" id="selectedInstructor" value="Игорь Иванов">
+
         <div id="motoLevelBlock">
             <label>Ваш уровень подготовки:</label>
             <div class="level-grid">
@@ -364,12 +218,10 @@
     <div id="cancelStatus"></div>
 </div>
 <script>
-    // ⚠️ ВСТАВЬ СЮДА СВОЮ НОВУЮ ССЫЛКУ /exec ИЗ GOOGLE МЕЖДУ ОДИНАРНЫХ КАВЫЧЕК
-    const API_URL = 'https://script.google.com/macros/s/AKfycbyL1B-vFY8UsCeO-wm8hcPc37I83j33jWpwFbY7Xct_AHpY9rBCT_8GR-gS1jS7Vatc/exec';
+    const API_URL = 'https://google.com';
     
     let globalSlotsData = []; let currentCategory = 'moto';
 
-    // УМНАЯ МАСКА НА РОССИЙСКИЙ НОМЕР ТЕЛЕФОНА
     document.getElementById('phone').addEventListener('input', function(e) {
         let matrix = '+7 (9xx) xxx-xx-xx', i = 0, def = matrix.replace(/\D/g, ""), val = this.value.replace(/\D/g, "");
         if (def.length >= val.length) val = def;
@@ -386,10 +238,10 @@
         document.getElementById('inst-andrey').classList.toggle('active', name === 'Андрей Гришин');
         const muranoCard = document.getElementById('tab-car_murano_auto');
         if (name === 'Андрей Гришин') { 
-            muranoCard.style.display = 'none'; 
+            if (muranoCard) muranoCard.style.display = 'none'; 
             if (document.getElementById('type').value === 'car_murano_auto') setVehicleType('car_granta_manual'); 
         } else { 
-            muranoCard.style.display = 'flex'; 
+            if (muranoCard) muranoCard.style.display = 'flex'; 
         }
         updateInterface();
     }
@@ -407,10 +259,11 @@
 
     function setVehicleType(v) {
         document.getElementById('type').value = v;
-        document.getElementById('tab-car_granta_manual').classList.toggle('active', v === 'car_granta_manual');
-        document.getElementById('tab-car_logan_manual').classList.toggle('active', v === 'car_logan_manual');
-        document.getElementById('tab-car_logan_auto').classList.toggle('active', v === 'car_logan_auto');
-        document.getElementById('tab-car_murano_auto').classList.toggle('active', v === 'car_murano_auto');
+        const carIds = { 'car_granta_manual': 'tab-car_granta_manual', 'car_logan_manual': 'tab-car_logan_manual', 'car_logan_auto': 'tab-car_logan_auto', 'car_murano_auto': 'tab-car_murano_auto' };
+        Object.values(carIds).forEach(id => { if(document.getElementById(id)) document.getElementById(id).classList.remove('active'); });
+        if(carIds[v] && document.getElementById(carIds[v])) {
+            document.getElementById(carIds[v]).classList.add('active');
+        }
         updateInterface();
     }
 
@@ -453,17 +306,9 @@
 
         Object.keys(grouped).forEach(dateStr => {
             let groupDiv = document.createElement('div'); groupDiv.className = 'date-group';
-                        // ИСПРАВЛЕННЫЙ БЛОК ОТОБРАЖЕНИЯ ДАТЫ НА САЙТЕ
-            let dateParts = dateStr.split('-'); // Разрезаем строку "2026-07-20" на части
-            let months = ['янв', 'фев', 'мар', 'апр', 'май', 'июн', 'июл', 'авг', 'сен', 'окт', 'ноя', 'дек'];
-            
-            let day = parseInt(dateParts[2], 10);   // Четко берем день (третья часть)
-            let monthIdx = parseInt(dateParts[1], 10) - 1; // Четко берем месяц (вторая часть)
-            
-            let header = document.createElement('div'); 
-            header.className = 'date-header'; 
-            header.innerText = day + ' ' + months[monthIdx]; // Будет выводить красиво: "20 июл"
-
+            let dateParts = dateStr.split('-'); let months = ['янв', 'фев', 'мар', 'апр', 'май', 'июн', 'июл', 'авг', 'сен', 'окт', 'ноя', 'дек'];
+            let day = parseInt(dateParts[10]); let monthIdx = parseInt(dateParts[10]) - 1;
+            let header = document.createElement('div'); header.className = 'date-header'; header.innerText = day + ' ' + months[monthIdx];
             groupDiv.appendChild(header);
 
             let container = document.createElement('div'); container.className = 'slot-container';
@@ -475,7 +320,6 @@
                 let isAllowed = true; let isCarType = type.startsWith('car_');
                 let targetId = isCarType ? type : selectedBike;
 
-                // СВЕРХТОЧНЫЙ ПОИСК: Если это конкретное железо занято кем-угодно - гасим кнопку!
                 let isBusyByAnyone = (slot.bikes || []).some(b => b.toString().trim() === targetId.toString().trim());
                 if (isBusyByAnyone) { isAllowed = false; }
 
@@ -498,6 +342,44 @@
             });
             groupDiv.appendChild(container); slotsBox.appendChild(groupDiv);
         });
+
+        const carIds = { 'car_granta_manual': 'tab-car_granta_manual', 'car_logan_manual': 'tab-car_logan_manual', 'car_logan_auto': 'tab-car_logan_auto', 'car_murano_auto': 'tab-car_murano_auto' };
+        Object.values(carIds).forEach(id => { if(document.getElementById(id)) document.getElementById(id).classList.remove('active', 'disabled'); });
+        if (carIds[type] && document.getElementById(carIds[type])) document.getElementById(carIds[type]).classList.add('active');
+        
+        if (instructorSlots.length > 0) {
+            const selSlotVal = document.getElementById('selectedSlot').value;
+            if (selSlotVal) {
+                const [selDate, selTime] = selSlotVal.split('|');
+                const currentHourData = globalSlotsData.find(s => s.date === selDate && s.time === selTime);
+                if (currentHourData) {
+                    (currentHourData.bikes || []).forEach(b => {
+                        if (carIds[b] && document.getElementById(carIds[b])) {
+                            document.getElementById(carIds[b]).classList.add('disabled');
+                            document.getElementById(carIds[b]).classList.remove('active');
+                        }
+                    });
+                }
+            }
+        }
+        
+        const bikeIds = { 'Bajaj Boxer': 'bike-boxer', 'Fuego Rambolor 250': 'bike-fuego', 'Yamaha YBR 125': 'bike-yamaha' };
+        Object.values(bikeIds).forEach(id => { if(document.getElementById(id)) document.getElementById(id).classList.remove('disabled'); });
+        if (instructorSlots.length > 0) {
+            const selSlotVal = document.getElementById('selectedSlot').value;
+            if (selSlotVal) {
+                const [selDate, selTime] = selSlotVal.split('|');
+                const currentHourData = globalSlotsData.find(s => s.date === selDate && s.time === selTime);
+                if (currentHourData) {
+                    (currentHourData.bikes || []).forEach(b => {
+                        if (bikeIds[b] && document.getElementById(bikeIds[b])) {
+                            document.getElementById(bikeIds[b]).classList.add('disabled');
+                            document.getElementById(bikeIds[b]).classList.remove('active');
+                        }
+                    });
+                }
+            }
+        }
     }
 
     document.getElementById('mainForm').addEventListener('submit', function(e) {
