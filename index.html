@@ -393,7 +393,7 @@
         status.style.display = 'block'; status.className = ''; status.innerText = 'Отмена занятия...';
         const oldScript = document.getElementById('jsonp-cancel'); if(oldScript) oldScript.remove();
         const script = document.createElement('script'); script.id = 'jsonp-cancel';
-        script.src = `${API_URL}?action=cancel&bookingId=${encodeURIComponent(code)}&callback=handleCancelResponse`;
+        script.src = `${API_URL}?action=cancel&id=${encodeURIComponent(code)}&callback=handleCancelResponse`;
         document.body.appendChild(script);
     }
 
