@@ -218,7 +218,7 @@
     <div id="cancelStatus"></div>
 </div>
 <script>
-    const API_URL = 'https://script.google.com/macros/s/AKfycbzYgPrMc3aPv5o8EheZWRhFEhJk2O07ZTCvcZoVeHHNjFOm7pvR5QHNKpEof2gA52RE/exec';
+    const API_URL = 'https://script.google.com/macros/s/AKfycbyL1B-vFY8UsCeO-wm8hcPc37I83j33jWpwFbY7Xct_AHpY9rBCT_8GR-gS1jS7Vatc/exec';
     let globalSlotsData = []; let currentCategory = 'moto';
 
     document.getElementById('phone').addEventListener('input', function(e) {
@@ -303,13 +303,10 @@
 
         Object.keys(grouped).forEach(dateStr => {
             let groupDiv = document.createElement('div'); groupDiv.className = 'date-group';
-            
-            // Нарезаем дату через точки (ДД.ММ.ГГГГ), как она лежит в твоей таблице
-            let dateParts = dateStr.split('.'); 
+            let dateParts = dateStr.split('-'); 
             let months = ['янв', 'фев', 'мар', 'апр', 'май', 'июн', 'июл', 'авг', 'сен', 'окт', 'ноя', 'дек'];
-            let day = parseInt(dateParts[0], 10); 
+            let day = parseInt(dateParts[2], 10); 
             let monthIdx = parseInt(dateParts[1], 10) - 1;
-            
             let header = document.createElement('div'); header.className = 'date-header'; header.innerText = day + ' ' + months[monthIdx];
             groupDiv.appendChild(header);
 
@@ -318,7 +315,6 @@
                 let btn = document.createElement('button'); btn.type = 'button'; btn.className = 'slot-btn';
                 let timeText = document.createElement('span'); timeText.innerText = slot.time; btn.appendChild(timeText);
                 let badge = document.createElement('span'); badge.style.fontSize = '12px'; badge.innerText = 'Свободно'; btn.appendChild(badge);
-
                 
                 let isAllowed = true; let isCarType = type.startsWith('car_');
                 let targetId = isCarType ? type : selectedBike;
@@ -368,13 +364,7 @@
             status.style.display = 'block'; status.className = 'err'; status.innerText = 'Ошибка: Введите 10 цифр телефона!'; return;
         }
         status.style.display = 'block'; status.className = ''; status.innerText = 'Оформление записи...'; btn.disabled = true;
-        
         const [date, time] = document.getElementById('selectedSlot').value.split('|');
-        
-        // ФИКС ФОРМАТА ДАТЫ: Переводим ГГГГ-ММ-ДД в ДД.ММ.ГГГГ для старого Гугл-скрипта
-        const [year, month, day] = date.split('-');
-        const formattedDate = day + '.' + month + '.' + year;
-        
         const name = encodeURIComponent(document.getElementById('name').value.trim());
         const phone = encodeURIComponent("'" + document.getElementById('phone').value.trim());
         const email = encodeURIComponent(document.getElementById('email').value.trim()); const type = document.getElementById('type').value;
@@ -384,10 +374,9 @@
 
         const oldScript = document.getElementById('jsonp-booking'); if(oldScript) oldScript.remove();
         const script = document.createElement('script'); script.id = 'jsonp-booking';
-        script.src = API_URL + '?action=book&date=' + formattedDate + '&time=' + time + '&type=' + type + '&level=' + level + '&name=' + name + '&phone=' + phone + '&email=' + email + '&bike=' + bike + '&instructor=' + instructor + '&callback=handleBookingResponse';
+        script.src = `${API_URL}?action=book&date=${date}&time=${time}&type=${type}&level=${level}&name=${name}&phone=${phone}&email=${email}&bike=${bike}&instructor=${instructor}&callback=handleBookingResponse`;
         document.body.appendChild(script);
     });
-
 
     function handleBookingResponse(response) {
         const status = document.getElementById('status');
@@ -429,4 +418,3 @@
 </script>
 </body>
 </html>
-
