@@ -54,14 +54,14 @@
         input:focus, select:focus { outline: none; border-color: var(--primary); box-shadow: 0 0 0 4px var(--primary-glow); }
 /* Контейнер переключателя категорий */
 /* Контейнер переключателя категорий по макету */
+/* Контейнер переключателя категорий БЕЗ ОБВОДКИ */
         .type-switcher {
             display: grid;
             grid-template-columns: 1fr 1fr;
-            border: 1px solid #1a1a1a; /* Строгая тонкая рамка вокруг всего переключателя */
             border-radius: 12px;
             overflow: hidden;
             margin-bottom: 25px;
-            background: #f4f6f8; /* Базовый фон для неактивной вкладки */
+            background: #f4f6f8; /* Базовый мягкий фон */
         }
         
         /* Сами вкладки Мотоциклы / Автомобили */
@@ -77,16 +77,12 @@
             transition: all 0.2s ease-in-out;
         }
         
-        /* Разделительная линия между двумя вкладками */
-        .type-tab:first-child {
-            border-right: 1px solid #1a1a1a;
-        }
-        
-        /* Активная выбранная категория (заливается нежным сине-голубым цветом и темным текстом) */
+        /* Активная выбранная категория (как у Игоря — нежный сине-голубой фон) */
         .type-tab.active {
             background: #edf4fc;
             color: #1a1a1a;
         }
+
         .level-grid { display: grid; grid-template-columns: 1fr; gap: 10px; }
         .level-card { padding: 14px; border: 1px solid var(--border); border-radius: 12px; cursor: pointer; display: flex; align-items: center; gap: 12px; font-weight: 600; font-size: 14px; background: #fff; color: var(--text-muted); transition: 0.2s; }
         .level-card.active { border-color: var(--primary); background: #eff6ff; color: var(--primary); }
