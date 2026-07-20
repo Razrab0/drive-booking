@@ -408,7 +408,12 @@
             status.innerText = response.message; 
         }
     }
-    window.onload = loadSlots;
+        window.onload = function() {
+        loadSlots();
+        // Проверка каждые 7 секунд — быстро, безопасно и без перегрузки Гугла!
+        setInterval(loadSlots, 7000);
+    };
+
 </script>
 </body>
 </html>
