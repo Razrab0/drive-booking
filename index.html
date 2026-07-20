@@ -392,7 +392,7 @@
         const oldScript = document.getElementById('jsonp-cancel'); if(oldScript) oldScript.remove();
         const script = document.createElement('script'); script.id = 'jsonp-cancel';
         // ИСПРАВЛЕННЫЙ ЗАПРОС: шлём параметр id через плюсы, чтобы пробить CORB и совпасть с бэкендом
-        script.src = API_URL + '?action=cancel&id=' + encodeURIComponent(code) + '&callback=handleCancelResponse';
+        script.src = API_URL + '?action=cancel&bookingId=' + encodeURIComponent(code) + '&callback=handleCancelResponse';
         document.body.appendChild(script);
     }
 
