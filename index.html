@@ -270,13 +270,21 @@
         <input type="hidden" id="selectedInstructor" value="Игорь Иванов">
 
         <div id="motoLevelBlock">
-            <label>Ваш уровень подготовки:</label>
-            <div class="level-grid">
-                <div class="level-card active" id="lvl-green" onclick="setLevel('green')"><span>🟢</span> Уверенно катаюсь</div>
-                <div class="level-card" id="lvl-yellow" onclick="setLevel('yellow')"><span>🟡</span> Я средний</div>
-                <div class="level-card" id="lvl-red" onclick="setLevel('red')"><span>🔴</span> Я новичок</div>
+        <label>Ваш уровень подготовки:</label>
+        <div class="level-container-block" style="display: flex; align-items: center; gap: 20px; margin-bottom: 22px;">
+            <!-- Стартуем строго с нейтрального серого байка из твоего GitHub -->
+            <img id="motoColorImage" src="moto_grey.png" alt="Выберите уровень" style="width: 80px; height: auto; object-fit: contain; transition: all 0.3s ease;">
+            
+            <!-- Кнопки выбора уровня — на старте ни одна не активна -->
+            <div class="level-grid" style="display: grid; grid-template-columns: 1fr; gap: 6px; flex-grow: 1;">
+                <div class="level-card" id="lvl-green" onclick="setLevel('green')">🟢 Уверенно катаюсь</div>
+                <div class="level-card" id="lvl-yellow" onclick="setLevel('yellow')">🟡 Я средний уровень</div>
+                <div class="level-card" id="lvl-red" onclick="setLevel('red')">🔴 Я абсолютный новичок</div>
             </div>
-            <input type="hidden" id="level" value="green">
+        </div>
+        <!-- Защита логики: пока уровень не выбран, пишем 'none', чтобы сайт не путался -->
+        <input type="hidden" id="level" value="none">
+
         </div>
 
         <label style="margin-bottom: 2px;">Выберите доступное время у этого инструктора:</label>
@@ -350,9 +358,18 @@
 
     function setLevel(l) {
         document.getElementById('level').value = l;
-        ['green', 'yellow', 'red'].forEach(id => { document.getElementById('lvl-' + id).classList.toggle('active', id === l); });
+        ['green', 'yellow', 'red'].forEach(id => { if(document.getElementById('lvl-' + id)) document.getElementById('lvl-' + id).classList.toggle('active', id === l); });
+        
+        // Моментальная подмена картинок: из серого в сочный цветной!
+        const bikeImg = document.getElementById('motoColorImage');
+        if (bikeImg) {
+            if (l === 'green') bikeImg.src = 'moto_green.png';
+            if (l === 'yellow') bikeImg.src = 'moto_yellow.png';
+            if (l === 'red') bikeImg.src = 'moto_red.png';
+        }
         updateInterface();
     }
+
 
     function loadSlots() {
         const oldScript = document.getElementById('jsonp-slots'); if(oldScript) oldScript.remove();
