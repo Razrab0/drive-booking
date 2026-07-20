@@ -53,41 +53,40 @@
         input, select { width: 100%; padding: 14px; border: 1px solid var(--border); border-radius: 12px; box-sizing: border-box; font-size: 15px; background: #fff; color: var(--text); transition: 0.2s; }
         input:focus, select:focus { outline: none; border-color: var(--primary); box-shadow: 0 0 0 4px var(--primary-glow); }
 /* Контейнер переключателя категорий */
-.type-switcher {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    border: 1px solid #1a1a1a; /* Четкая строгая рамка вокруг всего блока */
-    border-radius: 12px;
-    overflow: hidden;
-    margin-bottom: 25px;
-    background: #f4f6f8; /* Легкий серый фон для неактивной вкладки */
-}
-
-/* Сами вкладки Мотоциклы / Автомобили */
-.type-tab {
-    text-align: center;
-    padding: 14px;
-    font-size: 11px;
-    font-weight: 800;
-    text-transform: uppercase;
-    letter-spacing: 0.5px;
-    color: #64748b;
-    cursor: pointer;
-    transition: all 0.2s ease-in-out;
-}
-
-/* Тонкая разделительная линия посередине */
-.type-tab:first-child {
-    border-right: 1px solid #1a1a1a;
-}
-
-/* Активная выбранная категория (как у Игоря — нежный сине-голубой фон и черный текст) */
-.type-tab.active {
-    background: #edf4fc;
-    color: #1a1a1a;
-}
-
-        .type-tab.active { border-color: var(--primary) !important; background: #eff6ff !important; color: var(--primary) !important; }
+/* Контейнер переключателя категорий по макету */
+        .type-switcher {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            border: 1px solid #1a1a1a; /* Строгая тонкая рамка вокруг всего переключателя */
+            border-radius: 12px;
+            overflow: hidden;
+            margin-bottom: 25px;
+            background: #f4f6f8; /* Базовый фон для неактивной вкладки */
+        }
+        
+        /* Сами вкладки Мотоциклы / Автомобили */
+        .type-tab {
+            text-align: center;
+            padding: 14px;
+            font-size: 11px;
+            font-weight: 800;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            color: #64748b;
+            cursor: pointer;
+            transition: all 0.2s ease-in-out;
+        }
+        
+        /* Разделительная линия между двумя вкладками */
+        .type-tab:first-child {
+            border-right: 1px solid #1a1a1a;
+        }
+        
+        /* Активная выбранная категория (заливается нежным сине-голубым цветом и темным текстом) */
+        .type-tab.active {
+            background: #edf4fc;
+            color: #1a1a1a;
+        }
         .level-grid { display: grid; grid-template-columns: 1fr; gap: 10px; }
         .level-card { padding: 14px; border: 1px solid var(--border); border-radius: 12px; cursor: pointer; display: flex; align-items: center; gap: 12px; font-weight: 600; font-size: 14px; background: #fff; color: var(--text-muted); transition: 0.2s; }
         .level-card.active { border-color: var(--primary); background: #eff6ff; color: var(--primary); }
