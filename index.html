@@ -303,10 +303,13 @@
 
         Object.keys(grouped).forEach(dateStr => {
             let groupDiv = document.createElement('div'); groupDiv.className = 'date-group';
-            let dateParts = dateStr.split('-'); 
+            
+            // Нарезаем дату через точки (ДД.ММ.ГГГГ), как она лежит в твоей таблице
+            let dateParts = dateStr.split('.'); 
             let months = ['янв', 'фев', 'мар', 'апр', 'май', 'июн', 'июл', 'авг', 'сен', 'окт', 'ноя', 'дек'];
-            let day = parseInt(dateParts[2], 10); 
+            let day = parseInt(dateParts[0], 10); 
             let monthIdx = parseInt(dateParts[1], 10) - 1;
+            
             let header = document.createElement('div'); header.className = 'date-header'; header.innerText = day + ' ' + months[monthIdx];
             groupDiv.appendChild(header);
 
@@ -315,6 +318,7 @@
                 let btn = document.createElement('button'); btn.type = 'button'; btn.className = 'slot-btn';
                 let timeText = document.createElement('span'); timeText.innerText = slot.time; btn.appendChild(timeText);
                 let badge = document.createElement('span'); badge.style.fontSize = '12px'; badge.innerText = 'Свободно'; btn.appendChild(badge);
+
                 
                 let isAllowed = true; let isCarType = type.startsWith('car_');
                 let targetId = isCarType ? type : selectedBike;
