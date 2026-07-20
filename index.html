@@ -65,16 +65,34 @@
         }
         
         /* Сами вкладки Мотоциклы / Автомобили */
-        .type-tab {
-            text-align: center;
-            padding: 14px;
-            font-size: 11px;
-            font-weight: 800;
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
-            color: #64748b;
-            cursor: pointer;
-            transition: all 0.2s ease-in-out;
+            .type-tab {
+                text-align: center;
+                padding: 14px;
+                font-size: 11px;
+                font-weight: 800;
+                text-transform: uppercase;
+                letter-spacing: 0.5px;
+                color: #64748b;
+                cursor: pointer;
+                transition: all 0.2s ease-in-out;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                gap: 8px; /* Расстояние между иконкой и текстом */
+            }
+
+            .tab-icon {
+                width: 18px;
+                height: 18px;
+                color: #64748b; /* В базе они аккуратные серые */
+                transition: color 0.2s ease;
+            }
+            
+            /* Когда вкладка активна, иконка тоже красится в строгий темный цвет */
+            .type-tab.active .tab-icon {
+                color: #1a1a1a;
+            }
+
         }
         
         /* Активная выбранная категория (как у Игоря — нежный сине-голубой фон) */
@@ -151,10 +169,17 @@
         </div>
 
         <label>Категория обучения:</label>
-        <div class="type-switcher" style="grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 15px;">
-            <div class="type-tab active" id="tab-cat-moto" onclick="setCategory('moto')">🏍️ Мотоциклы</div>
-            <div class="type-tab" id="tab-cat-car" onclick="setCategory('car')">🚗 Автомобили</div>
+        <div class="type-switcher">
+            <div class="type-tab active" id="tab-cat-moto" onclick="setCategory('moto')">
+                <svg class="tab-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="7" cy="17" r="2"></circle><circle cx="17" cy="17" r="2"></circle><path d="M12 17V9l2-2h4M5 17h2M12 17h5M16 9h3M9 13h3"></path></svg>
+                Мотоциклы
+            </div>
+            <div class="type-tab" id="tab-cat-car" onclick="setCategory('car')">
+                <svg class="tab-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="1" y="11" width="22" height="6" rx="2"></rect><path d="M4 11V6a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v5M6 17v2M18 17v2"></path></svg>
+                Автомобили
+            </div>
         </div>
+
 
         <!-- БЛОК МОТОЦИКЛОВ -->
         <div id="motoBikesBlock" style="display: block; margin-bottom: 15px;">
