@@ -53,76 +53,90 @@
         input, select { width: 100%; padding: 14px; border: 1px solid var(--border); border-radius: 12px; box-sizing: border-box; font-size: 15px; background: #fff; color: var(--text); transition: 0.2s; }
         input:focus, select:focus { outline: none; border-color: var(--primary); box-shadow: 0 0 0 4px var(--primary-glow); }
         /* Широкоформатный контейнер для плашек с фарами */
+        /* Контейнер переключателя категорий (без обводок) */
         .type-switcher {
             display: grid;
             grid-template-columns: 1fr 1fr;
-            gap: 0; /* Бесшовный стык по центру */
+            gap: 0;
             border-radius: 16px;
             overflow: hidden;
             margin-bottom: 25px;
-            background: #000000; /* Черная база на случай долгой загрузки картинок */
+            background: #000000;
         }
         
-        /* Общие стили для обеих плашек */
+        /* Базовый стиль плашек */
         .type-tab {
-            height: 110px; /* Идеальная высота, чтобы рассмотреть фары на телефоне */
+            height: 110px;
+            position: relative;
+            cursor: pointer;
             display: flex;
-            align-items: center;
+            align-items: flex-end;
             justify-content: center;
+            padding-bottom: 12px;
             font-size: 13px;
             font-weight: 800;
             text-transform: uppercase;
-            letter-spacing: 1px;
-            color: #ffffff; /* Текст всегда белый, чтобы читался на темном фоне */
-            text-shadow: 0 2px 10px rgba(0, 0, 0, 0.8); /* Тень под текстом для максимальной читаемости */
-            cursor: pointer;
+            letter-spacing: 0.5px;
             background-size: cover;
             background-position: center;
             background-repeat: no-repeat;
-            opacity: 0.4; /* Неактивная плашка красиво затеняется */
-            filter: grayscale(40%); /* Легкое обесцвечивание невыбранной категории */
-            transition: all 0.3s ease-in-out;
+            transition: all 0.35s ease-in-out;
         }
         
-        /* Подгружаем твою левую картинку для Мотоциклов */
-        #tab-cat-moto {
-            background-image: url('moto_bg.jpg');
+        /* --- ПОДЛОЖКА: РЕАЛЬНЫЕ ФОТО ДЛЯ ДНЯ И НОЧИ --- */
+        .type-switcher.theme-day #tab-cat-moto { background-image: url('moto_photo_day.jpg'); }
+        .type-switcher.theme-day #tab-cat-car { 
+            background-image: url('car_photo_day.jpg'); 
+            transform: scaleX(-1); 
         }
         
-        /* Подгружаем твою правую картинку для Автомобилей */
-        #tab-cat-car {
-            background-image: url('car_bg.jpg');
+        .type-switcher.theme-night #tab-cat-moto { background-image: url('moto_bg.jpg'); opacity: 0.45; }
+        .type-switcher.theme-night #tab-cat-car { 
+            background-image: url('car_bg.jpg'); 
+            opacity: 0.45; 
+            transform: scaleX(-1); 
         }
+        .type-switcher.theme-night .type-tab.active { opacity: 1; }
         
-        /* Активное состояние — плашка плавно оживает, вспыхивает на 100% яркости и увеличивает текст */
-        .type-tab.active {
-            opacity: 1;
-            filter: grayscale(0%);
-            font-size: 14px;
+        /* --- ВЕРХНИЙ СЛОЙ: КОНТУРНЫЕ СИЛУЭТЫ ДЛЯ ДНЯ --- */
+        .type-switcher.theme-day .type-tab::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            transition: opacity 0.35s ease-in-out;
+            z-index: 1;
         }
-
-
-        .level-grid { display: grid; grid-template-columns: 1fr; gap: 10px; }
-        .level-card { padding: 14px; border: 1px solid var(--border); border-radius: 12px; cursor: pointer; display: flex; align-items: center; gap: 12px; font-weight: 600; font-size: 14px; background: #fff; color: var(--text-muted); transition: 0.2s; }
-        .level-card.active { border-color: var(--primary); background: #eff6ff; color: var(--primary); }
-        .date-group { margin-top: 20px; }
-        .date-header { font-size: 12px; font-weight: 800; color: var(--primary); text-transform: uppercase; letter-spacing: 1px; margin-bottom: 10px; padding-bottom: 6px; border-bottom: 1px solid var(--border); }
-        .slot-container { display: grid; grid-template-columns: 1fr; gap: 10px; }
+        .type-switcher.theme-day #tab-cat-moto::before { background-image: url('moto_line.jpg'); }
+        .type-switcher.theme-day #tab-cat-car::before { 
+            background-image: url('car_line.jpg'); 
+            transform: scaleX(-1); 
+        }
+        .type-switcher.theme-day .type-tab.active::before { opacity: 0; }
         
-        .slot-btn { padding: 16px; border: 1px solid #34d399 !important; background: var(--success-bg) !important; color: var(--success) !important; border-radius: 12px; cursor: pointer; font-size: 15px; font-weight: 800; text-align: left; display: flex; justify-content: space-between; align-items: center; width: 100%; box-sizing: border-box; transition: 0.2s; }
-        .slot-btn span { color: var(--success) !important; }
-        .slot-btn.selected { background: var(--primary) !important; border-color: var(--primary) !important; box-shadow: 0 4px 12px rgba(29, 78, 216, 0.2) !important; }
-        .slot-btn.selected span { color: #ffffff !important; }
-        .slot-btn:disabled { background: #f8fafc !important; border-color: #e2e8f0 !important; color: #cbd5e1 !important; cursor: not-allowed; font-weight: 500; }
-        .slot-btn:disabled span { color: #cbd5e1 !important; }
+        /* --- ТЕКСТ ПОВЕРХ ГРАХИКИ --- */
+        .type-tab span {
+            position: relative;
+            z-index: 2;
+            transition: all 0.35s ease-in-out;
+        }
+        .type-switcher.theme-day .type-tab span {
+            color: #1a1a1a;
+            text-shadow: 0 0 8px #ffffff, 0 0 4px #ffffff;
+        }
+        .type-switcher.theme-day .type-tab.active span { font-size: 14px; }
         
-        button.submit-btn { width: 100%; background: var(--primary); color: white; border: none; padding: 16px; border-radius: 12px; font-size: 16px; cursor: pointer; margin-top: 28px; font-weight: 800; transition: 0.2s; }
-        button.submit-btn:disabled { background: #cbd5e1; color: #94a3b8; cursor: not-allowed; }
-        button.cancel-btn { width: 100%; background: transparent; color: var(--danger); border: 1px solid #fee2e2; padding: 14px; border-radius: 12px; font-size: 15px; cursor: pointer; margin-top: 12px; font-weight: 700; transition: 0.2s; }
-        button.cancel-btn:hover { background: #fef2f2; }
-        #status, #cancelStatus { margin-top: 15px; padding: 14px; border-radius: 12px; text-align: center; display: none; font-weight: 700; font-size: 14px; }
-        .ok { background: #ecfdf5; color: #065f46; border: 1px solid #a7f3d0; }
-        .err { background: #fef2f2; color: #991b1b; border: 1px solid #fee2e2; }
+        .type-switcher.theme-night .type-tab span {
+            color: #ffffff;
+            text-shadow: 0 2px 10px rgba(0, 0, 0, 0.85);
+        }
+        .type-switcher.theme-night .type-tab.active span { font-size: 14px; }
+        
+        #tab-cat-car span {
+            transform: scaleX(-1);
+        }
 
         .bike-grid { display: grid; grid-template-columns: 1fr; gap: 12px; margin-top: 15px; }
         .bike-card { display: flex ; flex-direction: row !important; align-items: center !important; background: #ffffff !important; border: 1px solid var(--border) !important; border-radius: 14px !important; padding: 0 16px 0 0 !important; gap: 16px !important; transition: 0.2s ease-in-out !important; cursor: pointer !important; text-align: left !important; width: 100% !important; box-sizing: border-box !important; margin-bottom: 12px !important; box-shadow: 0 4px 12px rgba(15, 23, 42, 0.03) !important; overflow: hidden !important; }
@@ -170,9 +184,9 @@
         </div>
 
         <label>Категория обучения:</label>
-        <div class="type-switcher">
-            <div class="type-tab active" id="tab-cat-moto" onclick="setCategory('moto')">Мотоциклы</div>
-            <div class="type-tab" id="tab-cat-car" onclick="setCategory('car')">Автомобили</div>
+        <div class="type-switcher theme-day">
+            <div class="type-tab active" id="tab-cat-moto" onclick="setCategory('moto')"><span>Мотоциклы</span></div>
+            <div class="type-tab" id="tab-cat-car" onclick="setCategory('car')"><span>Автомобили</span></div>
         </div>
 
 
