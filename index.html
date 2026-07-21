@@ -360,33 +360,38 @@
         const bikeImg = document.getElementById('motoColorImage');
         const selectElement = document.getElementById('level');
         
-        // Переключаем картинки байков-хамелеонов строго в формат .jpg
+        // Переключаем картинки байков-хамелеонов
         if (bikeImg) {
             if (l === 'green') bikeImg.src = 'moto_green.jpg';
             if (l === 'yellow') bikeImg.src = 'moto_yellow.jpg';
             if (l === 'red') bikeImg.src = 'moto_red.jpg';
         }
         
-        // Магия тонкой цветной рамки! Сам фон списка остается кристально белым и чистым
+        // Магия неонового свечения рамки!
         if (selectElement) {
-            selectElement.style.backgroundColor = '#ffffff'; // Всегда белый аккуратный фон
+            selectElement.style.backgroundColor = '#ffffff'; // Чистый белый фон
             
             if (l === 'green') {
                 selectElement.style.borderColor = '#16a34a'; // Сочная зеленая рамка
-                selectElement.style.color = '#16a34a';       // Текст тоже становится зеленым
+                selectElement.style.color = '#15803d';       // Темно-зеленый текст
+                // Добавляем размытую неоновую тень вокруг плашки
+                selectElement.style.boxShadow = '0 0 12px rgba(22, 163, 74, 0.4)'; 
             }
             if (l === 'yellow') {
                 selectElement.style.borderColor = '#eab308'; // Солнечная желтая рамка
-                selectElement.style.color = '#a16207';       // Текст желто-горчичный
+                selectElement.style.color = '#a16207';       // Текст горчичный
+                selectElement.style.boxShadow = '0 0 12px rgba(234, 179, 8, 0.4)'; 
             }
             if (l === 'red') {
                 selectElement.style.borderColor = '#dc2626'; // Гоночная красная рамка
-                selectElement.style.color = '#dc2626';       // Текст красный
+                selectElement.style.color = '#b91c1c';       // Темно-красный текст
+                selectElement.style.boxShadow = '0 0 12px rgba(220, 38, 38, 0.4)'; 
             }
         }
         
         updateInterface();
     }
+
 
 
 
