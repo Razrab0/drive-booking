@@ -367,30 +367,34 @@
             if (l === 'red') bikeImg.src = 'moto_red.jpg';
         }
         
-        // Магия неонового свечения рамки!
+        // ТОТАЛЬНЫЙ НЕОНОВЫЙ ТЮНИНГ РАМКИ
         if (selectElement) {
-            selectElement.style.backgroundColor = '#ffffff'; // Чистый белый фон
+            selectElement.style.borderWidth = '2px'; // Делаем контур четче и толще
             
             if (l === 'green') {
-                selectElement.style.borderColor = '#16a34a'; // Сочная зеленая рамка
-                selectElement.style.color = '#15803d';       // Темно-зеленый текст
-                // Добавляем размытую неоновую тень вокруг плашки
-                selectElement.style.boxShadow = '0 0 12px rgba(22, 163, 74, 0.4)'; 
+                selectElement.style.borderColor = '#22c55e'; // Яркий лаймовый неон
+                selectElement.style.backgroundColor = '#16a34a'; // Заливаем сочным цветом
+                selectElement.style.color = '#ffffff'; // Текст горит белым
+                // Тройной лазерный ореол: плотный внутренний, средний и мягкий внешний свет
+                selectElement.style.boxShadow = '0 0 4px #22c55e, 0 0 12px #16a34a, 0 0 25px rgba(22, 163, 74, 0.6)'; 
             }
             if (l === 'yellow') {
-                selectElement.style.borderColor = '#eab308'; // Солнечная желтая рамка
-                selectElement.style.color = '#a16207';       // Текст горчичный
-                selectElement.style.boxShadow = '0 0 12px rgba(234, 179, 8, 0.4)'; 
+                selectElement.style.borderColor = '#facc15'; // Кислотно-желтый неон
+                selectElement.style.backgroundColor = '#eab308'; 
+                selectElement.style.color = '#ffffff';
+                selectElement.style.boxShadow = '0 0 4px #facc15, 0 0 12px #eab308, 0 0 25px rgba(234, 179, 8, 0.6)'; 
             }
             if (l === 'red') {
-                selectElement.style.borderColor = '#dc2626'; // Гоночная красная рамка
-                selectElement.style.color = '#b91c1c';       // Темно-красный текст
-                selectElement.style.boxShadow = '0 0 12px rgba(220, 38, 38, 0.4)'; 
+                selectElement.style.borderColor = '#ef4444'; // Хищный гоночный красный неон
+                selectElement.style.backgroundColor = '#dc2626'; 
+                selectElement.style.color = '#ffffff';
+                selectElement.style.boxShadow = '0 0 4px #ef4444, 0 0 12px #dc2626, 0 0 25px rgba(220, 38, 38, 0.6)'; 
             }
         }
         
         updateInterface();
     }
+
 
 
 
