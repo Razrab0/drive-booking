@@ -360,35 +360,35 @@
         const bikeImg = document.getElementById('motoColorImage');
         const selectElement = document.getElementById('level');
         
-        // Переключаем картинки байков-хамелеонов
+        // Переключаем картинки байков-хамелеонов строго в формат .jpg
         if (bikeImg) {
             if (l === 'green') bikeImg.src = 'moto_green.jpg';
             if (l === 'yellow') bikeImg.src = 'moto_yellow.jpg';
             if (l === 'red') bikeImg.src = 'moto_red.jpg';
         }
         
-        // ТОТАЛЬНЫЙ НЕОНОВЫЙ ТЮНИНГ РАМКИ
+        // ПАСТЕЛЬНАЯ ЗАЛИВКА + ЦВЕТНОЙ ТЕКСТ + НЕОНОВОЕ СВЕЧЕНИЕ РАМКИ
         if (selectElement) {
-            selectElement.style.borderWidth = '2px'; // Делаем контур четче и толще
+            selectElement.style.borderWidth = '1.5px'; // Оставляем аккуратную изящную рамку
             
             if (l === 'green') {
-                selectElement.style.borderColor = '#22c55e'; // Яркий лаймовый неон
-                selectElement.style.backgroundColor = '#16a34a'; // Заливаем сочным цветом
-                selectElement.style.color = '#ffffff'; // Текст горит белым
-                // Тройной лазерный ореол: плотный внутренний, средний и мягкий внешний свет
-                selectElement.style.boxShadow = '0 0 4px #22c55e, 0 0 12px #16a34a, 0 0 25px rgba(22, 163, 74, 0.6)'; 
+                selectElement.style.borderColor = '#22c55e'; // Яркая неоновая рамка
+                selectElement.style.backgroundColor = '#f0fdf4'; // Мягкий пастельно-зеленый фон
+                selectElement.style.color = '#16a34a'; // Сочный зеленый текст надписи
+                // Мягкое неоновое свечение в тон уровня
+                selectElement.style.boxShadow = '0 0 4px #22c55e, 0 0 15px rgba(22, 163, 74, 0.4)'; 
             }
             if (l === 'yellow') {
-                selectElement.style.borderColor = '#facc15'; // Кислотно-желтый неон
-                selectElement.style.backgroundColor = '#eab308'; 
-                selectElement.style.color = '#ffffff';
-                selectElement.style.boxShadow = '0 0 4px #facc15, 0 0 12px #eab308, 0 0 25px rgba(234, 179, 8, 0.6)'; 
+                selectElement.style.borderColor = '#facc15'; // Яркая желтая рамка
+                selectElement.style.backgroundColor = '#fef9c3'; // Мягкий пастельно-желтый фон
+                selectElement.style.color = '#ca8a04'; // Сочный горчичный текст
+                selectElement.style.boxShadow = '0 0 4px #facc15, 0 0 15px rgba(234, 179, 8, 0.4)'; 
             }
             if (l === 'red') {
-                selectElement.style.borderColor = '#ef4444'; // Хищный гоночный красный неон
-                selectElement.style.backgroundColor = '#dc2626'; 
-                selectElement.style.color = '#ffffff';
-                selectElement.style.boxShadow = '0 0 4px #ef4444, 0 0 12px #dc2626, 0 0 25px rgba(220, 38, 38, 0.6)'; 
+                selectElement.style.borderColor = '#ef4444'; // Яркая красная рамка
+                selectElement.style.backgroundColor = '#fef2f2'; // Мягкий пастельно-красный фон
+                selectElement.style.color = '#dc2626'; // Сочный гоночный красный текст
+                selectElement.style.boxShadow = '0 0 4px #ef4444, 0 0 15px rgba(220, 38, 38, 0.4)'; 
             }
         }
         
