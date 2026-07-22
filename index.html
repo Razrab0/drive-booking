@@ -74,28 +74,25 @@
         }
         
         /* Общие стили для обеих плашек */
+/* Базовый стиль плашек — возвращаем cover, чтобы фары залили весь блок без белых полей */
         .type-tab {
-            height: 110px; /* Идеальная высота, чтобы рассмотреть фары на телефоне */
+            height: 110px;
+            position: relative;
+            cursor: pointer;
             display: flex;
-            align-items: center;
+            align-items: flex-end;
             justify-content: center;
+            padding-bottom: 12px;
             font-size: 13px;
             font-weight: 800;
             text-transform: uppercase;
-            letter-spacing: 1px;
-            color: #ffffff; /* Текст всегда белый, чтобы читался на темном фоне */
-            text-shadow: 0 2px 10px rgba(0, 0, 0, 0.8); /* Тень под текстом для максимальной читаемости */
-            cursor: pointer;
-            background-size: cover;
+            letter-spacing: 0.5px;
+            background-size: cover; /* ФИКС: Фары плотно заполняют плашку, белый фон исчезнет */
             background-position: center;
             background-repeat: no-repeat;
-            opacity: 0.4; /* Неактивная плашка красиво затеняется */
-            filter: grayscale(40%); /* Легкое обесцвечивание невыбранной категории */
-            transition: all 0.3s ease-in-out;
+            transition: all 0.35s ease-in-out;
         }
         
-        /* Подгружаем твою левую картинку для Мотоциклов */
-        /* --- ДНЕВНАЯ ТЕМА: БАЗОВЫЕ СЕРЫЕ ПЛАШКИ НА СТАРТЕ --- */
         .theme-day #tab-cat-moto { background: #f4f6f8; color: #64748b; }
         .theme-day #tab-cat-car { background: #f4f6f8; color: #64748b; }
         .theme-day .type-tab.active { background: #edf4fc; color: #1a1a1a; }
@@ -316,6 +313,7 @@
                     <option value="yellow" style="background: #ffffff; color: #b45309; font-weight: 600;">Я средний уровень</option>
                     <option value="red" style="background: #ffffff; color: #b91c1c; font-weight: 600;">Я абсолютный новичок</option>
                 </select>
+                <input type="hidden" id="level" value="none">
                 <!-- Минималистичная стрелочка ▼ по ТЗ справа внутри поля -->
                 <span id="dropdownArrow" style="position: absolute; right: 16px; font-size: 11px; color: #cbd5e1; pointer-events: none; transition: all 0.25s ease;">▼</span>
             </div>
