@@ -85,14 +85,27 @@
         }
         
         /* Подгружаем твою левую картинку для Мотоциклов */
-        #tab-cat-moto {
-            background-image: url('moto_bg.jpg');
-        }
+        /* --- ДНЕВНАЯ ТЕМА: БАЗОВЫЕ СЕРЫЕ ПЛАШКИ НА СТАРТЕ --- */
+        .theme-day #tab-cat-moto { background: #f4f6f8; color: #64748b; }
+        .theme-day #tab-cat-car { background: #f4f6f8; color: #64748b; }
+        .theme-day .type-tab.active { background: #edf4fc; color: #1a1a1a; }
         
-        /* Подгружаем твою правую картинку для Автомобилей */
-        #tab-cat-car {
-            background-image: url('car_bg.jpg');
+        /* --- ВЕЧЕРНЯЯ ТЕМА: ТВОИ ОРИГИНАЛЬНЫЕ ИДЕАЛЬНЫЕ ФАРЫ --- */
+        .theme-night #tab-cat-moto { background-image: url('moto_bg.jpg'); opacity: 0.45; color: #ffffff; }
+        .theme-night #tab-cat-car { background-image: url('car_bg.jpg'); opacity: 0.45; color: #ffffff; }
+        .theme-night .type-tab.active { opacity: 1; }
+        
+        /* Настройки контейнера, чтобы фары стояли в идеальный бесшовный стык без полос */
+        .type-switcher {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 0;
+            border-radius: 16px;
+            overflow: hidden;
+            margin-bottom: 25px;
+            background: #000000;
         }
+
         
         /* Активное состояние — плашка плавно оживает, вспыхивает на 100% яркости и увеличивает текст */
         .type-tab.active {
@@ -145,7 +158,12 @@
     </style>
 </head>
 <body>
-<div class="box">
+<div class="box theme-day" id="mainBoxContainer">
+    <!-- Кнопочка аккуратно встанет в верхний правый угол, не ломая остальные элементы формы -->
+    <div style="text-align: right; margin-bottom: 10px;">
+        <button type="button" onclick="toggleTheme()" id="themeBtn" style="background: #f4f6f8; border: none; padding: 6px 12px; border-radius: 20px; font-size: 12px; font-weight: 700; cursor: pointer; color: #000000;">🌙 Ночь</button>
+    </div>
+
     <h2>Запись на вождение</h2>
     <form id="mainForm">
         <label>Ваше Имя и Фамилия:</label>
@@ -536,6 +554,32 @@
             status.innerText = response.message; 
         }
     }
+
+    function toggleTheme() {
+        const box = document.getElementById('mainBoxContainer');
+        const btn = document.getElementById('themeBtn');
+        if (!box) return;
+    
+        if (box.classList.contains('theme-day')) {
+            // Включаем идеальную ВЕЧЕРНЮЮ тему
+            box.classList.remove('theme-day');
+            box.classList.add('theme-night');
+            btn.innerText = '☀️ День';
+            btn.style.background = '#1e293b';
+            btn.style.color = '#ffffff';
+            document.body.style.background = '#0f172a'; // Экран вокруг формы тоже красиво темнеет
+        } else {
+            // Возвращаем ДЕНЬ
+            box.classList.remove('theme-night');
+            box.classList.add('theme-day');
+            btn.innerText = '🌙 Ночь';
+            btn.style.background = '#f4f6f8';
+            btn.style.color = '#000000';
+            document.body.style.background = '#ffffff';
+        }
+    }
+
+    
         window.onload = function() {
         loadSlots();
         // Проверка каждые 7 секунд — быстро, безопасно и без перегрузки Гугла!
