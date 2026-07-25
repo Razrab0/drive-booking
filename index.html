@@ -95,61 +95,9 @@
         }
 
         
-        /* --- ДНЕВНАЯ ТЕМА: ИНТЕРАКТИВНОЕ ТАЯНИЕ СИЛУЭТОВ ПО ТЗ --- */
-        /* Прописываем сочные дневные фотки-подложки, которые будут проявляться при клике */
-        .box.theme-day #tab-cat-moto { 
-            background-image: url('moto_photo_day.jpg'); 
-        }
-        /* Разворачиваем дневную фотку машины влево, чтобы смотрела в центр формы */
-        .box.theme-day #tab-cat-car { 
-            background-image: url('car_photo_day.jpg'); 
-            transform: scaleX(-1); 
-        }
-        
-        /* Создаем верхний слой для контурных рисунков, который будет плавно таять */
-        .box.theme-day .type-tab::before {
-            content: '';
-            position: absolute;
-            top: 0; left: 0; width: 100%; height: 100%;
-            background-size: cover;
-            background-position: center;
-            background-repeat: no-repeat;
-            transition: opacity 0.35s ease-in-out;
-            z-index: 1;
-        }
-        
-        /* Подгружаем твои контурные картинки из GitHub только для Дня */
-        .box.theme-day #tab-cat-moto::before { 
-            background-image: url('moto_line.jpg'); 
-        }
-        /* Разворачиваем контурный рисунок машины влево нос к носу к мотику */
-/* Разворачиваем контурный рисунок машины влево нос к носу к мотику */
-        .box.theme-day #tab-cat-car::before { 
-            background-image: url('car_line.jpg'); 
-            transform: scaleX(-1) !important; /* ЖЕСТКИЙ ФИКС: теперь контур 100% развернется влево */
-        }
-
-        
-        /* МАГИЯ ТАЯНИЯ: При клике на категорию её силуэт исчезает, проявляя яркое фото под ним! */
-        .box.theme-day .type-tab.active::before { 
-            opacity: 0; 
-        }
-        
-        /* Настройка дневного текста: темный, аккуратный, поверх картинок */
-        .box.theme-day .type-tab span {
-            color: #1a1a1a;
-            text-shadow: 0 0 8px #ffffff, 0 0 4px #ffffff; /* Белое свечение вокруг букв для идеальной читаемости */
-        }
-        .box.theme-day .type-tab.active span {
-            font-size: 14px;
-        }
-        
-        /* КРИТИЧЕСКИЙ ФИКС БУКВ: Отворачиваем текст машины обратно, чтобы надпись не отзеркалилась! */
-        #tab-cat-car span {
-            display: inline-block;
-            transform: scaleX(-1);
-        }
-
+        .theme-day #tab-cat-moto { background: #f4f6f8; color: #64748b; }
+        .theme-day #tab-cat-car { background: #f4f6f8; color: #64748b; }
+        .theme-day .type-tab.active { background: #edf4fc; color: #1a1a1a; }
         
 /* --- ВЕЧЕРНЯЯ ТЕМА: ОРИГИНАЛЬНЫЕ ИДЕАЛЬНЫЕ ФАРЫ БЕЗ ОБРЕЗОК --- */
 /* Растягиваем всю картинку целиком на 100% ширины, запрещая обрезку по краям! */
@@ -272,8 +220,7 @@
         <label>Категория обучения:</label>
         <div class="type-switcher">
             <div class="type-tab active" id="tab-cat-moto" onclick="setCategory('moto')">Мотоциклы</div>
-            <div class="type-tab" id="tab-cat-car" onclick="setCategory('car')" style="transform: scaleX(-1) !important;"><span style="transform: scaleX(-1) !important; display: inline-block;">Автомобили</span></div>
-
+            <div class="type-tab" id="tab-cat-car" onclick="setCategory('car')">Автомобили</div>
         </div>
 
         <!-- БЛОК МОТОЦИКЛОВ -->
