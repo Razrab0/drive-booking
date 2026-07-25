@@ -97,20 +97,25 @@
         .theme-day #tab-cat-car { background: #f4f6f8; color: #64748b; }
         .theme-day .type-tab.active { background: #edf4fc; color: #1a1a1a; }
         
+/* --- ВЕЧЕРНЯЯ ТЕМА: ОРИГИНАЛЬНЫЕ ИДЕАЛЬНЫЕ ФАРЫ БЕЗ ОБРЕЗОК --- */
+/* Растягиваем всю картинку целиком на 100% ширины, запрещая обрезку по краям! */
         .box.theme-night #tab-cat-moto { 
             background-image: url('moto_bg.jpg'); 
-            background-position: 30% center !important; 
+            background-size: 100% auto !important;
+            background-position: center center !important; 
             opacity: 0.45; 
             color: #ffffff; 
         }
         
-        /* Прижимаем машину чуть правее (70%), чтобы её фара встала ровно по центру правой плашки */
+        /* Растягиваем картинку машины целиком на 100% ширины плашки */
         .box.theme-night #tab-cat-car { 
             background-image: url('car_bg.jpg'); 
-            background-position: 70% center !important; 
+            background-size: 100% auto !important;
+            background-position: center center !important; 
             opacity: 0.45; 
             color: #ffffff; 
         }
+
         
         /* Добавили .box перед правилом, теперь активная плашка гарантированно вспыхнет! */
         .box.theme-night .type-tab.active { 
