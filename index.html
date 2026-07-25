@@ -123,10 +123,12 @@
             background-image: url('moto_line.jpg'); 
         }
         /* Разворачиваем контурный рисунок машины влево нос к носу к мотику */
+/* Разворачиваем контурный рисунок машины влево нос к носу к мотику */
         .box.theme-day #tab-cat-car::before { 
             background-image: url('car_line.jpg'); 
-            transform: scaleX(-1); 
+            transform: scaleX(-1) !important; /* ЖЕСТКИЙ ФИКС: теперь контур 100% развернется влево */
         }
+
         
         /* МАГИЯ ТАЯНИЯ: При клике на категорию её силуэт исчезает, проявляя яркое фото под ним! */
         .box.theme-day .type-tab.active::before { 
