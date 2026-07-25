@@ -75,9 +75,8 @@
         
         /* Общие стили для обеих плашек */
 /* Базовый стиль плашек — возвращаем cover, чтобы фары залили весь блок без белых полей */
-/* Базовый стиль плашек — сделали уже и аккуратнее по ТЗ! */
         .type-tab {
-            height: 75px; /* Уменьшили высоту, чтобы фары сели идеально без полос */
+            height: 110px;
             position: relative;
             cursor: pointer;
             display: flex;
@@ -88,35 +87,18 @@
             font-weight: 800;
             text-transform: uppercase;
             letter-spacing: 0.5px;
-            background-size: cover;
+            background-size: cover; /* ФИКС: Фары плотно заполняют плашку, белый фон исчезнет */
             background-position: center;
             background-repeat: no-repeat;
             transition: all 0.35s ease-in-out;
         }
-
         
         .theme-day #tab-cat-moto { background: #f4f6f8; color: #64748b; }
         .theme-day #tab-cat-car { background: #f4f6f8; color: #64748b; }
         .theme-day .type-tab.active { background: #edf4fc; color: #1a1a1a; }
         
-/* --- ВЕЧЕРНЯЯ ТЕМА: ОРИГИНАЛЬНЫЕ ИДЕАЛЬНЫЕ ФАРЫ БЕЗ ОБРЕЗОК --- */
-/* Растягиваем всю картинку целиком на 100% ширины, запрещая обрезку по краям! */
-        .box.theme-night #tab-cat-moto { 
-            background-image: url('moto_bg.jpg'); 
-            background-size: cover !important;
-            background-position: center center !important; /* Вернули в центр */
-            opacity: 0.45; 
-            color: #ffffff; 
-        }
-        .box.theme-night #tab-cat-car { 
-            background-image: url('car_bg.jpg'); 
-            background-size: cover !important;
-            background-position: center center !important; /* Вернули в центр */
-            opacity: 0.45; 
-            color: #ffffff; 
-        }
-
-
+        .box.theme-night #tab-cat-moto { background-image: url('moto_bg.jpg'); opacity: 0.45; color: #ffffff; }
+        .box.theme-night #tab-cat-car { background-image: url('car_bg.jpg'); opacity: 0.45; color: #ffffff; }
         
         /* Добавили .box перед правилом, теперь активная плашка гарантированно вспыхнет! */
         .box.theme-night .type-tab.active { 
@@ -258,7 +240,6 @@
                     </div>
                 </div>
             </div>
-        </div>
         </div>
 
         <!-- БЛОК АВТОМОБИЛЕЙ -->
