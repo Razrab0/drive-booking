@@ -75,8 +75,9 @@
         
         /* Общие стили для обеих плашек */
 /* Базовый стиль плашек — возвращаем cover, чтобы фары залили весь блок без белых полей */
+/* Базовый стиль плашек — сделали уже и аккуратнее по ТЗ! */
         .type-tab {
-            height: 110px;
+            height: 75px; /* Уменьшили высоту, чтобы фары сели идеально без полос */
             position: relative;
             cursor: pointer;
             display: flex;
@@ -87,11 +88,12 @@
             font-weight: 800;
             text-transform: uppercase;
             letter-spacing: 0.5px;
-            background-size: cover; /* ФИКС: Фары плотно заполняют плашку, белый фон исчезнет */
+            background-size: cover;
             background-position: center;
             background-repeat: no-repeat;
             transition: all 0.35s ease-in-out;
         }
+
         
         .theme-day #tab-cat-moto { background: #f4f6f8; color: #64748b; }
         .theme-day #tab-cat-car { background: #f4f6f8; color: #64748b; }
@@ -101,20 +103,19 @@
 /* Растягиваем всю картинку целиком на 100% ширины, запрещая обрезку по краям! */
         .box.theme-night #tab-cat-moto { 
             background-image: url('moto_bg.jpg'); 
-            background-size: 100% auto !important;
-            background-position: center center !important; 
+            background-size: cover !important;
+            background-position: center center !important; /* Вернули в центр */
             opacity: 0.45; 
             color: #ffffff; 
         }
-        
-        /* Растягиваем картинку машины целиком на 100% ширины плашки */
         .box.theme-night #tab-cat-car { 
             background-image: url('car_bg.jpg'); 
-            background-size: 100% auto !important;
-            background-position: center center !important; 
+            background-size: cover !important;
+            background-position: center center !important; /* Вернули в центр */
             opacity: 0.45; 
             color: #ffffff; 
         }
+
 
         
         /* Добавили .box перед правилом, теперь активная плашка гарантированно вспыхнет! */
