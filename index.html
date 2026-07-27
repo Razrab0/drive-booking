@@ -458,7 +458,15 @@
         document.body.appendChild(script);
     }
 
-    function renderSlotsData(slots) { globalSlotsData = slots; updateInterface(); }
+    function renderSlotsData(slots) { 
+        globalSlotsData = slots; 
+        // Жесткий фикс: полностью вычищаем slotsBox перед каждым новым спавном!
+        const slotsBox = document.getElementById('slotsBox');
+        if (slotsBox) slotsBox.innerHTML = ''; 
+        
+        updateInterface(); 
+    }
+
     function updateInterface() {
         const type = document.getElementById('type').value; const level = document.getElementById('level').value;
         const currentInst = document.getElementById('selectedInstructor').value; const selectedBike = document.getElementById('selectedBike').value;
