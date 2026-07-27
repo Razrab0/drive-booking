@@ -95,15 +95,17 @@
         }
 
         
+                /* --- ДНЕВНАЯ ТЕМА: КРУПНЫЕ ПЛАШКИ БЕЗ ОБВОДКИ ПО ТЗ --- */
+                /* Сама плитка для Дня: сделали побольше (115px), убрали все границы */
         /* --- ДНЕВНАЯ ТЕМА: КРУПНЫЕ ПЛАШКИ БЕЗ ОБВОДКИ ПО ТЗ --- */
-        /* Сама плитка для Дня: сделали побольше (115px), убрали все границы */
+        /* Сама плитка для Дня: сделали побольше (115px), убрали все внешние границы */
         .box.theme-day .type-tab {
             height: 115px !important; /* Фотки стали больше по ТЗ! */
             display: flex;
             flex-direction: column; /* Картинка сверху, текст строго снизу */
             background: #ffffff !important;
-            border: none !important; /* НАЧИСТО УБРАЛИ ГРАНИЦЫ И ОБВОДКИ КНОПОК ПО ТЗ */
-            box-shadow: 0 4px 16px rgba(0,0,0,0.04); /* Мягкая незаметная тень для объема */
+            border: none !important; /* НАЧИСТО УБРАЛИ ЛЮБЫЕ ВНЕШНИЕ ГРАНИЦЫ И ОБВОДКИ ПО ТЗ */
+            box-shadow: 0 4px 16px rgba(0,0,0,0.04); /* Мягкая тень для объема */
         }
         
         /* Контейнер для картинок внутри дневной плашки (верхняя часть) */
@@ -111,8 +113,8 @@
             position: relative;
             flex-grow: 1; /* Картинка занимает всё свободное место сверху */
             width: 100%;
-            background-size: contain;
-            background-position: center center;
+            background-size: contain !important; /* Картинки гарантированно влезают целиком */
+            background-position: center center !important;
             background-repeat: no-repeat;
             transition: all 0.35s ease-in-out;
         }
@@ -141,15 +143,15 @@
         /* --- НАДПИСЬ ПОНИЖЕ: ЧИСТАЯ БЕЛАЯ ПОДЛОЖКА ДЛЯ ТЕКСТА --- */
         .box.theme-day .tab-text-holder {
             width: 100%;
-            padding: 10px 0; /* Опустили надпись пониже, дав воздуху */
+            padding: 10px 0; /* Опустили надпись пониже по ТЗ */
             text-align: center;
             font-size: 12px;
             font-weight: 800;
             text-transform: uppercase;
             letter-spacing: 0.5px;
-            background: #ffffff !important; /* Всегда кристально белый фон под текстом без подсветки */
-            color: #475569; /* Спокойный благородный темно-серый цвет букв */
-            border: none !important; /* Полностью убрали внутренние рамки-полоски */
+            background: #ffffff !important; /* Всегда чистый белый фон под текстом */
+            color: #475569; /* Спокойный темно-серый цвет букв */
+            border: none !important; /* Начисто убрали внутренние рамки вокруг текста */
             z-index: 2;
             transition: all 0.3s ease;
         }
@@ -277,9 +279,18 @@
         </div>
 
         <label>Категория обучения:</label>
-        <div class="type-switcher">
-            <div class="type-tab active" id="tab-cat-moto" onclick="setCategory('moto')">Мотоциклы</div>
-            <div class="type-tab" id="tab-cat-car" onclick="setCategory('car')">Автомобили</div>
+        <div class="type-switcher" style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 25px; background: transparent;">
+            <!-- Вкладка Мотоциклы -->
+            <div class="type-tab active" id="tab-cat-moto" onclick="setCategory('moto')" style="border: none !important;">
+                <div class="tab-image-wrapper"></div>
+                <div class="tab-text-holder">Мотоциклы</div>
+            </div>
+            
+            <!-- Вкладка Автомобили -->
+            <div class="type-tab" id="tab-cat-car" onclick="setCategory('car')" style="border: none !important;">
+                <div class="tab-image-wrapper"></div>
+                <div class="tab-text-holder">Автомобили</div>
+            </div>
         </div>
 
         <!-- БЛОК МОТОЦИКЛОВ -->
