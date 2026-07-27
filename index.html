@@ -95,108 +95,31 @@
         }
 
         
-        /* --- ДНЕВНАЯ ТЕМА: ИНТЕРАКТИВНОЕ ТАЯНИЕ СИЛУЭТОВ ПО ТЗ --- */
-        /* Прописываем сочные дневные фотки-подложки со сжатием contain, чтобы они ВЛЕЗАЛИ полностью */
-/* --- ДНЕВНАЯ ТЕМА: НОВЫЕ АККУРАТНЫЕ ПЛАШКИ ПО ТЗ (БЕЗ ОБВОДКИ) --- */
-/* Сама плитка кнопки-категории для Дня: чистая белая подложка без границ */
-        .box.theme-day .type-tab {
-            height: 100px; /* Увеличили высоту, чтобы картинка и текст влезли кайфово */
-            display: flex;
-            flex-direction: column; /* Элементы встают друг под другом: картинка сверху, текст снизу */
-            background: #ffffff !important;
-            border: none !important; /* Полностью убираем любые обводки кнопок по ТЗ */
-            box-shadow: 0 4px 12px rgba(0,0,0,0.03); /* Мягкая незаметная тень для объема */
-        }
-        
-        /* Контейнер для самой картинки внутри плашки (верхняя часть) */
-        .tab-image-wrapper {
-            position: relative;
-            flex-grow: 1; /* Занимает всё свободное место сверху */
-            width: 100%;
-            background-size: contain;
-            background-position: center center;
-            background-repeat: no-repeat;
-            transition: all 0.35s ease-in-out;
-        }
-        
-        /* Навешиваем сочные дневные фотки */
-        .box.theme-day #tab-cat-moto .tab-image-wrapper { background-image: url('moto_photo_day.jpg'); }
-        .box.theme-day #tab-cat-car .tab-image-wrapper { background-image: url('car_photo_day.jpg'); }
-        
-        /* Создаем верхний слой для контурных рисунков, который будет плавно таять */
-        .box.theme-day .tab-image-wrapper::before {
-            content: '';
-            position: absolute;
-            top: 0; left: 0; width: 100%; height: 100%;
-            background-size: contain !important;
-            background-position: center center !important;
-            background-repeat: no-repeat;
-            transition: opacity 0.3s ease-in-out;
-            z-index: 1;
-        }
-        .box.theme-day #tab-cat-moto .tab-image-wrapper::before { background-image: url('moto_line.jpg'); }
-        .box.theme-day #tab-cat-car .tab-image-wrapper::before { background-image: url('car_line.jpg'); }
-        
-        /* МАГИЯ ТАЯНИЯ: Выбранный силуэт тает днём, открывая живую фотку */
-        .box.theme-day .type-tab.active .tab-image-wrapper::before { opacity: 0; }
-        
-        /* --- НОВАЯ СТИЛЬНАЯ НИЖНЯЯ ПЛАШКА ДЛЯ ТЕКСТА ДНЁМ --- */
-        .tab-text-holder {
-            width: 100%;
-            padding: 6px 0;
-            text-align: center;
-            font-size: 12px;
-            font-weight: 800;
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
-            background: #ffffff; /* Текст на чистом белом фоне внизу */
-            color: #475569; /* Спокойный темно-серый цвет букв */
-            border-top: 1px solid #f1f5f9;
-            z-index: 2;
-            transition: all 0.3s ease;
-        }
-        
-        /* Активное состояние текста днем */
-        .box.theme-day .type-tab.active .tab-text-holder {
-            color: #1e293b;
-            background: #edf4fc; /* Выбранная текстовая плашка слегка подсвечивается */
-        }
-
-
+        .theme-day #tab-cat-moto { background: #f4f6f8; color: #64748b; }
+        .theme-day #tab-cat-car { background: #f4f6f8; color: #64748b; }
+        .theme-day .type-tab.active { background: #edf4fc; color: #1a1a1a; }
         
         .box.theme-night #tab-cat-moto { 
             background-image: url('moto_bg.jpg'); 
             background-size: cover !important;
-            background-position: center center !important;
+            background-position: center center !important; /* Вернули в центр */
             opacity: 0.45; 
             color: #ffffff; 
-            height: 75px !important; /* ВОЗВРАЩАЕМ: Ночным кнопкам высоту 75px */
         }
         .box.theme-night #tab-cat-car { 
             background-image: url('car_bg.jpg'); 
             background-size: cover !important;
-            background-position: center center !important;
+            background-position: center center !important; /* Вернули в центр */
             opacity: 0.45; 
             color: #ffffff; 
-            height: 75px !important; /* ВОЗВРАЩАЕМ: Ночным кнопкам высоту 75px */
-            
         }
 
+        
         /* Добавили .box перед правилом, теперь активная плашка гарантированно вспыхнет! */
         .box.theme-night .type-tab.active { 
             opacity: 1 !important; 
         }
 
-        /* ТОЧЕЧНЫЙ ФИКС ТЕКСТА В НОЧИ: стираем белые плашки, возвращаем белый текст поверх фар */
-        .box.theme-night .tab-text-holder {
-            background: transparent !important; /* Полностью убираем белые подложки ночью */
-            border: none !important;
-            color: #ffffff !important; /* Буквы горят чисто-белым */
-            text-shadow: 0 2px 10px rgba(0, 0, 0, 0.85) !important;
-            margin-top: -30px; /* Приподнимаем текст на фары */
-            z-index: 5;
-            position: relative;
-        }
         
         /* Настройки контейнера, чтобы фары стояли в идеальный бесшовный стык без полос */
         .type-switcher {
@@ -293,20 +216,9 @@
 
         <label>Категория обучения:</label>
         <div class="type-switcher">
-            <!-- Вкладка Мотоциклы (смотрит вправо по умолчанию) -->
-            <div class="type-tab active" id="tab-cat-moto" onclick="setCategory('moto')">
-                <div class="tab-image-wrapper"></div>
-                <div class="tab-text-holder">Мотоциклы</div>
-            </div>
-            
-            <!-- Вкладка Автомобили (ЖЕСТКИЙ РАЗВОР ОТ ВЛЕВО прямо на контейнере через HTML!) -->
-            <div class="type-tab" id="tab-cat-car" onclick="setCategory('car')" style="transform: scaleX(-1);">
-                <div class="tab-image-wrapper"></div>
-                <!-- Защищаем текст от переворота букв задом наперед -->
-                <div class="tab-text-holder" style="transform: scaleX(-1);">Автомобили</div>
-            </div>
+            <div class="type-tab active" id="tab-cat-moto" onclick="setCategory('moto')">Мотоциклы</div>
+            <div class="type-tab" id="tab-cat-car" onclick="setCategory('car')">Автомобили</div>
         </div>
-
 
         <!-- БЛОК МОТОЦИКЛОВ -->
         <div id="motoBikesBlock" style="display: block; margin-bottom: 15px;">
