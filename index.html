@@ -163,38 +163,41 @@
         }
 
         
+        /* --- ВЕЧЕРНЯЯ ТЕМА: ОРИГИНАЛЬНЫЕ ФАРЫ (БЕЗ БЕЛОГО НАЛЕТА) --- */
         .box.theme-night #tab-cat-moto { 
-            background-image: url('moto_bg.jpg'); 
+            background-image: url('moto_bg.jpg') !important; 
+            background-color: transparent !important; /* Начисто стираем дневной белый налет */
             background-size: cover !important;
-            background-position: center center !important; /* Вернули в центр */
+            background-position: center center !important; 
             opacity: 0.45; 
             color: #ffffff; 
         }
         .box.theme-night #tab-cat-car { 
-            background-image: url('car_bg.jpg'); 
+            background-image: url('car_bg.jpg') !important; 
+            background-color: transparent !important; /* Начисто стираем дневной белый налет */
             background-size: cover !important;
-            background-position: center center !important; /* Вернули в центр */
+            background-position: center center !important; 
             opacity: 0.45; 
             color: #ffffff; 
         }
-
-        
-        /* Добавили .box перед правилом, теперь активная плашка гарантированно вспыхнет! */
         .box.theme-night .type-tab.active { 
             opacity: 1 !important; 
         }
 
+
         
         /* Настройки контейнера, чтобы фары стояли в идеальный бесшовный стык без полос */
+/* Контейнер переключателя категорий — жесткий стык фар без полос и щелей! */
         .type-switcher {
             display: grid;
             grid-template-columns: 1fr 1fr;
-            gap: 0;
+            gap: 0 !important; /* Убираем зазор, чтобы фары встали бесшовно пиксель в пиксель */
             border-radius: 16px;
             overflow: hidden;
             margin-bottom: 25px;
-            background: #000000;
+            background: #000000 !important; /* Черная база, чтобы скрыть любые стыки */
         }
+
 
         
         /* Активное состояние — плашка плавно оживает, вспыхивает на 100% яркости и увеличивает текст */
