@@ -590,6 +590,13 @@
 
             let container = document.createElement('div'); container.className = 'slot-container';
             grouped[dateStr].forEach(slot => {
+                // ФИКС ТРОЕНИЯ: Проверяем, нет ли уже на экране кнопки с таким точным временем в этом контейнере!
+                const existingBtns = Array.from(container.querySelectorAll('.slot-btn span'));
+                const isAlreadyPresent = existingBtns.some(span => span.innerText === slot.time);
+                if (isAlreadyPresent) return; // Если кнопка для 08:30 уже создана — уходим, не плодим дубли!
+
+                let btn = document.createElement('button'); btn.type = 'button'; btn.className = 'slot-btn';
+
                 let btn = document.createElement('button'); btn.type = 'button'; btn.className = 'slot-btn';
                 let timeText = document.createElement('span'); timeText.innerText = slot.time; btn.appendChild(timeText);
                 let badge = document.createElement('span'); badge.style.fontSize = '12px'; badge.innerText = 'Свободно'; btn.appendChild(badge);
