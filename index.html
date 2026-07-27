@@ -95,9 +95,71 @@
         }
 
         
-        .theme-day #tab-cat-moto { background: #f4f6f8; color: #64748b; }
-        .theme-day #tab-cat-car { background: #f4f6f8; color: #64748b; }
-        .theme-day .type-tab.active { background: #edf4fc; color: #1a1a1a; }
+        /* --- ДНЕВНАЯ ТЕМА: КРУПНЫЕ ПЛАШКИ БЕЗ ОБВОДКИ ПО ТЗ --- */
+        /* Сама плитка для Дня: сделали побольше (115px), убрали все границы */
+        .box.theme-day .type-tab {
+            height: 115px !important; /* Фотки стали больше по ТЗ! */
+            display: flex;
+            flex-direction: column; /* Картинка сверху, текст строго снизу */
+            background: #ffffff !important;
+            border: none !important; /* НАЧИСТО УБРАЛИ ГРАНИЦЫ И ОБВОДКИ КНОПОК ПО ТЗ */
+            box-shadow: 0 4px 16px rgba(0,0,0,0.04); /* Мягкая незаметная тень для объема */
+        }
+        
+        /* Контейнер для картинок внутри дневной плашки (верхняя часть) */
+        .box.theme-day .tab-image-wrapper {
+            position: relative;
+            flex-grow: 1; /* Картинка занимает всё свободное место сверху */
+            width: 100%;
+            background-size: contain;
+            background-position: center center;
+            background-repeat: no-repeat;
+            transition: all 0.35s ease-in-out;
+        }
+        
+        /* Привязываем сочные дневные фотки */
+        .box.theme-day #tab-cat-moto .tab-image-wrapper { background-image: url('moto_photo_day.jpg'); }
+        .box.theme-day #tab-cat-car .tab-image-wrapper { background-image: url('car_photo_day.jpg'); }
+        
+        /* Слой дневного силуэта, который плавно тает */
+        .box.theme-day .tab-image-wrapper::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background-size: contain !important;
+            background-position: center center !important;
+            background-repeat: no-repeat;
+            transition: opacity 0.3s ease-in-out;
+            z-index: 1;
+        }
+        .box.theme-day #tab-cat-moto .tab-image-wrapper::before { background-image: url('moto_line.jpg'); }
+        .box.theme-day #tab-cat-car .tab-image-wrapper::before { background-image: url('car_line.jpg'); }
+        
+        /* МАГИЯ ТАЯНИЯ: Выбранный силуэт исчезает, открывая живую фотку */
+        .box.theme-day .type-tab.active .tab-image-wrapper::before { opacity: 0; }
+        
+        /* --- НАДПИСЬ ПОНИЖЕ: ЧИСТАЯ БЕЛАЯ ПОДЛОЖКА ДЛЯ ТЕКСТА --- */
+        .box.theme-day .tab-text-holder {
+            width: 100%;
+            padding: 10px 0; /* Опустили надпись пониже, дав воздуху */
+            text-align: center;
+            font-size: 12px;
+            font-weight: 800;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            background: #ffffff !important; /* Всегда кристально белый фон под текстом без подсветки */
+            color: #475569; /* Спокойный благородный темно-серый цвет букв */
+            border: none !important; /* Полностью убрали внутренние рамки-полоски */
+            z-index: 2;
+            transition: all 0.3s ease;
+        }
+        
+        /* При выборе текст становится четким и угольным, но фон под ним остается белым */
+        .box.theme-day .type-tab.active .tab-text-holder {
+            color: #0f172a;
+            background: #ffffff !important; /* Никакой цветной подсветки слова по ТЗ */
+        }
+
         
         .box.theme-night #tab-cat-moto { 
             background-image: url('moto_bg.jpg'); 
