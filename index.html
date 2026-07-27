@@ -96,7 +96,16 @@
             transition: all 0.35s ease-in-out;
         }
 
-        
+        .box.theme-day .type-switcher,
+        .box.theme-day .type-switcher *,
+        .box.theme-day .type-tab,
+        .box.theme-day .type-tab::before,
+        .box.theme-day .tab-text-holder {
+            border: none !important;
+            border-radius: 0 !important; /* НАЧИСТО УБРАЛИ СКРУГЛЕНИЕ ДНЁМ: скобочки-уголки полностью исчезнут! */
+            outline: none !important;
+            box-shadow: none !important;
+        }        
                 /* --- ДНЕВНАЯ ТЕМА: КРУПНЫЕ ПЛАШКИ БЕЗ ОБВОДКИ ПО ТЗ --- */
                 /* Сама плитка для Дня: сделали побольше (115px), убрали все границы */
         /* --- ДНЕВНАЯ ТЕМА: КРУПНЫЕ ПЛАШКИ БЕЗ ОБВОДКИ ПО ТЗ --- */
