@@ -468,6 +468,10 @@
     }
 
     function setCategory(cat) {
+            // ФИКС РЯБИ: Мгновенно вычищаем экран при клике, чтобы старые слоты не двоились!
+        const slotsBox = document.getElementById('slotsBox');
+        if (slotsBox) slotsBox.innerHTML = '<div style="text-align: center; color: #64748b; padding: 10px;">Обновление расписания...</div>';
+
         currentCategory = cat;
         document.getElementById('tab-cat-moto').classList.toggle('active', cat === 'moto');
         document.getElementById('tab-cat-car').classList.toggle('active', cat === 'car');
