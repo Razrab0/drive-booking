@@ -228,12 +228,69 @@
         .date-header { font-size: 12px; font-weight: 800; color: var(--primary); text-transform: uppercase; letter-spacing: 1px; margin-bottom: 10px; padding-bottom: 6px; border-bottom: 1px solid var(--border); }
         .slot-container { display: grid; grid-template-columns: 1fr; gap: 10px; }
         
-        .slot-btn { padding: 16px; border: 1px solid #34d399 !important; background: var(--success-bg) !important; color: var(--success) !important; border-radius: 12px; cursor: pointer; font-size: 15px; font-weight: 800; text-align: left; display: flex; justify-content: space-between; align-items: center; width: 100%; box-sizing: border-box; transition: 0.2s; }
-        .slot-btn span { color: var(--success) !important; }
-        .slot-btn.selected { background: var(--primary) !important; border-color: var(--primary) !important; box-shadow: 0 4px 12px rgba(29, 78, 216, 0.2) !important; }
-        .slot-btn.selected span { color: #ffffff !important; }
-        .slot-btn:disabled { background: #f8fafc !important; border-color: #e2e8f0 !important; color: #cbd5e1 !important; cursor: not-allowed; font-weight: 500; }
-        .slot-btn:disabled span { color: #cbd5e1 !important; }
+        /* --- НОВЫЙ ВОЗДУШНЫЙ ДИЗАЙН СЛОТОВ РАСПИСАНИЯ ПО МАКЕТУ --- */
+        /* Контейнер для кнопок одного дня */
+        .slot-container {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr); /* Ровно 3 колонки как на скриншоте */
+            gap: 12px;
+            margin-bottom: 20px;
+        }
+        
+        /* Базовый стиль кнопки времени по макету */
+        .slot-btn {
+            display: flex;
+            flex-direction: column; /* Время сверху, статус снизу */
+            align-items: center;
+            justify-content: center;
+            height: 54px;
+            padding: 6px 0;
+            background-color: #ffffff !important; /* Белый фон для свободных кнопок */
+            border: 1px solid #cbd5e1 !important; /* Тонкая серая рамка 1px */
+            border-radius: 12px !important; /* Аккуратные скругленные уголки */
+            cursor: pointer;
+            transition: all 0.2s ease-in-out;
+            box-shadow: none !important;
+        }
+        
+        /* Текст самого времени внутри кнопки (верхняя строчка) */
+        .slot-btn span:first-child {
+            font-size: 14px;
+            font-weight: 800; /* Крупный и очень жирный шрифт по макету */
+            color: #0f172a;
+            line-height: 1.2;
+            margin-bottom: 2px;
+        }
+        
+        /* Текст статуса "Свободно" / "Занято" (нижняя строчка) */
+        .slot-btn span:last-child {
+            font-size: 10px; /* Маленький аккуратный шрифт */
+            font-weight: 600;
+            color: #64748b; /* Спокойный серый цвет */
+        }
+        
+        /* СОСТОЯНИЕ ВЫБОРА: когда ученик нажал на время (делаем стильный синий акцент) */
+        .slot-btn.selected {
+            background-color: #f1f5f9 !important; /* Мягкий фон при выборе */
+            border: 2px solid #2563eb !important; /* Четкая синяя рамка, фиксирующая клик */
+        }
+        
+        /* ЗАНЯТЫЙ СЛОТ ПО МАКЕТУ: плавно тускнеет и заливается нежным серо-голубым фоном */
+        .slot-btn:disabled {
+            background-color: #f1f5f9 !important; /* Мягкая серая подложка */
+            border: 1px solid #e2e8f0 !important;
+            opacity: 0.6; /* Слегка приглушаем яркость */
+            cursor: not-allowed;
+        }
+        
+        /* Текст внутри ЗАНЯТОЙ кнопки */
+        .slot-btn:disabled span:first-child {
+            color: #94a3b8; /* Время становится блеклым */
+        }
+        .slot-btn:disabled span:last-child {
+            color: #94a3b8; /* Слово "Занято" тоже затухает */
+        }
+
         
         button.submit-btn { width: 100%; background: var(--primary); color: white; border: none; padding: 16px; border-radius: 12px; font-size: 16px; cursor: pointer; margin-top: 28px; font-weight: 800; transition: 0.2s; }
         button.submit-btn:disabled { background: #cbd5e1; color: #94a3b8; cursor: not-allowed; }
