@@ -8,7 +8,802 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>Запись на вождение</title>
     <link href="https://googleapis.com" rel="stylesheet">
+    <style><!DOCTYPE html>
+<html lang="ru">
+<head>
+    <link href="https://googleapis.com" rel="stylesheet">
+
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Запись на вождение</title>
+    <link href="https://googleapis.com" rel="stylesheet">
     <style>
+        @import url('https://googleapis.com');
+
+        :root { 
+            --bg: #f1f5f9; 
+            --card-bg: #ffffff; 
+            --border: #cbd5e1; 
+            --primary: #1d4ed8; 
+            --primary-glow: rgba(29, 78, 216, 0.1);
+            --success: #065f46; 
+            --success-bg: #d1fae5; 
+            --danger: #dc2626; 
+            --text: #0f172a; 
+            --text-muted: #475569; 
+        }
+        body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; background: var(--bg); color: var(--text); margin: 0; padding: 15px; display: flex; flex-direction: column; align-items: center; min-height: 100vh; box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+        /* Главная подложка формы (белая, с мягкими углами и легкой тенью) */
+        .box {
+            background: var(--bg-form, #ffffff) !important;
+            color: var(--text-main, #000000) !important;
+            border-radius: 32px;
+            padding: 30px;
+            max-width: 480px;
+            margin: 20px auto;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.02);
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            box-sizing: border-box;
+            transition: background 0.3s ease-in-out, color 0.3s ease-in-out;
+        }
+        
+        /* Настройки главного заголовка: шрифт и размеры строго по твоему макету */
+        h2 {
+            color: inherit !important;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+            font-size: 26px;
+            font-weight: 800;
+            text-align: center;
+            margin-top: 5px;
+            margin-bottom: 35px;
+            letter-spacing: -0.5px;
+        }
+        .inst-info-block {
+            background: var(--bg-form, #ffffff) !important;
+            border-top: 1px solid #e2e8f0;
+            transition: background 0.3s ease-in-out;
+        }
+        .inst-card.active .inst-info-block {
+            background: #edf4fc !important; /* Легкий синеватый фон у выбранного инструктора */
+        }
+
+        h3 { font-size: 18px; margin: 0 0 15px 0; color: var(--text); text-align: center; }
+        label { font-size: 13px; font-weight: 700; display: block; margin: 20px 0 8px; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.5px; }
+        input, select { width: 100%; padding: 14px; border: 1px solid var(--border); border-radius: 12px; box-sizing: border-box; font-size: 15px; background: #fff; color: var(--text); transition: 0.2s; }
+        input:focus, select:focus { outline: none; border-color: var(--primary); box-shadow: 0 0 0 4px var(--primary-glow); }
+        /* Широкоформатный контейнер для плашек с фарами */
+       /* Контейнер переключателя категорий — НАЧИСТО стираем упрямую внешнюю рамку-уголки! */
+        .type-switcher {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 0 !important; /* Бесшовный стык фар в ночи */
+            margin-bottom: 25px;
+            background: transparent !important; /* Полностью прозрачный фон */
+            border: none !important; /* ФИКС: Стираем ту самую внешнюю серую рамку и уголки навсегда! */
+            box-shadow: none !important; /* Убираем любые внешние тени */
+        }
+
+        
+        /* Общие стили для обеих плашек */
+/* Базовый стиль плашек — возвращаем cover, чтобы фары залили весь блок без белых полей */
+ /* Базовый стиль плашек — сделали уже и аккуратнее по ТЗ! */
+        .type-tab {
+            height: 75px; /* Уменьшили высоту, чтобы фары сели идеально без полос */
+            position: relative;
+            cursor: pointer;
+            display: flex;
+            align-items: flex-end;
+            justify-content: center;
+            padding-bottom: 12px;
+            font-size: 13px;
+            font-weight: 800;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            transition: all 0.35s ease-in-out;
+        }
+
+        .box.theme-day .type-switcher,
+        .box.theme-day .type-switcher *,
+        .box.theme-day .type-tab,
+        .box.theme-day .type-tab::before,
+        .box.theme-day .tab-text-holder {
+            border: none !important;
+            border-radius: 0 !important; /* НАЧИСТО УБРАЛИ СКРУГЛЕНИЕ ДНЁМ: скобочки-уголки полностью исчезнут! */
+            outline: none !important;
+            box-shadow: none !important;
+        }        
+                /* --- ДНЕВНАЯ ТЕМА: КРУПНЫЕ ПЛАШКИ БЕЗ ОБВОДКИ ПО ТЗ --- */
+                /* Сама плитка для Дня: сделали побольше (115px), убрали все границы */
+        /* --- ДНЕВНАЯ ТЕМА: КРУПНЫЕ ПЛАШКИ БЕЗ ОБВОДКИ ПО ТЗ --- */
+        /* Сама плитка для Дня: сделали побольше (115px), убрали все внешние границы */
+/* Сама плитка для Дня: убрали начисто любые внешние границы, рамки и тени по ТЗ */
+        .box.theme-day .type-tab {
+            height: 115px !important; /* Высота для сочных крупных фоток */
+            display: flex;
+            flex-direction: column; /* Картинка сверху, текст строго снизу */
+            background: #ffffff !important;
+            border: none !important; /* НАЧИСТО УБРАЛИ ЛЮБЫЕ ВНЕШНИЕ РАМКИ И ОБВОДКИ */
+            box-shadow: none !important; /* НАЧИСТО УБРАЛИ ГРЯЗНУЮ ТЕНЬ С КАРТОЧЕК */
+        }
+
+        
+        /* Контейнер для картинок внутри дневной плашки (верхняя часть) */
+        .box.theme-day .tab-image-wrapper {
+            position: relative;
+            flex-grow: 1; /* Картинка занимает всё свободное место сверху */
+            width: 100%;
+            background-size: contain !important; /* Картинки гарантированно влезают целиком */
+            background-position: center center !important;
+            background-repeat: no-repeat;
+            transition: all 0.35s ease-in-out;
+        }
+        
+        /* Привязываем сочные дневные фотки */
+        .box.theme-day #tab-cat-moto .tab-image-wrapper { background-image: url('moto_photo_day.jpg'); }
+        .box.theme-day #tab-cat-car .tab-image-wrapper { background-image: url('car_photo_day.jpg'); }
+        
+        /* Слой дневного силуэта, который плавно тает */
+        .box.theme-day .tab-image-wrapper::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background-size: contain !important;
+            background-position: center center !important;
+            background-repeat: no-repeat;
+            transition: opacity 0.3s ease-in-out;
+            z-index: 1;
+        }
+        .box.theme-day #tab-cat-moto .tab-image-wrapper::before { background-image: url('moto_line.jpg'); }
+        .box.theme-day #tab-cat-car .tab-image-wrapper::before { background-image: url('car_line.jpg'); }
+        
+        /* МАГИЯ ТАЯНИЯ: Выбранный силуэт исчезает, открывая живую фотку */
+        .box.theme-day .type-tab.active .tab-image-wrapper::before { opacity: 0; }
+        
+        /* --- НАДПИСЬ ПОНИЖЕ: ЧИСТАЯ БЕЛАЯ ПОДЛОЖКА ДЛЯ ТЕКСТА --- */
+        .box.theme-day .tab-text-holder {
+            width: 100%;
+            padding: 10px 0; /* Опустили надпись пониже по ТЗ */
+            text-align: center;
+            font-size: 12px;
+            font-weight: 800;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            background: #ffffff !important; /* Всегда чистый белый фон под текстом */
+            color: #475569; /* Спокойный темно-серый цвет букв */
+            border: none !important; /* Начисто убрали внутренние рамки вокруг текста */
+            z-index: 2;
+            transition: all 0.3s ease;
+        }
+        
+        /* При выборе текст становится четким и угольным, но фон под ним остается белым */
+        .box.theme-day .type-tab.active .tab-text-holder {
+            color: #0f172a;
+            background: #ffffff !important; /* Никакой цветной подсветки слова по ТЗ */
+        }
+
+        
+        /* --- ВЕЧЕРНЯЯ ТЕМА: ОРИГИНАЛЬНЫЕ ФАРЫ (БЕЗ БЕЛОГО НАЛЕТА) --- */
+        .box.theme-night #tab-cat-moto { 
+            background-image: url('moto_bg.jpg') !important; 
+            background-color: transparent !important; /* Начисто стираем дневной белый налет */
+            background-size: cover !important;
+            background-position: center center !important; 
+            opacity: 0.45; 
+            color: #ffffff; 
+        }
+        .box.theme-night #tab-cat-car { 
+            background-image: url('car_bg.jpg') !important; 
+            background-color: transparent !important; /* Начисто стираем дневной белый налет */
+            background-size: cover !important;
+            background-position: center center !important; 
+            opacity: 0.45; 
+            color: #ffffff; 
+        }
+        .box.theme-night .type-tab.active { 
+            opacity: 1 !important; 
+        }
+
+
+        
+        /* Настройки контейнера, чтобы фары стояли в идеальный бесшовный стык без полос */
+/* Контейнер переключателя категорий — жесткий стык фар без полос и щелей! */
+        .type-switcher {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 0 !important; /* Убираем зазор, чтобы фары встали бесшовно пиксель в пиксель */
+            border-radius: 16px;
+            overflow: hidden;
+            margin-bottom: 25px;
+            background: #000000 !important; /* Черная база, чтобы скрыть любые стыки */
+        }
+
+
+        
+        /* Активное состояние — плашка плавно оживает, вспыхивает на 100% яркости и увеличивает текст */
+        .type-tab.active {
+            opacity: 1;
+            filter: grayscale(0%);
+            font-size: 14px;
+        }
+
+
+        .level-grid { display: grid; grid-template-columns: 1fr; gap: 10px; }
+        .level-card { padding: 14px; border: 1px solid var(--border); border-radius: 12px; cursor: pointer; display: flex; align-items: center; gap: 12px; font-weight: 600; font-size: 14px; background: #fff; color: var(--text-muted); transition: 0.2s; }
+        .level-card.active { border-color: var(--primary); background: #eff6ff; color: var(--primary); }
+        .date-group { margin-top: 20px; }
+        .date-header { font-size: 12px; font-weight: 800; color: var(--primary); text-transform: uppercase; letter-spacing: 1px; margin-bottom: 10px; padding-bottom: 6px; border-bottom: 1px solid var(--border); }
+        .slot-container { display: grid; grid-template-columns: 1fr; gap: 10px; }
+        
+        /* --- НОВЫЙ ВОЗДУШНЫЙ ДИЗАЙН СЛОТОВ РАСПИСАНИЯ ПО МАКЕТУ --- */
+        /* Контейнер для кнопок одного дня */
+        .slot-container {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr); /* Ровно 3 колонки как на скриншоте */
+            gap: 12px;
+            margin-bottom: 20px;
+        }
+        
+        /* Базовый стиль кнопки времени по макету */
+        .slot-btn {
+            display: flex;
+            flex-direction: column; /* Время сверху, статус снизу */
+            align-items: center;
+            justify-content: center;
+            height: 54px;
+            padding: 6px 0;
+            background-color: #ffffff !important; /* Белый фон для свободных кнопок */
+            border: 1px solid #cbd5e1 !important; /* Тонкая серая рамка 1px */
+            border-radius: 12px !important; /* Аккуратные скругленные уголки */
+            cursor: pointer;
+            transition: all 0.2s ease-in-out;
+            box-shadow: none !important;
+        }
+        
+        /* Текст самого времени внутри кнопки (верхняя строчка) */
+        .slot-btn.selected span:first-child,
+        .slot-btn.selected span:last-child {
+            color: #ffffff !important; /* И время, и статус "Свободно" загораются чисто-белым */
+            text-shadow: none !important;
+        }
+        /* ФИКС РАЗМЕРОВ: Свободное время делаем КРУПНЫМ */
+        .slot-btn span:first-child {
+            font-size: 16px !important; /* Крупно для свободных! */
+            font-weight: 800;
+        }
+        
+        /* А занятое время принудительно делаем МАЛЕНЬКИМ */
+        .slot-btn:disabled span:first-child {
+            font-size: 13px !important; /* Маленькое для занятых! */
+            color: #94a3b8;
+        }
+
+
+        
+        /* Текст статуса "Свободно" / "Занято" (нижняя строчка) */
+        .slot-btn span:last-child {
+            font-size: 10px; /* Маленький аккуратный шрифт */
+            font-weight: 600;
+            color: #64748b; /* Спокойный серый цвет */
+        }
+        
+        .slot-btn.selected {
+            background-color: #2563eb !important; /* Яркий насыщенный синий фон на всю кнопку */
+            border-color: #2563eb !important; /* Рамка сливается с фоном */
+            transform: scale(0.97); /* Легкий эффект упругого нажатия под пальцем */
+        }
+        
+        /* ЗАНЯТЫЙ СЛОТ ПО МАКЕТУ: плавно тускнеет и заливается нежным серо-голубым фоном */
+        .slot-btn:disabled {
+            background-color: #f1f5f9 !important; /* Мягкая серая подложка */
+            border: 1px solid #e2e8f0 !important;
+            opacity: 0.6; /* Слегка приглушаем яркость */
+            cursor: not-allowed;
+        }
+        
+        /* Текст внутри ЗАНЯТОЙ кнопки */
+        .slot-btn:disabled span:first-child {
+            color: #94a3b8; /* Время становится блеклым */
+        }
+        .slot-btn:disabled span:last-child {
+            color: #94a3b8; /* Слово "Занято" тоже затухает */
+        }
+
+        
+        button.submit-btn { width: 100%; background: var(--primary); color: white; border: none; padding: 16px; border-radius: 12px; font-size: 16px; cursor: pointer; margin-top: 28px; font-weight: 800; transition: 0.2s; }
+        button.submit-btn:disabled { background: #cbd5e1; color: #94a3b8; cursor: not-allowed; }
+        button.cancel-btn { width: 100%; background: transparent; color: var(--danger); border: 1px solid #fee2e2; padding: 14px; border-radius: 12px; font-size: 15px; cursor: pointer; margin-top: 12px; font-weight: 700; transition: 0.2s; }
+        button.cancel-btn:hover { background: #fef2f2; }
+        #status, #cancelStatus { margin-top: 15px; padding: 14px; border-radius: 12px; text-align: center; display: none; font-weight: 700; font-size: 14px; }
+        .ok { background: #ecfdf5; color: #065f46; border: 1px solid #a7f3d0; }
+        .err { background: #fef2f2; color: #991b1b; border: 1px solid #fee2e2; }
+
+        .bike-grid { display: grid; grid-template-columns: 1fr; gap: 12px; margin-top: 15px; }
+        .bike-card { display: flex ; flex-direction: row !important; align-items: center !important; background: #ffffff !important; border: 1px solid var(--border) !important; border-radius: 14px !important; padding: 0 16px 0 0 !important; gap: 16px !important; transition: 0.2s ease-in-out !important; cursor: pointer !important; text-align: left !important; width: 100% !important; box-sizing: border-box !important; margin-bottom: 12px !important; box-shadow: 0 4px 12px rgba(15, 23, 42, 0.03) !important; overflow: hidden !important; }
+        .bike-card.active { border-color: var(--primary) !important; background: #eff6ff !important; box-shadow: 0 4px 12px rgba(29, 78, 216, 0.1) !important; }
+        .bike-card.disabled { opacity: 0.25 !important; pointer-events: none !important; background: #f8fafc !important; border-color: #e2e8f0 !important; }
+        .bike-img { width: 120px !important; height: 100% !important; min-height: 95px !important; object-fit: cover !important; border: none !important; flex-shrink: 0 !important; }
+        .bike-info { display: flex !important; flex-direction: column !important; gap: 2px !important; flex: 1 !important; padding: 10px 0 !important; }
+        .bike-title { font-family: "Eras Bold ITC", "Eras Demi ITC", "Arial Black", sans-serif !important; font-weight: 900 !important; font-size: 17px !important; color: var(--text) !important; letter-spacing: 0.5px !important; text-transform: uppercase !important; margin: 0 !important; }
+        .bike-details { font-size: 12px !important; margin: 0 !important; }
+        .bike-details summary { font-family: "JetBrains Mono", "Courier New", monospace !important; color: var(--primary) !important; cursor: pointer !important; font-weight: 700 !important; list-style: none !important; outline: none !important; text-decoration: none !important; display: inline-block !important; letter-spacing: 0.5px !important; margin-top: -2px !important; font-size: 13px !important; text-transform: lowercase !important; }
+        .bike-details summary::-webkit-details-marker { display: none !important; }
+        .bike-details p { font-family: "Bahnschrift Light SemiCondensed", "Bahnschrift", sans-serif !important; margin: 6px 0 0 0 !important; color: #475569 !important; line-height: 1.4 !important; font-weight: 500 !important; font-size: 13px !important; text-align: left !important; }
+
+        .inst-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 20px; }
+        .inst-card { display: flex !important; flex-direction: column !important; align-items: stretch !important; justify-content: flex-start !important; background: #ffffff !important; border: 1px solid var(--border) !important; border-radius: 14px !important; padding: 0 0 12px 0 !important; cursor: pointer !important; transition: 0.2s ease-in-out !important; box-shadow: 0 4px 12px rgba(15, 23, 42, 0.02) !important; text-align: center !important; box-sizing: border-box !important; overflow: hidden !important; }
+        .inst-card.active { border-color: var(--primary) !important; background: #eff6ff !important; box-shadow: 0 4px 12px rgba(29, 78, 216, 0.1) !important; }
+        .inst-img { width: 100% !important; height: 110px !important; object-fit: cover !important; border: none !important; margin-bottom: 10px !important; background: #f1f5f9; flex-shrink: 0 !important; }
+        .inst-name { font-family: "Eras Bold ITC", "Eras Demi ITC", "Arial Black", sans-serif !important; font-weight: 900 !important; font-size: 13px !important; color: var(--text) !important; letter-spacing: 0.3px !important; margin-bottom: 2px !important; padding: 0 6px !important; }
+        .inst-spec { font-family: "Bahnschrift Light SemiCondensed", "Bahnschrift", sans-serif !important; font-size: 11px !important; color: var(--text-muted) !important; font-weight: 500 !important; padding: 0 6px !important; }
+    </style>
+</head>
+<body>
+
+<div class="box theme-day" id="mainBoxContainer">
+    <!-- Кнопочка аккуратно встанет в верхний правый угол, не ломая остальные элементы формы -->
+    <div style="text-align: right; margin-bottom: 10px;">
+        <button type="button" onclick="toggleTheme()" id="themeBtn" style="background: #f4f6f8; border: none; padding: 6px 12px; border-radius: 20px; font-size: 12px; font-weight: 700; cursor: pointer; color: #000000;">🌙 Ночь</button>
+    </div>
+
+    <h2>Запись на вождение</h2>
+    <form id="mainForm">
+        <label>Ваше Имя и Фамилия:</label>
+        <input type="text" id="name" required placeholder="Иван Иванов">
+        <label>Email:</label>
+        <input type="email" id="email" placeholder="example@gmail.com">
+        <label>Телефон:</label>
+        <input type="tel" id="phone" required value="+7 " placeholder="+7 (900) 000-00-00">
+
+        <label>Выберите инструктора:</label>
+        <div class="inst-grid">
+            <div class="inst-card active" id="inst-igor" onclick="setInstructor('Игорь Иванов')">
+                <img src="igor.jpg" alt="👨‍🏫" class="inst-img">
+                <div class="inst-name">ИГОРЬ ИВАНОВ</div>
+                <div class="inst-spec">Категории: А, В</div>
+            </div>
+            <div class="inst-card" id="inst-andrey" onclick="setInstructor('Андрей Гришин')">
+                <img src="andrey.jpg" alt="👨‍🏫" class="inst-img">
+                <div class="inst-name">АНДРЕЙ ГРИШИН</div>
+                <div class="inst-spec">Категории: А, В (кроме Мурано)</div>
+            </div>
+        </div>
+
+        <label>Категория обучения:</label>
+        <div class="type-switcher" style="display: grid; grid-template-columns: 1fr 1fr; gap: 0px; margin-bottom: 25px; background: transparent;">
+            <!-- Вкладка Мотоциклы -->
+            <div class="type-tab active" id="tab-cat-moto" onclick="setCategory('moto')" style="border: none !important;">
+                <div class="tab-image-wrapper"></div>
+                <div class="tab-text-holder">Мотоциклы</div>
+            </div>
+            
+            <!-- Вкладка Автомобили -->
+            <div class="type-tab" id="tab-cat-car" onclick="setCategory('car')" style="border: none !important;">
+                <div class="tab-image-wrapper"></div>
+                <div class="tab-text-holder">Автомобили</div>
+            </div>
+        </div>
+
+        <!-- БЛОК МОТОЦИКЛОВ -->
+        <div id="motoBikesBlock" style="display: block; margin-bottom: 15px;">
+            <label>Выберите мотоцикл:</label>
+            <div class="bike-grid">
+                <div class="bike-card active" id="bike-boxer" onclick="setBike('Bajaj Boxer')">
+                    <img src="boxer.jpg" alt="" class="bike-img">
+                    <div class="bike-info">
+                        <div class="bike-title">BAJAJ BOXER</div>
+                        <details class="bike-details" onclick="event.stopPropagation()">
+                            <summary>описание</summary>
+                            <p>Самый легкий, послушный и предсказуемый мотоцикл. Идеальный выбор для абсолютных новичков и девушек. На нём проще всего научиться плавно трогаться, держать баланс на малом ходу и без страха сдать «восьмерку» на автодроме.</p>
+                        </details>
+                    </div>
+                </div>
+                <div class="bike-card" id="bike-fuego" onclick="setBike('Fuego Rambolor 250')">
+                    <img src="fuego.jpg" alt="" class="bike-img">
+                    <div class="bike-info">
+                        <div class="bike-title">FUEGO RAMBOLOR 250</div>
+                        <details class="bike-details" onclick="event.stopPropagation()">
+                            <summary>описание</summary>
+                            <p>Стильный, высокий и бодрый скремблер. Отлично подходит для средних учеников и парней высокого роста. У него более резвый характер, плотная подвеска и отличная управляемость. Идеален для отработки скоростного маневрирования.</p>
+                        </details>
+                    </div>
+                </div>
+                <div class="bike-card" id="bike-yamaha" onclick="setBike('Yamaha YBR 125')">
+                    <img src="yamaha.jpg" alt="" class="bike-img">
+                    <div class="bike-info">
+                        <div class="bike-title">YAMAHA YBR 125</div>
+                        <details class="bike-details" onclick="event.stopPropagation()">
+                            <summary>описание</summary>
+                            <p>Легендарная классика мотошкол. Максимально дружелюбный, юркий и послушный аппарат. На нём одинаково комфортно и делать первые шаги, и оттачивать сложные элементы. Прощает любые мелкие ошибки с газом и сцеплением.</p>
+                        </details>
+                    </div>
+                </div>
+            </div> <!-- Закрыли внутренний bike-grid мотоциклов -->
+        </div> <!-- Закрыли общий контейнер motoBikesBlock -->
+
+        <!-- БЛОК АВТОМОБИЛЕЙ -->
+        <div id="carVehiclesBlock" style="display: none; margin-bottom: 15px;">
+            <label>Выберите автомобиль:</label>
+            <div class="bike-grid">
+                <div class="bike-card" id="tab-car_granta_manual" onclick="setVehicleType('car_granta_manual')">
+                    <img src="granta.jpg" alt="" class="bike-img">
+                    <div class="bike-info">
+                        <div class="bike-title">LADA GRANTA</div>
+                        <div style="font-size: 11px; color: var(--text-muted); font-weight: 600;">Механика (МКПП)</div>
+                        <details class="bike-details" onclick="event.stopPropagation()">
+                            <summary>описание</summary>
+                            <p>Главный учебный автомобиль на механике. Послушный руль, понятные габариты и мягкое сцепление. Базовый вариант для тех, кто хочет железно научиться щелкать передачи и без проблем сдать официальный экзамен в ГИБДД.</p>
+                        </details>
+                    </div>
+                </div>
+                <div class="bike-card" id="tab-car_logan_manual" onclick="setVehicleType('car_logan_manual')">
+                    <img src="logan_manual.jpg" alt="" class="bike-img">
+                    <div class="bike-info">
+                        <div class="bike-title">RENAULT LOGAN</div>
+                        <div style="font-size: 11px; color: var(--text-muted); font-weight: 600;">Механика (МКПП)</div>
+                        <details class="bike-details" onclick="event.stopPropagation()">
+                            <summary>описание</summary>
+                            <p>Надежная, крепкая и очень выносливая «рабочая лошадка». У Логана отличная обзорность из салона и очень прощающая механическая коробка — заглохнуть на нём надо еще умудриться. Отличный выбор для первых выездов в город.</p>
+                        </details>
+                    </div>
+                </div>
+                <div class="bike-card" id="tab-car_logan_auto" onclick="setVehicleType('car_logan_auto')">
+                    <img src="logan_auto.jpg" alt="" class="bike-img">
+                    <div class="bike-info">
+                        <div class="bike-title">RENAULT LOGAN</div>
+                        <div style="font-size: 11px; color: var(--text-muted); font-weight: 600;">Автомат (АКПП)</div>
+                        <details class="bike-details" onclick="event.stopPropagation()">
+                            <summary>описание</summary>
+                            <p>Вариант строго для тех, кто учится на категорию «Автомат». Никаких заморочек с педалью сцепления и троганием в горку. Только газ, тормоз и максимальная концентрация на дорожной обстановке и знаках.</p>
+                        </details>
+                    </div>
+                </div>
+                <div class="bike-card" id="tab-car_murano_auto" onclick="setVehicleType('car_murano_auto')">
+                    <img src="murano.jpg" alt="" class="bike-img">
+                    <div class="bike-info">
+                        <div class="bike-title">NISSAN MURANO</div>
+                        <div style="font-size: 11px; color: var(--text-muted); font-weight: 600;">Автомат (АКПП)</div>
+                        <details class="bike-details" onclick="event.stopPropagation()">
+                            <summary>описание</summary>
+                            <p>Премиальный, мощный кроссовер повышенного комфорта. Отличный вариант для тех, кто уже имеет базовые навыки и хочет уверенно пересесть со скромной учебной машины на крупный внедорожник.</p>
+                        </details>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <input type="hidden" id="type" value="moto">
+        <input type="hidden" id="selectedBike" value="Bajaj Boxer">
+        <input type="hidden" id="selectedInstructor" value="Игорь Иванов">
+
+        <div id="motoLevelBlock">
+        <!-- Заголовок блока по ТЗ: аккуратный, стандартный регистр, темно-серый цвет -->
+        <label style="text-transform: none; font-size: 14px; font-weight: 600; color: #475569; letter-spacing: normal; margin-bottom: 10px;">Ваш уровень подготовки:</label>
+        <div id="mainLevelBlock" class="level-container-block" style="display: flex; align-items: center; gap: 15px; margin-bottom: 22px;">
+
+            
+            <!-- Силуэт мотоцикла (по ТЗ: строго по центру оси, формат .jpg) -->
+            <img id="motoColorImage" src="moto_grey.jpg" alt="Уровень" style="width: 75px; height: auto; object-fit: contain; transition: all 0.25s ease;">
+            
+            <!-- Обертка выпадающего списка для позиционирования стрелочки ▼ -->
+            <div style="position: relative; flex-grow: 1; display: flex; align-items: center;">
+                <select id="level" onchange="selectLevelDropdown(this.value)" style="width: 100%; background: #ffffff; border: 2px solid #cbd5e1; border-radius: 14px; padding: 12px 40px 12px 16px; font-size: 14px; font-weight: 700; color: #475569; outline: none; cursor: pointer; font-family: inherit; transition: all 0.25s ease; -webkit-appearance: none; -moz-appearance: none; appearance: none; text-align: left;">
+                    <option value="none" selected disabled style="background: #ffffff; color: #94a3b8;">Укажите свой уровень...</option>
+                    <option value="green" style="background: #ffffff; color: #15803d; font-weight: 600;">Уверенно катаюсь</option>
+                    <option value="yellow" style="background: #ffffff; color: #b45309; font-weight: 600;">Я средний уровень</option>
+                    <option value="red" style="background: #ffffff; color: #b91c1c; font-weight: 600;">Я абсолютный новичок</option>
+                </select>
+                <input type="hidden" id="level" value="none">
+                <!-- Минималистичная стрелочка ▼ по ТЗ справа внутри поля -->
+                <span id="dropdownArrow" style="position: absolute; right: 16px; font-size: 11px; color: #cbd5e1; pointer-events: none; transition: all 0.25s ease;">▼</span>
+            </div>
+        </div>
+
+
+        <label style="margin-bottom: 2px;">Выберите доступное время у этого инструктора:</label>
+        <div id="slotsBox"><div style="text-align: center; color: #64748b; padding: 10px;">Загрузка расписания...</div></div>
+        <input type="hidden" id="selectedSlot" required>
+        <button type="submit" class="submit-btn" id="submitBtn" disabled>Подтвердить запись</button>
+    </form>
+    <div id="status"></div>
+</div>
+
+<div class="box" style="border-top: 4px solid var(--danger);">
+    <h3>❌ Отмена записи</h3>
+    <input type="text" id="cancelCode" placeholder="6-значный цифровой код">
+    <button type="button" class="cancel-btn" onclick="cancelBooking()">Отменить занятие</button>
+    <div id="cancelStatus"></div>
+</div>
+<script>
+    const API_URL = 'https://script.google.com/macros/s/AKfycbyriDUH29iTG14H4LjRLaFNOZLAG_sWv5sjA_fk_8jZC0HUGQS_BDtWicZkxaVaR2lK/exec';
+    let globalSlotsData = []; let currentCategory = 'moto';
+
+    document.getElementById('phone').addEventListener('input', function(e) {
+        let matrix = '+7 (9xx) xxx-xx-xx', i = 0, def = matrix.replace(/\D/g, ""), val = this.value.replace(/\D/g, "");
+        if (def.length >= val.length) val = def;
+        this.value = matrix.replace(/./g, function(a) { return /[x\d]/.test(a) && i < val.length ? val.charAt(i++) : i >= val.length ? "" : a; });
+    });
+
+    document.getElementById('cancelCode').addEventListener('input', function(e) {
+        e.target.value = e.target.value.replace(/\D/g, '').substring(0,6);
+    });
+
+    function setInstructor(name) {
+        document.getElementById('selectedInstructor').value = name;
+        document.getElementById('inst-igor').classList.toggle('active', name === 'Игорь Иванов');
+        document.getElementById('inst-andrey').classList.toggle('active', name === 'Андрей Гришин');
+        const muranoCard = document.getElementById('tab-car_murano_auto');
+        if (name === 'Андрей Гришин') { 
+            if (muranoCard) muranoCard.style.display = 'none'; 
+            if (document.getElementById('type').value === 'car_murano_auto') setVehicleType('car_granta_manual'); 
+        } else { 
+            if (muranoCard) muranoCard.style.display = 'flex'; 
+        }
+        updateInterface();
+    }
+
+    function setCategory(cat) {
+            // ФИКС РЯБИ: Мгновенно вычищаем экран при клике, чтобы старые слоты не двоились!
+        const slotsBox = document.getElementById('slotsBox');
+        if (slotsBox) slotsBox.innerHTML = '<div style="text-align: center; color: #64748b; padding: 10px;">Обновление расписания...</div>';
+
+        currentCategory = cat;
+        document.getElementById('tab-cat-moto').classList.toggle('active', cat === 'moto');
+        document.getElementById('tab-cat-car').classList.toggle('active', cat === 'car');
+        document.getElementById('motoBikesBlock').style.display = cat === 'moto' ? 'block' : 'none';
+        document.getElementById('carVehiclesBlock').style.display = cat === 'car' ? 'block' : 'none';
+        if (cat === 'moto') { setBike(document.getElementById('selectedBike').value || 'Bajaj Boxer'); } 
+        else { setVehicleType(document.getElementById('type').value.startsWith('car_') ? document.getElementById('type').value : 'car_granta_manual'); }
+        updateInterface();
+    }
+
+    function setVehicleType(v) {
+        document.getElementById('type').value = v;
+        const carIds = { 'car_granta_manual': 'tab-car_granta_manual', 'car_logan_manual': 'tab-car_logan_manual', 'car_logan_auto': 'tab-car_logan_auto', 'car_murano_auto': 'tab-car_murano_auto' };
+        Object.values(carIds).forEach(id => { if(document.getElementById(id)) document.getElementById(id).classList.remove('active'); });
+        if(carIds[v] && document.getElementById(carIds[v])) document.getElementById(carIds[v]).classList.add('active');
+        updateInterface();
+    }
+
+    function setBike(b) {
+        document.getElementById('type').value = 'moto'; document.getElementById('selectedBike').value = b;
+        document.getElementById('bike-boxer').classList.toggle('active', b === 'Bajaj Boxer');
+        document.getElementById('bike-fuego').classList.toggle('active', b === 'Fuego Rambolor 250');
+        document.getElementById('bike-yamaha').classList.toggle('active', b === 'Yamaha YBR 125');
+        updateInterface();
+    }
+
+    function selectLevelDropdown(l) {
+        if (!l || l === 'none') return;
+        
+        const bikeImg = document.getElementById('motoColorImage');
+        const selectElement = document.getElementById('level');
+        
+        // Переключаем картинки байков-хамелеонов строго в формат .jpg
+        if (bikeImg) {
+            if (l === 'green') bikeImg.src = 'moto_green.jpg';
+            if (l === 'yellow') bikeImg.src = 'moto_yellow.jpg';
+            if (l === 'red') bikeImg.src = 'moto_red.jpg';
+        }
+        
+        // ПАСТЕЛЬНАЯ ЗАЛИВКА + ЦВЕТНОЙ ТЕКСТ + НЕОНОВОЕ СВЕЧЕНИЕ РАМКИ
+        if (selectElement) {
+            selectElement.style.borderWidth = '1.5px'; // Оставляем аккуратную изящную рамку
+            
+            if (l === 'green') {
+                selectElement.style.borderColor = '#22c55e'; // Яркая неоновая рамка
+                selectElement.style.backgroundColor = '#f0fdf4'; // Мягкий пастельно-зеленый фон
+                selectElement.style.color = '#16a34a'; // Сочный зеленый текст надписи
+                // Мягкое неоновое свечение в тон уровня
+                selectElement.style.boxShadow = '0 0 4px #22c55e, 0 0 15px rgba(22, 163, 74, 0.4)'; 
+            }
+            if (l === 'yellow') {
+                selectElement.style.borderColor = '#facc15'; // Яркая желтая рамка
+                selectElement.style.backgroundColor = '#fef9c3'; // Мягкий пастельно-желтый фон
+                selectElement.style.color = '#ca8a04'; // Сочный горчичный текст
+                selectElement.style.boxShadow = '0 0 4px #facc15, 0 0 15px rgba(234, 179, 8, 0.4)'; 
+            }
+            if (l === 'red') {
+                selectElement.style.borderColor = '#ef4444'; // Яркая красная рамка
+                selectElement.style.backgroundColor = '#fef2f2'; // Мягкий пастельно-красный фон
+                selectElement.style.color = '#dc2626'; // Сочный гоночный красный текст
+                selectElement.style.boxShadow = '0 0 4px #ef4444, 0 0 15px rgba(220, 38, 38, 0.4)'; 
+            }
+        }
+        
+        updateInterface();
+    }
+
+
+
+
+
+
+    function loadSlots() {
+        const oldScript = document.getElementById('jsonp-slots'); if(oldScript) oldScript.remove();
+        const script = document.createElement('script'); script.id = 'jsonp-slots';
+        script.src = API_URL + '?callback=renderSlotsData&_t=' + new Date().getTime();
+        document.body.appendChild(script);
+    }
+
+    function renderSlotsData(slots) { 
+        globalSlotsData = slots; 
+        // Жесткий фикс: полностью вычищаем slotsBox перед каждым новым спавном!
+        const slotsBox = document.getElementById('slotsBox');
+        if (slotsBox) slotsBox.innerHTML = ''; 
+        
+        updateInterface(); 
+    }
+
+function updateInterface() {
+    const type = document.getElementById('type').value; const level = document.getElementById('level').value;
+    const currentInst = document.getElementById('selectedInstructor').value; const selectedBike = document.getElementById('selectedBike').value;
+    const slotsBox = document.getElementById('slotsBox'); const submitBtn = document.getElementById('submitBtn');
+    
+    // ЖЕСТКИЙ РАБОЧИЙ ФИКС БЛОКА УРОВНЕЙ И ЗАЧИСТКИ ЭКРАНА
+    if (document.getElementById('mainLevelBlock')) {
+        document.getElementById('mainLevelBlock').style.display = currentCategory === 'moto' ? 'flex' : 'none';
+    }
+    if (slotsBox) slotsBox.innerHTML = '';
+    
+    const instructorSlots = (globalSlotsData || []).filter(slot => slot.instructor === currentInst);
+    
+    if (instructorSlots.length === 0) {
+        slotsBox.innerHTML = '<div style="text-align: center; color: #64748b; padding: 10px;">Нет свободных слотов</div>';
+        submitBtn.disabled = true; return;
+    }
+
+    let grouped = {}; instructorSlots.forEach(slot => { if (!grouped[slot.date]) grouped[slot.date] = []; grouped[slot.date].push(slot); });
+
+    Object.keys(grouped).forEach(dateStr => {
+        let groupDiv = document.createElement('div'); groupDiv.className = 'date-group';
+        let dateParts = dateStr.split('-'); 
+        let months = ['янв', 'фев', 'мар', 'апр', 'май', 'июн', 'июл', 'авг', 'сен', 'окт', 'ноя', 'дек'];
+        let day = parseInt(dateParts, 10); 
+        let monthIdx = parseInt(dateParts, 10) - 1;
+        let header = document.createElement('div'); header.className = 'date-header'; header.innerText = day + ' ' + months[monthIdx];
+        groupDiv.appendChild(header);
+
+        let container = document.createElement('div'); container.className = 'slot-container';
+        grouped[dateStr].forEach(slot => {
+            let btn = document.createElement('button'); btn.type = 'button'; btn.className = 'slot-btn';
+            let timeText = document.createElement('span'); timeText.innerText = slot.time; btn.appendChild(timeText);
+            let badge = document.createElement('span'); badge.style.fontSize = '12px'; badge.innerText = 'Свободно'; btn.appendChild(badge);
+            
+            let isAllowed = true; let isCarType = type.startsWith('car_');
+            let targetId = isCarType ? type : selectedBike;
+
+            let isBusyByAnyone = (slot.bikes || []).some(b => b.toString().trim() === targetId.toString().trim());
+            if (isBusyByAnyone) { isAllowed = false; }
+
+            if (isCarType && (slot.car > 0 || slot.totalMoto > 0)) { isAllowed = false; }
+            if (!isCarType && type === "moto") {
+                if (slot.totalMoto >= 3 || slot.car > 0) isAllowed = false;
+                if (level === "red" && (slot.red > 0 || slot.yellow > 0 || slot.green > 2)) isAllowed = false;
+                if (level === "yellow" && (slot.red > 0 || slot.yellow >= 2 || (slot.yellow === 1 && slot.green > 1))) isAllowed = false;
+                if (level === "green" && ((slot.red === 1 && slot.green >= 2) || (slot.yellow === 2 && slot.green >= 1))) isAllowed = false;
+            }
+
+            if (!isAllowed) { btn.disabled = true; badge.innerText = "Занято"; } 
+            else {
+                btn.onclick = function() {
+                    document.querySelectorAll('.slot-btn').forEach(b => b.classList.remove('selected')); btn.classList.add('selected');
+                    document.getElementById('selectedSlot').value = `${slot.date}|${slot.time}`; submitBtn.disabled = false;
+                };
+                if (document.getElementById('selectedSlot').value === `${slot.date}|${slot.time}`) {
+                    btn.classList.add('selected');
+                }
+            }
+            container.appendChild(btn);
+        });
+        groupDiv.appendChild(container); slotsBox.appendChild(groupDiv);
+    });
+
+    // Карточки машин и мотиков теперь ВСЕГДА остаются активными и красивыми!
+    const carIds = { 'car_granta_manual': 'tab-car_granta_manual', 'car_logan_manual': 'tab-car_logan_manual', 'car_logan_auto': 'tab-car_logan_auto', 'car_murano_auto': 'tab-car_murano_auto' };
+    Object.values(carIds).forEach(id => { if(document.getElementById(id)) document.getElementById(id).classList.remove('disabled'); });
+    if (carIds[type] && document.getElementById(carIds[type])) {
+        Object.values(carIds).forEach(id => { if(document.getElementById(id)) document.getElementById(id).classList.remove('active'); });
+        document.getElementById(carIds[type]).classList.add('active');
+    }
+    
+    const bikeIds = { 'Bajaj Boxer': 'bike-boxer', 'Fuego Rambolor 250': 'bike-fuego', 'Yamaha YBR 125': 'bike-yamaha' };
+    Object.values(bikeIds).forEach(id => { if(document.getElementById(id)) document.getElementById(id).classList.remove('disabled'); });
+    if (bikeIds[selectedBike] && document.getElementById(bikeIds[selectedBike]) && currentCategory === 'moto') {
+        Object.values(bikeIds).forEach(id => { if(document.getElementById(id)) document.getElementById(id).classList.remove('active'); });
+        document.getElementById(bikeIds[selectedBike]).classList.add('active');
+    }
+}
+
+
+    document.getElementById('mainForm').addEventListener('submit', function(e) {
+        e.preventDefault(); const status = document.getElementById('status'); const btn = document.getElementById('submitBtn');
+        if (document.getElementById('phone').value.replace(/\D/g, "").length !== 11) {
+            status.style.display = 'block'; status.className = 'err'; status.innerText = 'Ошибка: Введите 10 цифр телефона!'; return;
+        }
+        status.style.display = 'block'; status.className = ''; status.innerText = 'Оформление записи...'; btn.disabled = true;
+        const [date, time] = document.getElementById('selectedSlot').value.split('|');
+        const name = encodeURIComponent(document.getElementById('name').value.trim());
+        const phone = encodeURIComponent("'" + document.getElementById('phone').value.trim());
+        const email = encodeURIComponent(document.getElementById('email').value.trim()); const type = document.getElementById('type').value;
+        const instructor = encodeURIComponent(document.getElementById('selectedInstructor').value);
+        const level = type === 'moto' ? document.getElementById('level').value : 'none';
+        const bike = type === 'moto' ? encodeURIComponent(document.getElementById('selectedBike').value) : '';
+
+        const oldScript = document.getElementById('jsonp-booking'); if(oldScript) oldScript.remove();
+        const script = document.createElement('script'); script.id = 'jsonp-booking';
+        script.src = `${API_URL}?action=book&date=${date}&time=${time}&type=${type}&level=${level}&name=${name}&phone=${phone}&email=${email}&bike=${bike}&instructor=${instructor}&callback=handleBookingResponse`;
+        document.body.appendChild(script);
+    });
+
+    function handleBookingResponse(response) {
+        const status = document.getElementById('status');
+        if (response.status === 'success') {
+            status.className = 'ok'; status.innerText = response.message; document.getElementById('mainForm').reset();
+            document.getElementById('phone').value = "+7 "; setCategory('moto'); loadSlots();
+        } else { status.className = 'err'; status.innerText = 'Ошибка: ' + response.message; document.getElementById('submitBtn').disabled = false; }
+    }
+
+    function cancelBooking() {
+        const code = document.getElementById('cancelCode').value.trim(); const status = document.getElementById('cancelStatus'); if(!code) return;
+        status.style.display = 'block'; status.className = ''; status.innerText = 'Отмена занятия...';
+        const oldScript = document.getElementById('jsonp-cancel'); if(oldScript) oldScript.remove();
+        const script = document.createElement('script'); script.id = 'jsonp-cancel';
+        // ИСПРАВЛЕННЫЙ ЗАПРОС: шлём параметр id через плюсы, чтобы пробить CORB и совпасть с бэкендом
+        script.src = API_URL + '?action=cancel&bookingId=' + encodeURIComponent(code) + '&callback=handleCancelResponse';
+        document.body.appendChild(script);
+    }
+
+    function handleCancelResponse(response) {
+        const status = document.getElementById('cancelStatus');
+        if (response.status === 'success') { 
+            status.className = 'ok'; 
+            status.innerText = response.message; 
+            document.getElementById('cancelCode').value = ''; 
+            loadSlots(); 
+        } else { 
+            status.className = 'err'; 
+            status.innerText = response.message; 
+        }
+    }
+
+    function toggleTheme() {
+        const box = document.getElementById('mainBoxContainer');
+        const btn = document.getElementById('themeBtn');
+        if (!box) return;
+    
+        if (box.classList.contains('theme-day')) {
+            // Включаем идеальную ВЕЧЕРНЮЮ тему
+            box.classList.remove('theme-day');
+            box.classList.add('theme-night');
+            btn.innerText = '☀️ День';
+            btn.style.background = '#1e293b';
+            btn.style.color = '#ffffff';
+            document.body.style.background = '#0f172a'; // Экран вокруг формы тоже красиво темнеет
+        } else {
+            // Возвращаем ДЕНЬ
+            box.classList.remove('theme-night');
+            box.classList.add('theme-day');
+            btn.innerText = '🌙 Ночь';
+            btn.style.background = '#f4f6f8';
+            btn.style.color = '#000000';
+            document.body.style.background = '#ffffff';
+        }
+    }
+
+    
+        window.onload = function() {
+        loadSlots();
+        // Проверка каждые 7 секунд — быстро, безопасно и без перегрузки Гугла!
+        setInterval(loadSlots, 7000);
+    };
+
+</script>
+</body>
+</html>
         @import url('https://googleapis.com');
 
         :root { 
