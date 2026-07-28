@@ -689,18 +689,9 @@ function updateInterface() {
             if (!isAllowed) { btn.disabled = true; badge.innerText = "Занято"; } 
             else {
                 btn.onclick = function() {
-                    document.querySelectorAll('.slot-btn').forEach(b => b.classList.remove('selected')); 
-                    btn.classList.add('selected');
-                    document.getElementById('selectedSlot').value = `${slot.date}|${slot.time}`;
-                    
-                    // ЖЕСТКИЙ ФИКС КНОПКИ ЗАПИСИ: Гарантируем её включение и видимость при клике!
-                    const submitBtn = document.getElementById('submitBtn');
-                    if (submitBtn) {
-                        submitBtn.disabled = false;
-                        submitBtn.style.display = 'block'; 
-                    }
+                    document.querySelectorAll('.slot-btn').forEach(b => b.classList.remove('selected')); btn.classList.add('selected');
+                    document.getElementById('selectedSlot').value = `${slot.date}|${slot.time}`; submitBtn.disabled = false;
                 };
-                
                 if (document.getElementById('selectedSlot').value === `${slot.date}|${slot.time}`) {
                     btn.classList.add('selected');
                 }
