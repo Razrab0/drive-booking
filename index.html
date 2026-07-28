@@ -231,28 +231,30 @@
         /* --- НОВЫЙ ВОЗДУШНЫЙ ДИЗАЙН СЛОТОВ РАСПИСАНИЯ ПО МАКЕТУ --- */
         /* Контейнер для кнопок одного дня */
         .slot-container {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr); /* Ровно 3 колонки как на скриншоте */
-            gap: 12px;
+            display: flex;
+            flex-wrap: wrap; /* Кнопки сами переносятся, если не влезают */
+            gap: 10px; /* Аккуратный зазор между кнопками */
             margin-bottom: 20px;
+            justify-content: flex-start;
         }
         
-        /* Базовый стиль кнопки времени по макету */
+        /* Базовый стиль кнопки времени: увеличили высоту и дали авто-ширину, чтобы текст ДЫШАЛ */
         .slot-btn {
             display: flex;
             flex-direction: column; /* Время сверху, статус снизу */
             align-items: center;
             justify-content: center;
-            height: 54px;
-            padding: 6px 0;
-            background-color: #ffffff !important; /* Белый фон для свободных кнопок */
+            flex: 1 1 calc(33.333% - 10px); /* Гибкие 3 колонки, но с защитой от сплющивания */
+            min-width: 85px; /* Защита: кнопка не сожмется меньше этого размера */
+            height: 60px; /* Увеличили высоту с 54px до 60px, чтобы слово "Свободно" не вылезало! */
+            padding: 8px 10px; /* Внутренние отступы для воздуха */
+            background-color: #ffffff !important;
             border: 1px solid #cbd5e1 !important; /* Тонкая серая рамка 1px */
-            border-radius: 12px !important; /* Аккуратные скругленные уголки */
+            border-radius: 14px !important; /* Красивые скругленные уголки */
             cursor: pointer;
-            transition: all 0.2s ease-in-out;
             box-shadow: none !important;
+            transition: all 0.2s ease-in-out;
         }
-        
         /* Текст самого времени внутри кнопки (верхняя строчка) */
         .slot-btn.selected span:first-child,
         .slot-btn.selected span:last-child {
@@ -261,9 +263,13 @@
         }
         /* ФИКС РАЗМЕРОВ: Свободное время делаем КРУПНЫМ */
         .slot-btn span:first-child {
-            font-size: 16px !important; /* Крупно для свободных! */
-            font-weight: 800;
+            font-size: 15px !important; /* Слегка уменьшили с 16px до 15px для идеального баланса */
+            font-weight: 800; /* Оставили сочный жирный шрифт */
+            color: #0f172a;
+            line-height: 1.1;
+            margin-bottom: 3px;
         }
+
         
         /* А занятое время принудительно делаем МАЛЕНЬКИМ */
         .slot-btn:disabled span:first-child {
@@ -275,9 +281,10 @@
         
         /* Текст статуса "Свободно" / "Занято" (нижняя строчка) */
         .slot-btn span:last-child {
-            font-size: 10px; /* Маленький аккуратный шрифт */
-            font-weight: 600;
+            font-size: 10px;
+            font-weight: 700;
             color: #64748b; /* Спокойный серый цвет */
+            white-space: nowrap; /* Запрещаем слову "Свободно" разрываться на две строчки */
         }
         
         .slot-btn.selected {
