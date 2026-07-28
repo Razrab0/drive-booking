@@ -254,13 +254,12 @@
         }
         
         /* Текст самого времени внутри кнопки (верхняя строчка) */
-        .slot-btn span:first-child {
-            font-size: 14px;
-            font-weight: 800; /* Крупный и очень жирный шрифт по макету */
-            color: #0f172a;
-            line-height: 1.2;
-            margin-bottom: 2px;
+        .slot-btn.selected span:first-child,
+        .slot-btn.selected span:last-child {
+            color: #ffffff !important; /* И время, и статус "Свободно" загораются чисто-белым */
+            text-shadow: none !important;
         }
+
         
         /* Текст статуса "Свободно" / "Занято" (нижняя строчка) */
         .slot-btn span:last-child {
@@ -269,10 +268,10 @@
             color: #64748b; /* Спокойный серый цвет */
         }
         
-        /* СОСТОЯНИЕ ВЫБОРА: когда ученик нажал на время (делаем стильный синий акцент) */
         .slot-btn.selected {
-            background-color: #f1f5f9 !important; /* Мягкий фон при выборе */
-            border: 2px solid #2563eb !important; /* Четкая синяя рамка, фиксирующая клик */
+            background-color: #2563eb !important; /* Яркий насыщенный синий фон на всю кнопку */
+            border-color: #2563eb !important; /* Рамка сливается с фоном */
+            transform: scale(0.97); /* Легкий эффект упругого нажатия под пальцем */
         }
         
         /* ЗАНЯТЫЙ СЛОТ ПО МАКЕТУ: плавно тускнеет и заливается нежным серо-голубым фоном */
