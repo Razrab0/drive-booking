@@ -652,8 +652,10 @@ function updateInterface() {
         let groupDiv = document.createElement('div'); groupDiv.className = 'date-group';
         let dateParts = dateStr.split('-'); 
         let months = ['янв', 'фев', 'мар', 'апр', 'май', 'июн', 'июл', 'авг', 'сен', 'окт', 'ноя', 'дек'];
-        let day = parseInt(dateParts, 10); 
-        let monthIdx = parseInt(dateParts, 10) - 1;
+        // Жестко берем день из третьей части даты, а месяц — из второй!
+        let day = parseInt(dateParts[2], 10); 
+        let monthIdx = parseInt(dateParts[1], 10) - 1;
+
         let header = document.createElement('div'); header.className = 'date-header'; header.innerText = day + ' ' + months[monthIdx];
         groupDiv.appendChild(header);
 
