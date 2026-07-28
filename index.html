@@ -469,10 +469,10 @@
         <input type="hidden" id="selectedBike" value="Bajaj Boxer">
         <input type="hidden" id="selectedInstructor" value="Игорь Иванов">
 
-        <div id="motoLevelBlock">
-        <!-- Заголовок блока по ТЗ: аккуратный, стандартный регистр, темно-серый цвет -->
-        <label style="text-transform: none; font-size: 14px; font-weight: 600; color: #475569; letter-spacing: normal; margin-bottom: 10px;">Ваш уровень подготовки:</label>
-        <div id="mainLevelBlock" class="level-container-block" style="display: flex; align-items: center; gap: 15px; margin-bottom: 22px;">
+        <!-- БЛОК ВЫБОРА УРОВНЯ ПО ТЗ: Объединили в один блок для автоскрытия на машинах -->
+        <div id="mainLevelBlock" class="level-container-block" style="display: flex; flex-direction: column; align-items: flex-start; gap: 8px; margin-bottom: 22px;">
+            <label style="text-transform: none; font-size: 14px; font-weight: 600; color: #475569; letter-spacing: 0.5px; margin: 0;">Уровень подготовки:</label>
+            <div style="display: flex; align-items: center; gap: 15px; width: 100%;">
 
             
             <!-- Силуэт мотоцикла (по ТЗ: строго по центру оси, формат .jpg) -->
@@ -650,10 +650,12 @@ function updateInterface() {
 
     Object.keys(grouped).forEach(dateStr => {
         let groupDiv = document.createElement('div'); groupDiv.className = 'date-group';
-        let dateParts = dateStr.split('-'); 
-        let months = ['янв', 'фев', 'мар', 'апр', 'май', 'июн', 'июл', 'авг', 'сен', 'окт', 'ноя', 'дек'];
-        let day = parseInt(dateParts, 10); 
-        let monthIdx = parseInt(dateParts, 10) - 1;
+            let dateParts = dateStr.split('-'); 
+            let months = ['янв', 'фев', 'мар', 'апр', 'май', 'июн', 'июл', 'авг', 'сен', 'окт', 'ноя', 'дек'];
+            // Жестко берем день из третьей части даты, а месяц — из второй!
+            let day = parseInt(dateParts[2] || 0, 10); 
+            let monthIdx = parseInt(dateParts[1] || 1, 10) - 1;
+
         let header = document.createElement('div'); header.className = 'date-header'; header.innerText = day + ' ' + months[monthIdx];
         groupDiv.appendChild(header);
 
