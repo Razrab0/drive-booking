@@ -464,6 +464,7 @@
         } else { 
             if (muranoCard) muranoCard.style.display = 'flex'; 
         }
+        updateInterface();
     }
 
     function setCategory(cat) {
@@ -478,6 +479,7 @@
         document.getElementById('carVehiclesBlock').style.display = cat === 'car' ? 'block' : 'none';
         if (cat === 'moto') { setBike(document.getElementById('selectedBike').value || 'Bajaj Boxer'); } 
         else { setVehicleType(document.getElementById('type').value.startsWith('car_') ? document.getElementById('type').value : 'car_granta_manual'); }
+        updateInterface();
     }
 
     function setVehicleType(v) {
