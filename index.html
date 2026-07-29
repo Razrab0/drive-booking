@@ -723,15 +723,35 @@ function updateInterface() {
             }
 
             if (!isAllowed) { btn.disabled = true; badge.innerText = "Занято"; } 
-            else {
+            } else {
                 btn.onclick = function() {
-                    document.querySelectorAll('.slot-btn').forEach(b => b.classList.remove('selected')); btn.classList.add('selected');
-                    document.getElementById('selectedSlot').value = `${slot.date}|${slot.time}`; submitBtn.disabled = false;
+                    // 1. Проверяем, заполнено ли обязательное поле уровня подготовки
+                    const userLevel = document.getElementById('level').value;
+                    
+                    if (!userLevel || userLevel === 'none' || userLevel === '') {
+                        // Если уровень не выбран — выкидываем предупреждение и блокируем лазейку!
+                        alert('Пожалуйста, укажите ваш уровень подготовки перед выбором времени!');
+                        if (submitBtn) submitBtn.disabled = true; // Кнопка записи остается выключенной
+                        document.querySelectorAll('.slot-btn').forEach(b => b.classList.remove('selected')); // Убираем синий цвет
+                        return; // Аварийно выходим, не давая записаться!
+                    }
+
+                    // 2. Если уровень выбран успешно — разрешаем стандартный выбор времени
+                    document.querySelectorAll('.slot-btn').forEach(b => b.classList.remove('selected')); 
+                    btn.classList.add('selected');
+                    document.getElementById('selectedSlot').value = `${slot.date}|${slot.time}`;
+                    
+                    if (submitBtn) {
+                        submitBtn.disabled = false;
+                        submitBtn.style.display = 'block'; 
+                    }
                 };
+                
                 if (document.getElementById('selectedSlot').value === `${slot.date}|${slot.time}`) {
                     btn.classList.add('selected');
                 }
             }
+
             container.appendChild(btn);
         });
         groupDiv.appendChild(container); slotsBox.appendChild(groupDiv);
