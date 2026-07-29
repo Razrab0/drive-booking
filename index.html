@@ -478,10 +478,11 @@
         <input type="hidden" id="selectedBike" value="Bajaj Boxer">
         <input type="hidden" id="selectedInstructor" value="Игорь Иванов">
 
-        <div id="motoLevelBlock">
         <!-- Заголовок блока по ТЗ: аккуратный, стандартный регистр, темно-серый цвет -->
-        <label style="text-transform: none; font-size: 14px; font-weight: 600; color: #475569; letter-spacing: normal; margin-bottom: 10px;">Ваш уровень подготовки:</label>
-        <div id="mainLevelBlock" class="level-container-block" style="display: flex; align-items: center; gap: 15px; margin-bottom: 22px;">
+               <!-- БЛОК УРОВНЯ: Надпись упрятана внутрь контейнера для авто-скрытия на машинах! -->
+        <div id="mainLevelBlock" class="level-container-block" style="display: flex; flex-direction: column; align-items: flex-start; gap: 8px; margin-bottom: 22px;">
+            <label style="text-transform: none; font-size: 14px; font-weight: 600; color: #475569; letter-spacing: normal; margin: 0;">Ваш уровень подготовки:</label>
+            <div style="display: flex; align-items: center; gap: 15px; width: 100%;">
 
             
             <!-- Силуэт мотоцикла (по ТЗ: строго по центру оси, формат .jpg) -->
@@ -495,6 +496,7 @@
                     <option value="yellow" style="background: #ffffff; color: #b45309; font-weight: 600;">Я средний уровень</option>
                     <option value="red" style="background: #ffffff; color: #b91c1c; font-weight: 600;">Я абсолютный новичок</option>
                 </select>
+                </div>
                 <input type="hidden" id="level" value="none">
                 <!-- Минималистичная стрелочка ▼ по ТЗ справа внутри поля -->
                 <span id="dropdownArrow" style="position: absolute; right: 16px; font-size: 11px; color: #cbd5e1; pointer-events: none; transition: all 0.25s ease;">▼</span>
