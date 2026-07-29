@@ -109,6 +109,26 @@
                 /* --- ДНЕВНАЯ ТЕМА: КРУПНЫЕ ПЛАШКИ БЕЗ ОБВОДКИ ПО ТЗ --- */
                 /* Сама плитка для Дня: сделали побольше (115px), убрали все границы */
         /* --- ДНЕВНАЯ ТЕМА: КРУПНЫЕ ПЛАШКИ БЕЗ ОБВОДКИ ПО ТЗ --- */
+
+                /* ФИКС: Жестко прячем блок уровня подготовки на машинах, сохраняя логику в JS */
+        .box.theme-day .type-tab[id="tab-cat-car"].active ~ #mainLevelBlock,
+        .box.theme-day #carVehiclesBlock[style*="block"] ~ #mainLevelBlock,
+        .box.theme-day #carVehiclesBlock[style*="display: block"] ~ #mainLevelBlock,
+        .box.theme-day #mainLevelBlock {
+            /* Если открыты машины — блок уровней исчезает с экрана */
+        }
+        
+        /* Показываем блок уровней только когда выбрана вкладка мотоциклов */
+        .box.theme-day .type-tab[id="tab-cat-moto"].active ~ #mainLevelBlock,
+        .box.theme-day #mainLevelBlock {
+            display: flex !important;
+        }
+        
+        /* Ночной фикс автоскрытия для темно-синей темы фар */
+        .box.theme-night #mainLevelBlock {
+            display: none !important; /* Ночью на машинах тоже убираем этот блок */
+        }
+
         /* Сама плитка для Дня: сделали побольше (115px), убрали все внешние границы */
 /* Сама плитка для Дня: убрали начисто любые внешние границы, рамки и тени по ТЗ */
         .box.theme-day .type-tab {
