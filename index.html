@@ -367,6 +367,20 @@
             background-color: #ffffff !important;
             box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1) !important;
         }
+                /* --- ТЮНИНГ ШИРИНЫ: ДЕЛАЕМ ВЫПАДАЮЩИЙ СПИСОК АККУРАТНЫМ И ПОУЖЕ --- */
+        select[id="level"],
+        .level-container-block select {
+            flex-grow: 0 !important; /* Запрещаем плашке растягиваться на весь экран */
+            width: 230px !important;  /* Жестко задали красивую, аккуратную ширину поуже */
+            height: 44px !important;  /* Сделали высоту чуть изящнее (среднее между 48 и 40) */
+            font-size: 14px !important;
+        }
+        
+        /* Выравниваем контейнер, чтобы уменьшенная плашка стояла ровно в ряд с мотоциклом */
+        .level-container-block {
+            justify-content: flex-start !important;
+        }
+
 
     </style>
 </head>
