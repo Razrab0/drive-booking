@@ -338,6 +338,36 @@
         .inst-img { width: 100% !important; height: 110px !important; object-fit: cover !important; border: none !important; margin-bottom: 10px !important; background: #f1f5f9; flex-shrink: 0 !important; }
         .inst-name { font-family: "Eras Bold ITC", "Eras Demi ITC", "Arial Black", sans-serif !important; font-weight: 900 !important; font-size: 13px !important; color: var(--text) !important; letter-spacing: 0.3px !important; margin-bottom: 2px !important; padding: 0 6px !important; }
         .inst-spec { font-family: "Bahnschrift Light SemiCondensed", "Bahnschrift", sans-serif !important; font-size: 11px !important; color: var(--text-muted) !important; font-weight: 500 !important; padding: 0 6px !important; }
+
+                /* --- ФИНАЛЬНЫЙ ТЮНИНГ УРОВНЕЙ: ВЫЖИГАЕМ РОЗОВУЮ ЗАЛИВКУ ДО БЕЛОГО --- */
+        /* Намертво запрещаем делать фон розовым при выборе уровня новичка */
+        .level-container-block select,
+        #mainLevelBlock select,
+        .level-container-block select option {
+            background: #ffffff !important; 
+            background-color: #ffffff !important;
+        }
+        
+        /* УМЕНЬШАЕМ НЕОН: Заменяем ядовитый туман вокруг плашки на легкое матовое свечение */
+        .level-container-block div[style*="border-color"],
+        .level-container-block select[style*="border-color"],
+        select[id="level"] {
+            background: #ffffff !important;
+            background-color: #ffffff !important;
+            
+            /* Тонкое, едва заметное матовое свечение 6px вместо жирного ИИ-тумана */
+            box-shadow: 0 2px 6px rgba(239, 68, 68, 0.15) !important;
+        }
+        
+        /* Если в инлайновых стилях прописан box-shadow для красного, желтого или зеленого уровня — жестко сжимаем его до 6px */
+        div[style*="rgba(239, 68, 68"], 
+        select[style*="rgba(239, 68, 68"],
+        div[style*="box-shadow"], 
+        select[style*="box-shadow"] {
+            background-color: #ffffff !important;
+            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1) !important;
+        }
+
     </style>
 </head>
 <body>
