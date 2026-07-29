@@ -372,7 +372,9 @@
         </div>
 
         <label>Категория обучения:</label>
-        <div class="type-switcher" style="display: grid; grid-template-columns: 1fr 1fr; gap: 0px; margin-bottom: 25px; background: transparent;">
+        <!-- Жестко прописали border: none прямо в HTML, чтобы стереть рамку со скриншота навсегда! -->
+        <div class="type-switcher" style="display: grid; grid-template-columns: 1fr 1fr; gap: 0 !important; margin-bottom: 25px; background: transparent !important; border: none !important; border-radius: 0 !important; box-shadow: none !important;">
+
             <!-- Вкладка Мотоциклы -->
             <div class="type-tab active" id="tab-cat-moto" onclick="setCategory('moto')" style="border: none !important;">
                 <div class="tab-image-wrapper"></div>
