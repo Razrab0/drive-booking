@@ -388,11 +388,11 @@
             flex-direction: column;
             align-items: center;
             justify-content: center;
-            flex: 0 0 62px; /* Фиксированная аккуратная ширина карточки дня */
-            height: 74px;
+            flex: 0 0 52px; /* Уменьшили ширину с 62px до 52px, чтобы больше дней влезало в ряд! */
+            height: 62px; /* Уменьшили высоту с 74px до 62px — теперь они аккуратные! */
             background-color: #ffffff !important;
-            border: 1px solid #cbd5e1 !important; /* Тонкая серая рамочка */
-            border-radius: 16px !important; /* Мягкие скругленные уголки */
+            border: 1px solid #cbd5e1 !important;
+            border-radius: 12px !important; /* Чуть уменьшили скругление под новый масштаб */
             cursor: pointer;
             transition: all 0.2s ease-in-out;
             box-shadow: 0 1px 3px rgba(0, 0, 0, 0.02) !important;
@@ -400,18 +400,19 @@
         
         /* Название дня недели (например: Пн, Вт) */
         .day-tab-card .day-name {
-            font-size: 11px;
+            font-size: 10px; /* Уменьшили шрифт */
             font-weight: 700;
-            color: #94a3b8; /* Спокойный серый цвет */
+            color: #94a3b8;
             text-transform: uppercase;
-            margin-bottom: 4px;
+            margin-bottom: 2px;
         }
         
         /* Число месяца внутри карточки (например: 28, 29) */
         .day-tab-card .day-number {
-            font-size: 17px;
-            font-weight: 800; /* Крупно и жирно */
+            font-size: 15px; /* Уменьшили с 17px до 15px */
+            font-weight: 800;
             color: #0f172a;
+            line-height: 1.1;
         }
         
         /* АКТИВНЫЙ ВЫБРАННЫЙ ДЕНЬ ПО ТЗ: Премиальный глубокий синий акцент */
@@ -596,7 +597,7 @@
                     <option value="none" selected disabled style="background: #ffffff; color: #94a3b8;">Укажите свой уровень...</option>
                     <option value="green" style="background: #ffffff; color: #15803d; font-weight: 600;">Уверенно катаюсь</option>
                     <option value="yellow" style="background: #ffffff; color: #b45309; font-weight: 600;">Я средний уровень</option>
-                    <option value="red" style="background: #ffffff; color: #b91c1c; font-weight: 600;">Я абсолютный новичок</option>
+                    <option value="red" style="background: #ffffff; color: #b91c1c; font-weight: 600;">Я новичок</option>
                 </select>
                 </div>
                 <input type="hidden" id="level" value="none">
