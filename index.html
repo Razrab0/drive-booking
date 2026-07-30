@@ -368,6 +368,76 @@
             box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1) !important;
         }
 
+        /* --- ПРЕМИАЛЬНЫЙ ГОРИЗОНТАЛЬНЫЙ КАЛЕНДАРЬ НА НЕДЕЛЮ ПО ТЗ --- */
+        /* Контейнер для горизонтальной ленты дней с мягким свайпом */
+        .week-calendar-slider {
+            display: flex;
+            gap: 10px;
+            overflow-x: auto; /* Разрешаем мягкий горизонтальный скролл пальцем на телефоне */
+            padding: 5px 2px 15px 2px;
+            margin-bottom: 22px;
+            scrollbar-width: none; /* Прячем системный некрасивый скроллбар */
+        }
+        .week-calendar-slider::-webkit-scrollbar {
+            display: none; /* Скрываем скроллбар на айфонах и андроидах */
+        }
+        
+        /* Карточка отдельного дня недели по умолчанию (кристально белая внутри) */
+        .day-tab-card {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            flex: 0 0 62px; /* Фиксированная аккуратная ширина карточки дня */
+            height: 74px;
+            background-color: #ffffff !important;
+            border: 1px solid #cbd5e1 !important; /* Тонкая серая рамочка */
+            border-radius: 16px !important; /* Мягкие скругленные уголки */
+            cursor: pointer;
+            transition: all 0.2s ease-in-out;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.02) !important;
+        }
+        
+        /* Название дня недели (например: Пн, Вт) */
+        .day-tab-card .day-name {
+            font-size: 11px;
+            font-weight: 700;
+            color: #94a3b8; /* Спокойный серый цвет */
+            text-transform: uppercase;
+            margin-bottom: 4px;
+        }
+        
+        /* Число месяца внутри карточки (например: 28, 29) */
+        .day-tab-card .day-number {
+            font-size: 17px;
+            font-weight: 800; /* Крупно и жирно */
+            color: #0f172a;
+        }
+        
+        /* АКТИВНЫЙ ВЫБРАННЫЙ ДЕНЬ ПО ТЗ: Премиальный глубокий синий акцент */
+        .day-tab-card.active {
+            background-color: #2563eb !important; /* Насыщенная синяя заливка всей карточки */
+            border-color: #2563eb !important;
+            transform: translateY(-2px); /* Легкий дорогой эффект приподнимания под пальцем */
+            box-shadow: 0 4px 12px rgba(37, 99, 235, 0.25) !important; /* Объемная мягкая тень */
+        }
+        /* Перекрашиваем буквы внутри выбранного активного дня в белый цвет */
+        .day-tab-card.active .day-name {
+            color: rgba(255, 255, 255, 0.8) !important;
+        }
+        .day-tab-card.active .day-number {
+            color: #ffffff !important;
+        }
+        
+        /* Заголовок над сеткой слотов времени, показывающий выбранную дату */
+        .selected-date-title {
+            font-size: 14px;
+            font-weight: 700;
+            color: #475569;
+            margin-bottom: 12px;
+            padding-left: 2px;
+        }
+
     </style>
 </head>
 <body>
