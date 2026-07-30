@@ -439,6 +439,120 @@
             padding-left: 2px;
         }
 
+
+                /* --- СТИЛЬНЫЙ АВТОШКОЛЬНЫЙ ДИЗАЙН БЛОКА ОТМЕНЫ ЗАНЯТИЙ С НУЛЯ --- */
+        /* Главный контейнер отмены: чёткий, как дорожный знак, белый внутри с асфальтовой рамкой */
+        .cancel-booking-box, 
+        #cancelBlock,
+        div[style*="background-color: #fee2e2"],
+        div[style*="background-color: rgb(254, 226, 226)"] {
+            background-color: #ffffff !important; /* Кристально белый фон внутри */
+            border: 2px solid #0f172a !important; /* Чёткая, плотная асфальтово-чёрная рамка 2px! */
+            border-radius: 14px !important; /* Строгие аккуратные уголки */
+            padding: 22px 20px !important;
+            margin-top: 25px !important;
+            box-shadow: 0 4px 12px rgba(15, 23, 42, 0.04) !important; /* Легкая строгая тень */
+            position: relative !important;
+            overflow: hidden !important;
+        }
+        
+        /* Сигнальная гоночная полоса на верхней грани блока для стиля автошколы */
+        .cancel-booking-box::before,
+        #cancelBlock::before,
+        div[style*="background-color: #fee2e2"]::before {
+            content: "" !important;
+            position: absolute !important;
+            top: 0 !important;
+            left: 0 !important;
+            right: 0 !important;
+            height: 4px !important;
+            background: repeating-linear-gradient(
+                -45deg,
+                #0f172a,
+                #0f172a 10px,
+                #f59e0b 10px,
+                #f59e0b 20px
+            ) !important; /* Черно-желтая разметка гоночного трека сверху плашки! */
+        }
+        
+        /* Заголовок блока отмены (строгий, плотный, автошкольный стиль) */
+        .cancel-booking-box h3,
+        #cancelBlock h3,
+        div[style*="background-color: #fee2e2"] h3 {
+            font-size: 16px !important;
+            font-weight: 900 !important; /* Максимально плотный и жирный шрифт */
+            color: #0f172a !important;
+            text-transform: uppercase !important; /* Мужественный капс как на знаках */
+            letter-spacing: 0.5px !important;
+            margin-top: 5px !important;
+            margin-bottom: 6px !important;
+        }
+        
+        /* Текст описания внутри блока */
+        .cancel-booking-box p,
+        #cancelBlock p,
+        div[style*="background-color: #fee2e2"] p {
+            font-size: 12px !important;
+            font-weight: 600 !important;
+            color: #475569 !important; /* Чёткий графитовый цвет текста */
+            line-height: 1.4 !important;
+            margin-bottom: 16px !important;
+        }
+        
+        /* Поле ввода 6-значного цифрового кода */
+        .cancel-booking-box input,
+        #cancelBlock input,
+        div[style*="background-color: #fee2e2"] input {
+            width: 100% !important;
+            height: 46px !important;
+            padding: 0 16px !important;
+            font-size: 15px !important;
+            font-weight: 800 !important; /* Цифры кода будут жирными и чёткими */
+            color: #0f172a !important;
+            background-color: #f8fafc !important; /* Мягкая серая подложка для поля */
+            border: 2px solid #cbd5e1 !important;
+            border-radius: 10px !important;
+            outline: none !important;
+            transition: all 0.2s ease !important;
+            font-family: monospace !important; /* Особый цифровой шрифт для кода */
+            letter-spacing: 2px !important;
+        }
+        
+        /* Фокус поля ввода — рамка становится чёрной, как асфальт */
+        .cancel-booking-box input:focus,
+        #cancelBlock input:focus {
+            border-color: #0f172a !important;
+            background-color: #ffffff !important;
+        }
+        
+        /* Кнопка «ОТМЕНИТЬ ЗАПИСЬ» — сигнальный, плотный спортивный цвет суппортов */
+        .cancel-booking-box button,
+        #cancelBlock button,
+        #cancelSubmitBtn,
+        div[style*="background-color: #fee2e2"] button {
+            width: 100% !important;
+            height: 48px !important;
+            margin-top: 14px !important;
+            background-color: #dc2626 !important; /* Яркий, сочный автомобильный красный цвет! */
+            color: #ffffff !important;
+            border: none !important;
+            border-radius: 10px !important;
+            font-size: 13px !important;
+            font-weight: 900 !important;
+            text-transform: uppercase !important; /* Капс для решительного действия */
+            letter-spacing: 1px !important;
+            cursor: pointer !important;
+            transition: all 0.2s ease !important;
+            box-shadow: 0 3px 6px rgba(220, 38, 38, 0.15) !important;
+        }
+        
+        /* Эффект при нажатии на кнопку отмены */
+        .cancel-booking-box button:active,
+        #cancelBlock button:active {
+            background-color: #991b1b !important; /* Глубокий бордовый при тапе под пальцем */
+            transform: scale(0.98) !important;
+        }
+
     </style>
 </head>
 <body>
