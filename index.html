@@ -725,24 +725,34 @@ function updateInterface() {
             if (!isAllowed) { btn.disabled = true; badge.innerText = "Занято"; } 
             else {
                 btn.onclick = function() {
-                    // НАШ ГЛАВНЫЙ ФИКС ОШИБКИ: вытаскиваем текущее значение уровня прямо в момент тапа по времени
-                    const currentSelectedLevel = document.getElementById('level')?.value || 'none';
-                    
-                    // Если это мотики и уровень остался дефолтным ("none") — жестко блокируем лазейку!
-                    if (currentCategory === 'moto' && currentSelectedLevel === 'none') {
-                        alert('Пожалуйста, выберите ваш уровень подготовки перед выбором времени занятия!');
-                        if (submitBtn) submitBtn.disabled = true; // Кнопка записи остается намертво выключенной
-                        document.querySelectorAll('.slot-btn').forEach(b => b.classList.remove('selected')); // Гасим синий цвет кнопок
-                        return; // Аварийно выходим из функции, прерывая запись!
-                    }
-
-                    // Если проверка прошла или это машины — разрешаем стандартный выбор слота
+                    // Выделяем нажатую кнопку времени синим
                     document.querySelectorAll('.slot-btn').forEach(b => b.classList.remove('selected')); 
                     btn.classList.add('selected');
                     document.getElementById('selectedSlot').value = `${slot.date}|${slot.time}`; 
-                    if (submitBtn) {
-                        submitBtn.disabled = false;
-                        submitBtn.style.display = 'block'; 
+                    
+                    // БЕЗОПАСНАЯ И МЯГКАЯ ПРОВЕРКА КАК С ИМЕНЕМ/ТЕЛЕФОНОМ:
+                    const currentSelectedLevel = document.getElementById('level')?.value || 'none';
+                    
+                    if (currentCategory === 'moto' && currentSelectedLevel === 'none') {
+                        // Если это мотики и уровень забыли выбрать — кнопка записи ОСТАЕТСЯ БЛЕДНОЙ и выключенной!
+                        if (submitBtn) {
+                            submitBtn.disabled = true;
+                            submitBtn.style.display = 'block'; 
+                        }
+                        // Подсвечиваем рамку уровня красным, чтобы ученик понял, где он накосячил
+                        const levelEl = document.getElementById('level');
+                        if (levelEl) levelEl.style.borderColor = '#be123c';
+                    } else {
+                        // Если всё заполнено (или это машины) — сочно зажигаем кнопку записи!
+                        if (submitBtn) {
+                            submitBtn.disabled = false;
+                            submitBtn.style.display = 'block'; 
+                        }
+                        const levelEl = document.getElementById('level');
+                        if (levelEl && currentCategory === 'moto') {
+                            // Возвращаем рамке красивый цвет уровня, если он выбран
+                            levelEl.style.borderColor = currentSelectedLevel === 'red' ? '#be123c' : (currentSelectedLevel === 'yellow' ? '#b45309' : '#15803d');
+                        }
                     }
                 };
                 
@@ -750,6 +760,7 @@ function updateInterface() {
                     btn.classList.add('selected');
                 }
             }
+
 
             container.appendChild(btn);
         });
