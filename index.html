@@ -691,90 +691,142 @@ function updateInterface() {
 
     let grouped = {}; instructorSlots.forEach(slot => { if (!grouped[slot.date]) grouped[slot.date] = []; grouped[slot.date].push(slot); });
 
-    Object.keys(grouped).forEach(dateStr => {
-        let groupDiv = document.createElement('div'); groupDiv.className = 'date-group';
-        let dateParts = dateStr.split('-'); 
-        let months = ['янв', 'фев', 'мар', 'апр', 'май', 'июн', 'июл', 'авг', 'сен', 'окт', 'ноя', 'дек'];
-        // Жестко берем день из третьей части даты, а месяц — из второй!
-        let day = parseInt(dateParts[2], 10); 
-        let monthIdx = parseInt(dateParts[1], 10) - 1;
+    // --- ПРЕМИАЛЬНЫЙ КАЛЕНДАРЬ НА НЕДЕЛЮ ---
+    // Создаем или находим контейнер для ленты дней недели
+    let slider = document.getElementById('weekCalendarSlider');
+    if (!slider) {
+        slider = document.createElement('div');
+        slider.id = 'weekCalendarSlider';
+        slider.className = 'week-calendar-slider';
+        slotsBox.parentNode.insertBefore(slider, slotsBox); // Вставляем ленту прямо над слотами времени
+    }
+    slider.innerHTML = ''; // Зачищаем старые дни перед перерисовкой
 
-        let header = document.createElement('div'); header.className = 'date-header'; header.innerText = day + ' ' + months[monthIdx];
-        groupDiv.appendChild(header);
+    const datesList = Object.keys(grouped).sort(); // Сортируем даты по порядку
+    if (datesList.length === 0) return;
 
-        let container = document.createElement('div'); container.className = 'slot-container';
-        grouped[dateStr].forEach(slot => {
-            let btn = document.createElement('button'); btn.type = 'button'; btn.className = 'slot-btn';
-            let timeText = document.createElement('span'); timeText.innerText = slot.time; btn.appendChild(timeText);
-            let badge = document.createElement('span'); badge.style.fontSize = '12px'; badge.innerText = 'Свободно'; btn.appendChild(badge);
-            
-            let isAllowed = true; let isCarType = type.startsWith('car_');
-            let targetId = isCarType ? type : selectedBike;
+    // Запоминаем выбранный день (по умолчанию берем самый первый доступный день недели)
+    if (typeof window.currentSelectedDateStr === 'undefined' || !datesList.includes(window.currentSelectedDateStr)) {
+        window.currentSelectedDateStr = datesList[0];
+    }
 
-            let isBusyByAnyone = (slot.bikes || []).some(b => b.toString().trim() === targetId.toString().trim());
-            if (isBusyByAnyone) { isAllowed = false; }
+    // Словари для красивого вывода дат
+    const daysOfWeekNames = ['Вс', 'Пн', 'Вт', 'Ср', 'Чт', 'Пт', 'Сб'];
+    const monthsNames = ['янв', 'фев', 'мар', 'апр', 'май', 'июн', 'июл', 'авг', 'сен', 'окт', 'ноя', 'дек'];
 
-            if (isCarType && (slot.car > 0 || slot.totalMoto > 0)) { isAllowed = false; }
-            if (!isCarType && type === "moto") {
-                if (slot.totalMoto >= 3 || slot.car > 0) isAllowed = false;
-                if (level === "red" && (slot.red > 0 || slot.yellow > 0 || slot.green > 2)) isAllowed = false;
-                if (level === "yellow" && (slot.red > 0 || slot.yellow >= 2 || (slot.yellow === 1 && slot.green > 1))) isAllowed = false;
-                if (level === "green" && ((slot.red === 1 && slot.green >= 2) || (slot.yellow === 2 && slot.green >= 1))) isAllowed = false;
-            }
+    // 1. Рисуем горизонтальную премиум-ленту дней недели сверху
+    datesList.forEach(dateStr => {
+        const dateParts = dateStr.split('-');
+        const dayNum = parseInt(dateParts[2], 10);
+        const monthIdx = parseInt(dateParts[1], 10) - 1;
+        
+        // Вычисляем реальный день недели (Пн, Вт и т.д.)
+        const realDateObj = new Date(parseInt(dateParts[0], 10), monthIdx, dayNum);
+        const dayNameText = daysOfWeekNames[realDateObj.getDay()];
 
-            if (!isAllowed) { btn.disabled = true; badge.innerText = "Занято"; } 
-            else {
-                btn.onclick = function() {
-                    // Выделяем нажатую кнопку времени синим
-                    document.querySelectorAll('.slot-btn').forEach(b => b.classList.remove('selected')); 
-                    btn.classList.add('selected');
-                    document.getElementById('selectedSlot').value = `${slot.date}|${slot.time}`; 
-                    
-                    // БЕЗОПАСНАЯ И МЯГКАЯ ПРОВЕРКА КАК С ИМЕНЕМ/ТЕЛЕФОНОМ:
-                    const currentSelectedLevel = document.getElementById('level')?.value || 'none';
-                    
-                    if (currentCategory === 'moto' && currentSelectedLevel === 'none') {
-                        // Если это мотики и уровень забыли выбрать — кнопка записи ОСТАЕТСЯ БЛЕДНОЙ и выключенной!
-                        if (submitBtn) {
-                            submitBtn.disabled = true;
-                            submitBtn.style.display = 'block'; 
-                        }
-                        // Подсвечиваем рамку уровня красным, чтобы ученик понял, где он накосячил
-                        const levelEl = document.getElementById('level');
-                        if (levelEl) levelEl.style.borderColor = '#be123c';
-                    } else {
-                        // Если всё заполнено (или это машины) — сочно зажигаем кнопку записи!
-                        if (submitBtn) {
-                            submitBtn.disabled = false;
-                            submitBtn.style.display = 'block'; 
-                        }
-                        const levelEl = document.getElementById('level');
-                        if (levelEl && currentCategory === 'moto') {
-                            // Возвращаем рамке красивый цвет уровня, если он выбран
-                            levelEl.style.borderColor = currentSelectedLevel === 'red' ? '#be123c' : (currentSelectedLevel === 'yellow' ? '#b45309' : '#15803d');
-                        }
-                    }
-                };
-                
-                if (document.getElementById('selectedSlot').value === `${slot.date}|${slot.time}`) {
-                    btn.classList.add('selected');
-                }
-            }
+        const card = document.createElement('div');
+        card.className = 'day-tab-card';
+        if (dateStr === window.currentSelectedDateStr) card.classList.add('active');
 
+        card.innerHTML = `
+            <span class="day-name">${dayNameText}</span>
+            <span class="day-number">${dayNum}</span>
+        `;
 
-            container.appendChild(btn);
-        });
-        groupDiv.appendChild(container); slotsBox.appendChild(groupDiv);
+        // Клик по карточке дня мгновенно переключает дату и плавно обновляет слоты времени снизу
+        card.onclick = function() {
+            window.currentSelectedDateStr = dateStr;
+            updateInterface();
+        };
+
+        slider.appendChild(card);
     });
 
-    // Карточки машин и мотиков теперь ВСЕГДА остаются активными и красивыми!
-    const carIds = { 'car_granta_manual': 'tab-car_granta_manual', 'car_logan_manual': 'tab-car_logan_manual', 'car_logan_auto': 'tab-car_logan_auto', 'car_murano_auto': 'tab-car_murano_auto' };
-    Object.values(carIds).forEach(id => { if(document.getElementById(id)) document.getElementById(id).classList.remove('disabled'); });
-    if (carIds[type] && document.getElementById(carIds[type])) {
-        Object.values(carIds).forEach(id => { if(document.getElementById(id)) document.getElementById(id).classList.remove('active'); });
-        document.getElementById(carIds[type]).classList.add('active');
-    }
-    
+    // 2. Выводим мятно-белые крупные слоты времени СТРОГО на выбранный учеником день недели
+    const activeDateStr = window.currentSelectedDateStr;
+    const activeDateParts = activeDateStr.split('-');
+    const activeDay = parseInt(activeDateParts[2], 10);
+    const activeMonthIdx = parseInt(activeDateParts[1], 10) - 1;
+
+    // Аккуратный журнальный заголовок над кнопками
+    const titleDiv = document.createElement('div');
+    titleDiv.className = 'selected-date-title';
+    titleDiv.innerText = `Доступное время на ${activeDay} ${monthsNames[activeMonthIdx]}:`;
+    slotsBox.appendChild(titleDiv);
+
+    const container = document.createElement('div');
+    container.className = 'slot-container';
+
+    grouped[activeDateStr].forEach(slot => {
+        let btn = document.createElement('button');
+        btn.type = 'button';
+        btn.className = 'slot-btn';
+        
+        let timeText = document.createElement('span');
+        timeText.innerText = slot.time;
+        btn.appendChild(timeText);
+        
+        let badge = document.createElement('span');
+        badge.style.fontSize = '10px';
+        badge.innerText = 'Свободно';
+        btn.appendChild(badge);
+        
+        // Жесткая проверка ограничений и блокировок из твоего бэкапа
+        let isAllowed = true;
+        let isCarType = (currentCategory === 'car');
+        
+        let activeCarCard = document.querySelector('.car-card-selector.active, .type-tab.active[id^="tab-car_"]');
+        let targetId = isCarType ? (activeCarCard ? activeCarCard.id.replace('tab-', '') : 'car_granta_manual') : selectedBike;
+
+        let isBusyByAnyone = (slot.bikes || []).some(b => b.toString().trim() === targetId.toString().trim());
+        if (isBusyByAnyone) { isAllowed = false; }
+
+        if (isCarType && slot.car > 0) { isAllowed = false; }
+        if (!isCarType) {
+            if (slot.totalMoto >= 3 || slot.car > 0) isAllowed = false;
+            const level = document.getElementById('level')?.value || 'green';
+            if (level === "red" && (slot.red > 0 || slot.yellow > 0 || slot.green > 2)) isAllowed = false;
+            if (level === "yellow" && (slot.red > 0 || slot.yellow >= 2 || (slot.yellow === 1 && slot.green > 1))) isAllowed = false;
+            if (level === "green" && ((slot.red === 1 && slot.green >= 2) || (slot.yellow === 2 && slot.green >= 1))) isAllowed = false;
+        }
+
+        if (!isAllowed) {
+            btn.disabled = true;
+            badge.innerText = "Занято";
+        } else {
+            btn.onclick = function() {
+                // Синее выделение выбранной кнопки времени
+                document.querySelectorAll('.slot-btn').forEach(b => b.classList.remove('selected'));
+                btn.classList.add('selected');
+                document.getElementById('selectedSlot').value = `${slot.date}|${slot.time}`;
+                
+                // Твоя фирменная бордовая проверка уровня
+                const currentSelectedLevel = document.getElementById('level')?.value || 'none';
+                if (currentCategory === 'moto' && currentSelectedLevel === 'none') {
+                    if (submitBtn) submitBtn.disabled = true;
+                    const levelEl = document.getElementById('level');
+                    if (levelEl) levelEl.style.borderColor = '#be123c';
+                } else {
+                    if (submitBtn) {
+                        submitBtn.disabled = false;
+                        submitBtn.style.display = 'block';
+                    }
+                    const levelEl = document.getElementById('level');
+                    if (levelEl && currentCategory === 'moto') {
+                        levelEl.style.borderColor = currentSelectedLevel === 'red' ? '#be123c' : (currentSelectedLevel === 'yellow' ? '#b45309' : '#15803d');
+                    }
+                }
+            };
+            
+            if (document.getElementById('selectedSlot').value === `${slot.date}|${slot.time}`) {
+                btn.classList.add('selected');
+            }
+        }
+        container.appendChild(btn);
+    });
+    slotsBox.appendChild(container);
+
+    // Подсветка карточек мотоциклов (твоя оригинальная логика)
     const bikeIds = { 'Bajaj Boxer': 'bike-boxer', 'Fuego Rambolor 250': 'bike-fuego', 'Yamaha YBR 125': 'bike-yamaha' };
     Object.values(bikeIds).forEach(id => { if(document.getElementById(id)) document.getElementById(id).classList.remove('disabled'); });
     if (bikeIds[selectedBike] && document.getElementById(bikeIds[selectedBike]) && currentCategory === 'moto') {
@@ -782,6 +834,7 @@ function updateInterface() {
         document.getElementById(bikeIds[selectedBike]).classList.add('active');
     }
 }
+
 
 
     document.getElementById('mainForm').addEventListener('submit', function(e) {
