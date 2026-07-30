@@ -725,13 +725,32 @@ function updateInterface() {
             if (!isAllowed) { btn.disabled = true; badge.innerText = "Занято"; } 
             else {
                 btn.onclick = function() {
-                    document.querySelectorAll('.slot-btn').forEach(b => b.classList.remove('selected')); btn.classList.add('selected');
-                    document.getElementById('selectedSlot').value = `${slot.date}|${slot.time}`; submitBtn.disabled = false;
+                    // НАШ ГЛАВНЫЙ ФИКС ОШИБКИ: вытаскиваем текущее значение уровня прямо в момент тапа по времени
+                    const currentSelectedLevel = document.getElementById('level')?.value || 'none';
+                    
+                    // Если это мотики и уровень остался дефолтным ("none") — жестко блокируем лазейку!
+                    if (currentCategory === 'moto' && currentSelectedLevel === 'none') {
+                        alert('Пожалуйста, выберите ваш уровень подготовки перед выбором времени занятия!');
+                        if (submitBtn) submitBtn.disabled = true; // Кнопка записи остается намертво выключенной
+                        document.querySelectorAll('.slot-btn').forEach(b => b.classList.remove('selected')); // Гасим синий цвет кнопок
+                        return; // Аварийно выходим из функции, прерывая запись!
+                    }
+
+                    // Если проверка прошла или это машины — разрешаем стандартный выбор слота
+                    document.querySelectorAll('.slot-btn').forEach(b => b.classList.remove('selected')); 
+                    btn.classList.add('selected');
+                    document.getElementById('selectedSlot').value = `${slot.date}|${slot.time}`; 
+                    if (submitBtn) {
+                        submitBtn.disabled = false;
+                        submitBtn.style.display = 'block'; 
+                    }
                 };
+                
                 if (document.getElementById('selectedSlot').value === `${slot.date}|${slot.time}`) {
                     btn.classList.add('selected');
                 }
             }
+
             container.appendChild(btn);
         });
         groupDiv.appendChild(container); slotsBox.appendChild(groupDiv);
