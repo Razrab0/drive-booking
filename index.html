@@ -468,7 +468,7 @@
             <div class="inst-card" id="inst-andrey" onclick="setInstructor('Андрей Гришин')">
                 <img src="andrey.jpg" alt="👨‍🏫" class="inst-img">
                 <div class="inst-name">АНДРЕЙ ГРИШИН</div>
-                <div class="inst-spec">Категории: А, В (кроме Мурано)</div>
+                <div class="inst-spec">Категории: А, В </div>
             </div>
         </div>
 
@@ -602,7 +602,7 @@
                 </div>
                 <input type="hidden" id="level" value="none">
                 <!-- Минималистичная стрелочка ▼ по ТЗ справа внутри поля -->
-                <span id="dropdownArrow" style="position: absolute; right: 16px; font-size: 11px; color: #cbd5e1; pointer-events: none; transition: all 0.25s ease;">▼</span>
+                <span id="dropdownArrow" style="position: absolute; right: 16px; font-size: 11px; color: #cbd5e1; pointer-events: none; transition: all 0.25s ease;"> </span>
             </div>
         </div>
 
@@ -719,6 +719,8 @@
         }
         
         updateInterface();
+        const selectedTimeBtn = document.querySelector('.slot-btn.selected');
+        if (selectedTimeBtn) selectedTimeBtn.click();
     }
 
 
