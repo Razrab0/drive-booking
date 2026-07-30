@@ -529,12 +529,6 @@
                     <option value="red" style="background: #ffffff; color: #b91c1c; font-weight: 600;">Я абсолютный новичок</option>
                 </select>
                 </div>
-            <!-- Наша аккуратная скрытая строчка-подсказка как у полей Имени/Телефона -->
-            <div id="levelErrorHint" style="display: none; color: #be123c; font-size: 12px; font-weight: 700; margin-top: 5px; margin-left: 95px;">
-                Пожалуйста, укажите ваш уровень подготовки
-            </div>
-        </div>
-                </div>
                 <input type="hidden" id="level" value="none">
                 <!-- Минималистичная стрелочка ▼ по ТЗ справа внутри поля -->
                 <span id="dropdownArrow" style="position: absolute; right: 16px; font-size: 11px; color: #cbd5e1; pointer-events: none; transition: all 0.25s ease;">▼</span>
@@ -736,29 +730,27 @@ function updateInterface() {
                     btn.classList.add('selected');
                     document.getElementById('selectedSlot').value = `${slot.date}|${slot.time}`; 
                     
+                    // БЕЗОПАСНАЯ И МЯГКАЯ ПРОВЕРКА КАК С ИМЕНЕМ/ТЕЛЕФОНОМ:
                     const currentSelectedLevel = document.getElementById('level')?.value || 'none';
-                    const errorHint = document.getElementById('levelErrorHint');
                     
                     if (currentCategory === 'moto' && currentSelectedLevel === 'none') {
-                        // Если уровень забыли выбрать — кнопка записи бледнеет, а строчка МЯГКО ЗАГОРАЕТСЯ
+                        // Если это мотики и уровень забыли выбрать — кнопка записи ОСТАЕТСЯ БЛЕДНОЙ и выключенной!
                         if (submitBtn) {
                             submitBtn.disabled = true;
                             submitBtn.style.display = 'block'; 
                         }
-                        if (errorHint) errorHint.style.display = 'block'; // Показываем аккуратную красную надпись
-                        
+                        // Подсвечиваем рамку уровня красным, чтобы ученик понял, где он накосячил
                         const levelEl = document.getElementById('level');
-                        if (levelEl) levelEl.style.borderColor = '#be123c'; // Рамка тоже слегка краснеет
+                        if (levelEl) levelEl.style.borderColor = '#be123c';
                     } else {
-                        // Если всё заполнено успешно (или это машины) — гасим подсказку и зажигаем кнопку записи!
+                        // Если всё заполнено (или это машины) — сочно зажигаем кнопку записи!
                         if (submitBtn) {
                             submitBtn.disabled = false;
                             submitBtn.style.display = 'block'; 
                         }
-                        if (errorHint) errorHint.style.display = 'none'; // Мягко прячем строчку ошибки
-                        
                         const levelEl = document.getElementById('level');
                         if (levelEl && currentCategory === 'moto') {
+                            // Возвращаем рамке красивый цвет уровня, если он выбран
                             levelEl.style.borderColor = currentSelectedLevel === 'red' ? '#be123c' : (currentSelectedLevel === 'yellow' ? '#b45309' : '#15803d');
                         }
                     }
@@ -768,7 +760,6 @@ function updateInterface() {
                     btn.classList.add('selected');
                 }
             }
-
 
 
             container.appendChild(btn);
