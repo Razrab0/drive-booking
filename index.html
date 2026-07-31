@@ -729,12 +729,23 @@
     <div id="status"></div>
 </div>
 
-<div class="box" style="border-top: 4px solid var(--danger);">
-    <h3>❌ Отмена записи</h3>
-    <input type="text" id="cancelCode" placeholder="6-значный цифровой код">
-    <button type="button" class="cancel-btn" onclick="cancelBooking()">Отменить занятие</button>
-    <div id="cancelStatus"></div>
+        <!-- СТИЛЬНЫЙ АВТОШКОЛЬНЫЙ БЛОК ОТМЕНЫ ЗАНЯТИЙ ПО ТЗ -->
+<div id="cancelBlock" style="background-color: #ffffff !important; padding: 22px 20px !important; border-radius: 14px !important; border: 2px solid #0f172a !important; margin-top: 25px !important; box-shadow: 0 4px 12px rgba(15, 23, 42, 0.04) !important; position: relative !important; overflow: hidden !important;">
+            
+            <!-- Сигнальная гоночная полоса на верхней грани блока -->
+    <div style="position: absolute !important; top: 0 !important; left: 0 !important; right: 0 !important; height: 4px !important; background: repeating-linear-gradient(-45deg, #0f172a, #0f172a 10px, #f59e0b 10px, #f59e0b 20px) !important;"></div>
+            
+    <h3 style="font-size: 16px !important; font-weight: 900 !important; color: #0f172a !important; text-transform: uppercase !important; letter-spacing: 0.5px !important; margin-top: 5px !important; margin-bottom: 6px !important;">Отмена записи</h3>
+    <p style="font-size: 12px !important; font-weight: 600 !important; color: #475569 !important; line-height: 1.4 !important; margin-bottom: 16px !important;">Введите 6-значный цифровой код для отмены:</p>
+            
+    <input type="text" id="cancelCode" placeholder="6-значный цифровой код" style="width: 100% !important; height: 46px !important; padding: 0 16px !important; font-size: 15px !important; font-weight: 800 !important; color: #0f172a !important; background-color: #f8fafc !important; border: 2px solid #cbd5e1 !important; border-radius: 10px !important; outline: none !important; transition: all 0.2s ease !important; font-family: monospace !important; letter-spacing: 2px !important;">
+            
+            <!-- Твой родной блок вывода статуса отмены для JavaScript -->
+    <div id="cancelStatus" style="font-size: 13px; font-weight: 700; margin-top: 10px; margin-bottom: 5px;"></div>
+            
+    <button type="button" class="cancel-btn" onclick="cancelBooking()" style="width: 100% !important; height: 48px !important; margin-top: 14px !important; background-color: #dc2626 !important; color: #ffffff !important; border: none !important; border-radius: 10px !important; font-size: 13px !important; font-weight: 900 !important; text-transform: uppercase !important; letter-spacing: 1px !important; cursor: pointer !important; transition: all 0.2s ease !important; box-shadow: 0 3px 6px rgba(220, 38, 38, 0.15) !important;">ОТМЕНИТЬ ЗАНЯТИЕ</button>
 </div>
+
 <script>
     const API_URL = 'https://script.google.com/macros/s/AKfycbyriDUH29iTG14H4LjRLaFNOZLAG_sWv5sjA_fk_8jZC0HUGQS_BDtWicZkxaVaR2lK/exec';
     let globalSlotsData = []; let currentCategory = 'moto';
