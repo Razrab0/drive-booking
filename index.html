@@ -297,6 +297,7 @@
         button.cancel-btn:hover { background: #fef2f2; }
         #status, #cancelStatus { margin-top: 15px; padding: 14px; border-radius: 12px; text-align: center; display: none; font-weight: 700; font-size: 14px; }
 /* --- ПРЕМИАЛЬНЫЙ ЖУРНАЛЬНЫЙ ЭКРАН УСПЕХА ИЗ БЛОКА .OK --- */
+     /* --- КРИСТАЛЬНО ЧИСТЫЙ ЖУРНАЛЬНЫЙ ЧЕК УСПЕХА --- */
         .ok {
             display: flex !important;
             flex-direction: column !important;
@@ -305,38 +306,30 @@
             text-align: center !important;
             
             /* Верстка карточки */
-            padding: 30px 24px !important;
+            padding: 40px 24px !important;
             background-color: #ffffff !important; /* Кристально белый благородный фон */
             border: 2px solid #0f172a !important; /* Наша фирменная асфальтовая рамка */
             border-radius: 20px !important;
-            box-shadow: 0 10px 25px rgba(15, 23, 42, 0.08) !important;
+            box-shadow: 0 4px 20px rgba(15, 23, 42, 0.04) !important;
             
-            /* Элитное позиционирование: перекрываем форму, чтоб выглядело как отдельный экран */
-            position: fixed !important;
-            top: 50% !important;
-            left: 50% !important;
-            transform: translate(-50%, -50%) !important;
-            width: calc(100% - 32px) !important;
-            max-width: 360px !important;
-            z-index: 99999 !important;
+            /* ФИКС: Встает аккуратно по ширине формы, не летая по центру экрана */
+            margin: 25px 0 !important;
+            width: 100% !important;
+            box-sizing: border-box !important;
             
-            font-size: 14px !important;
-            font-weight: 700 !important;
+            /* Шрифт */
+            font-size: 15px !important;
+            font-weight: 800 !important;
             color: #0f172a !important;
-            line-height: 1.5 !important;
+            line-height: 1.6 !important;
+            letter-spacing: 0.3px !important;
             
-            animation: slideUpSuccessCard 0.4s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+            animation: slideUpSuccessCard 0.3s ease-out forwards;
         }
         
         @keyframes slideUpSuccessCard {
-            from { opacity: 0; transform: translate(-50%, -40%); }
-            to { opacity: 1; transform: translate(-50%, -50%); }
-        }
-        
-        /* Красивое оформление текста внутри чека бронирования */
-        .ok strong, .ok b {
-            color: #2563eb !important; /* Все ключевые детали (Имя, Время) загораются фирменным синим */
-            font-weight: 800 !important;
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
         }
         
         /* Ночная адаптация: Чтобы на ночном асфальте чек выглядел просто космически дорого */
@@ -345,11 +338,7 @@
             background-color: #0f172a !important; /* Угольно-черный фон */
             border-color: #334155 !important; /* Сдержанная ночная рамка */
             color: #ffffff !important; /* Белые сочные буквы */
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.6) !important;
-        }
-        .box.theme-night .ok strong,
-        .theme-night .ok b {
-            color: #38bdf8 !important; /* Ночью важные детали мягко светятся неоново-голубым */
+            box-shadow: 0 4px 25px rgba(0, 0, 0, 0.5) !important;
         }
 
         .err { background: #fef2f2; color: #991b1b; border: 1px solid #fee2e2; }
