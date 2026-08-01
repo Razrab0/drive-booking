@@ -39,23 +39,26 @@
         
         /* Настройки главного заголовка: шрифт и размеры строго по твоему макету */
         /* Настройки главного заголовка: ШРИФТ BEBAS NEUE ПО ТВОЕМУ СКРИНШОТУ */
+        /* Настройки главного заголовка: ШРИФТ BEBAS NEUE С ЗАЩИТОЙ ОТ ПЕРЕНОСОВ */
         h2 {
-            font-family: 'Bebas Neue', sans-serif !important; /* Наш вытянутый премиум-шрифт */
-            font-size: 34px !important; /* Сделали буквы крупными, плотными и броскими */
-            font-weight: 400 !important; /* Стандартная плотность Bebas Neue */
+            font-family: 'Bebas Neue', sans-serif !important; /* Наш вытянутый гоночный шрифт */
+            font-size: 28px !important; /* Сжали размер, чтобы надпись железно встала в одну строчку! */
+            font-weight: 400 !important;
             color: #0f172a !important; /* Плотный асфальтовый цвет букв днем */
-            text-transform: uppercase !important; /* Жесткий гоночный капс, как на скриншоте */
-            letter-spacing: 1.5px !important; /* Благородный зазор между буквами, чтобы текст дышал */
+            text-transform: uppercase !important; /* Жесткий гоночный капс */
+            letter-spacing: 1.2px !important; /* Легкий благородный зазор между буквами */
             text-align: center !important;
+            white-space: nowrap !important; /* Намертво ЗАПРЕЩАЕМ буквам разбиваться на 2 строки! */
             margin-top: 5px !important;
-            margin-bottom: 35px !important;
+            margin-bottom: 30px !important;
         }
 
-        /* Ночная адаптация: чтобы в темноте фар надпись горела чистым белым цветом */
+        /* Ночная адаптация заголовка */
         .box.theme-night h2,
         .theme-night h2 {
             color: #ffffff !important;
         }
+
 
         .inst-info-block {
             background: var(--bg-form, #ffffff) !important;
