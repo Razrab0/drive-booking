@@ -533,35 +533,41 @@
         }
         /* --- ЭЛИТНЫЙ НОЧНОЙ РЕЖИМ ФАР С КРАСИВЫМ СКРУГЛЕНИЕМ КАТЕГОРИЙ И ГРАНИЦАМИ --- */
         /* Плашка Мотоциклов ночью: жестко запечатываем скругление углов! */
+        /* --- ЭЛИТНЫЙ НОЧНОЙ РЕЖИМ: БЕСШОВНЫЙ МОНОЛИТ КАТЕГОРИЙ ПО ТЗ --- */
+        /* Плашка Мотоциклов (ЛЕВАЯ): Скругляем ТОЛЬКО левые углы, правый стык прямой! */
         .box.theme-night #tab-cat-moto { 
             background-image: url('moto_bg.jpg') !important; 
             background-color: transparent !important; 
             background-size: cover !important;
             background-position: center center !important; 
-            opacity: 0.45; 
+            opacity: 0.35; /* Затемняем по умолчанию */
             color: #ffffff; 
-            border: 1px solid #334155 !important; /* Аккуратная ночная граница */
-            border-radius: 16px !important; /* ФИКС: Красиво закругляем края плашки! */
-            overflow: hidden !important; /* Чтобы картинка фона не вылезала за скругление */
+            border: 1px solid #334155 !important;
+            border-right: none !important; /* Убираем внутренний забор на стыке */
+            border-radius: 16px 0 0 16px !important; /* Скруглили ТОЛЬКО левый бок! */
+            overflow: hidden !important;
+            box-shadow: none !important;
         }
         
-        /* Плашка Машин ночью: жестко запечатываем скругление углов! */
+        /* Плашка Машин (ПРАВАЯ): Скругляем ТОЛЬКО правые углы, левый стык прямой! */
         .box.theme-night #tab-cat-car { 
             background-image: url('car_bg.jpg') !important; 
             background-color: transparent !important; 
             background-size: cover !important;
             background-position: center center !important; 
-            opacity: 0.45; 
+            opacity: 0.35; /* Затемняем по умолчанию */
             color: #ffffff; 
-            border: 1px solid #334155 !important; /* Аккуратная ночная граница */
-            border-radius: 16px !important; /* ФИКС: Красиво закругляем края плашки! */
+            border: 1px solid #334155 !important;
+            border-radius: 0 16px 16px 0 !important; /* Скруглили ТОЛЬКО правый бок! */
             overflow: hidden !important;
+            box-shadow: none !important;
         }
         
+        /* АКТИВНОЕ СОСТОЯНИЕ: Никаких неонов и синих рамок! Выбранная плашка просто загорается на 100% яркости */
         .box.theme-night .type-tab.active { 
             opacity: 1 !important; 
-            border: 2px solid #2563eb !important; /* Активная выбранная плашка ярко горит синим контуром */
-            box-shadow: 0 0 15px rgba(37, 99, 235, 0.3) !important; /* Изящное неоновое свечение */
+            border-color: #334155 !important; /* Обычная аккуратная ночная рамка */
+            box-shadow: none !important; /* Начисто стерли неоновое свечение */
         }
 
         /* Полноценная ночная подложка всей формы */
@@ -571,29 +577,29 @@
             color: #ffffff !important; 
         }
 
-        /* ВОЗВРАЩАЕМ ВИДИМЫЕ ГРАНИЦЫ КАРТОЧКАМ И ИНПУТАМ В ТЕМНОТЕ */
+        /* Возвращаем видимые границы карточкам времени, дням и полям в темноте */
         .box.theme-night input,
         .box.theme-night select,
         .box.theme-night .form-group,
         .box.theme-night .slot-btn,
         .box.theme-night .day-tab-card {
-            background-color: #1e293b !important; /* Мягкая темная подложка */
+            background-color: #1e293b !important; 
             color: #ffffff !important;
-            border: 1px solid #334155 !important; /* Тонкие чёткие графитовые границы, которые теперь отлично видно ночью! */
+            border: 1px solid #334155 !important; /* Аккуратные четкие ночные контуры */
         }
 
-        /* Выбранные мятно-белые кнопки времени ночью горят сочным синим */
+        /* Выбранные кнопки времени и активный день недели ночью горят сочным синим */
         .box.theme-night .slot-btn.selected,
         .box.theme-night .day-tab-card.active {
             background-color: #2563eb !important;
             border-color: #2563eb !important;
         }
 
-        /* Неактивные (занятые) слоты времени ночью слегка приглушаем */
+        /* Занятые слоты времени ночью слегка приглушаем */
         .box.theme-night .slot-btn:disabled {
             background-color: #0f172a !important;
             border-color: #1e293b !important;
-            opacity: 0.4;
+            opacity: 0.3;
         }
 
         /* Фикс плейсхолдеров, чтоб их было видно ночью */
