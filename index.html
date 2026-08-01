@@ -552,7 +552,29 @@
             background-color: #991b1b !important; /* Глубокий бордовый при тапе под пальцем */
             transform: scale(0.98) !important;
         }
+        /* --- НАШ УЛЬТИМАТИВНЫЙ НОЧНОЙ РЕЖИМ: ПОГРУЖАЕМ ПОДЛОЖКУ ФОРМЫ В ТЕМНОТУ --- */
+        .box.theme-night {
+            background: #0f172a !important; /* Насыщенный цвет глубокого ночного асфальта */
+            background-color: #0f172a !important;
+            color: #ffffff !important; /* Все тексты автоматически становятся белыми */
+        }
 
+        /* Перекрашиваем инпуты, карточки и селекты, чтобы они не оставались белыми пятнами в темноте */
+        .box.theme-night input,
+        .box.theme-night select,
+        .box.theme-night .form-group {
+            background-color: #1e293b !important; /* Мягкий графит для полей ввода */
+            color: #ffffff !important;
+            border-color: #334155 !important;
+        }
+
+        /* Фикс плейсхолдеров (подсказок внутри полей), чтоб их было отлично видно ночью */
+        .box.theme-night input::placeholder {
+            color: #64748b !important;
+        }
+
+    
+    
     </style>
 </head>
 <body>
