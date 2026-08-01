@@ -6,11 +6,10 @@
 
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>ЗАПИСЬ НА ВОЖДЕНИЕ</title>
+    <title>Запись на вождение</title>
     <link href="https://googleapis.com" rel="stylesheet">
     <style>
         @import url('https://googleapis.com');
-
         :root { 
             --bg: #f1f5f9; 
             --card-bg: #ffffff; 
@@ -39,16 +38,25 @@
         }
         
         /* Настройки главного заголовка: шрифт и размеры строго по твоему макету */
+        /* Настройки главного заголовка: ШРИФТ BEBAS NEUE ПО ТВОЕМУ СКРИНШОТУ */
         h2 {
-            color: inherit !important;
-            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
-            font-size: 26px;
-            font-weight: 800;
-            text-align: center;
-            margin-top: 5px;
-            margin-bottom: 35px;
-            letter-spacing: -0.5px;
+            font-family: 'Bebas Neue', sans-serif !important; /* Наш вытянутый премиум-шрифт */
+            font-size: 34px !important; /* Сделали буквы крупными, плотными и броскими */
+            font-weight: 400 !important; /* Стандартная плотность Bebas Neue */
+            color: #0f172a !important; /* Плотный асфальтовый цвет букв днем */
+            text-transform: uppercase !important; /* Жесткий гоночный капс, как на скриншоте */
+            letter-spacing: 1.5px !important; /* Благородный зазор между буквами, чтобы текст дышал */
+            text-align: center !important;
+            margin-top: 5px !important;
+            margin-bottom: 35px !important;
         }
+
+        /* Ночная адаптация: чтобы в темноте фар надпись горела чистым белым цветом */
+        .box.theme-night h2,
+        .theme-night h2 {
+            color: #ffffff !important;
+        }
+
         .inst-info-block {
             background: var(--bg-form, #ffffff) !important;
             border-top: 1px solid #e2e8f0;
@@ -618,9 +626,9 @@
         <button type="button" onclick="toggleTheme()" id="themeBtn" style="background: #f4f6f8; border: none; padding: 6px 12px; border-radius: 20px; font-size: 12px; font-weight: 700; cursor: pointer; color: #000000;">🌙 Ночь</button>
     </div>
 
-    <h2>Запись на вождение</h2>
+    <h2>ЗАПИСЬ НА ВОЖДЕНИЕ</h2>
     <form id="mainForm">
-        <label>Ваше Имя и Фамилия:</label>
+        <label>ФИО:</label>
         <input type="text" id="name" required placeholder="Иван Иванов">
         <label>Email:</label>
         <input type="email" id="email" placeholder="example@gmail.com">
