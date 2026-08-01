@@ -1103,72 +1103,85 @@ function updateInterface() {
         const status = document.getElementById('status');
         if (response.status === 'success') {
             // Скрываем кнопку отправки, чтобы её больше не нажали дважды
-            const submitBtn = document.getElementById('submitBtn');
-            if (submitBtn) submitBtn.style.display = 'none';
-            
-            // Собираем все заполненные данные с формы для красивого чека
-            const nameVal = document.getElementById('name')?.value || '';
-            const instructorVal = document.getElementById('selectedInstructor')?.value || '';
-            const levelVal = document.getElementById('level')?.value || 'none';
-            
-            // Красиво расшифровываем уровень для мотоциклистов
-            let levelText = '';
-            if (currentCategory === 'moto') {
-                levelText = levelVal === 'red' ? ' (Новичок)' : (levelVal === 'yellow' ? ' (Опыт)' : ' (Профи)');
-            }
-    
-            // Разбираем выбранную дату и время из скрытого инпута
-            const slotRaw = document.getElementById('selectedSlot')?.value || '';
-            const slotParts = slotRaw.split('|');
-            const dateVal = slotParts[0] || '';
-            const timeVal = slotParts[1] || '';
-    
-            // Определяем конкретную технику, на которую записался ученик
-            let vehicleName = 'Мотоцикл';
-            if (currentCategory === 'car') {
-                const activeCarCard = document.querySelector('.car-card-selector.active, .type-tab.active[id^="tab-car_"]');
-                const carId = activeCarCard ? activeCarCard.id.replace('tab-', '') : 'car_granta_manual';
-                vehicleName = carId.includes('granta') ? 'Lada Granta МКПП' : (carId.includes('logan') ? 'Renault Logan МКПП' : 'Nissan Murano АКПП');
-            } else {
-                vehicleName = (document.getElementById('selectedBike')?.value || 'Bajaj Boxer') + levelText;
-            }
-    
-            // Находим наш блок успеха, зачищаем его и превращаем в премиальный чек!
-            status.className = 'status ok';
-            status.style.display = 'block';
-            status.innerHTML = `
-                <div class="success-card-overlay" style="display: flex; flex-direction: column; align-items: center; text-align: center; width: 100%; box-sizing: border-box;">
-                    <div class="success-icon-circle" style="display: flex; align-items: center; justify-content: center; width: 54px; height: 54px; background-color: #f0fdf4; border: 2px solid #16a34a; border-radius: 50%; margin-bottom: 14px;">
-                        <svg xmlns="http://w3.org" fill="none" viewBox="0 0 24 24" stroke-width="3" stroke="#16a34a" style="width: 26px; height: 26px;">
-                            <path stroke-linecap="round" stroke-linejoin="round" d="M4.5 12.75l6 6 9-13.5" />
-                        </svg>
-                    </div>
-                    <h2 style="font-size: 18px; font-weight: 900; color: #0f172a; text-transform: uppercase; letter-spacing: 0.5px; margin: 0 0 4px 0;">Запись подтверждена</h2>
-                    <p style="font-size: 12px; color: #64748b; margin: 0 0 18px 0; line-height: 1.4;">Ждем вас на автодроме! Сводка вашей брони сохранена в базе данных автошколы.</p>
-                    
-                    <div class="success-details-box" style="width: 100%; background-color: #f8fafc; border: 1px solid #e2e8f0; border-radius: 12px; padding: 14px; margin-bottom: 18px; text-align: left; box-sizing: border-box;">
-                        <div style="display: flex; justify-content: space-between; font-size: 13px; padding: 5px 0; border-bottom: 1px dashed #e2e8f0; color: #64748b; font-weight: 600;">Ученик: <span style="color: #0f172a; font-weight: 800;">${nameVal}</span></div>
-                        <div style="display: flex; justify-content: space-between; font-size: 13px; padding: 5px 0; border-bottom: 1px dashed #e2e8f0; color: #64748b; font-weight: 600;">Инструктор: <span style="color: #0f172a; font-weight: 800;">${instructorVal}</span></div>
-                        <div style="display: flex; justify-content: space-between; font-size: 13px; padding: 5px 0; border-bottom: 1px dashed #e2e8f0; color: #64748b; font-weight: 600;">Техника: <span style="color: #0f172a; font-weight: 800;">${vehicleName}</span></div>
-                        <div style="display: flex; justify-content: space-between; font-size: 13px; padding: 5px 0; border-bottom: 1px dashed #e2e8f0; color: #64748b; font-weight: 600;">Дата занятия: <span style="color: #0f172a; font-weight: 800;">${dateVal}</span></div>
-                        <div style="display: flex; justify-content: space-between; font-size: 13px; padding: 5px 0; border-bottom: 1px dashed #e2e8f0; color: #64748b; font-weight: 600;">Время выезда: <span style="color: #0f172a; font-weight: 800;">${timeVal}</span></div>
-                        
-                        <!-- Выводим реальный 6-значный код отмены из твоего ответа Гугл Скрипта! -->
-                        <div style="display: flex; justify-content: space-between; align-items: center; font-size: 13px; margin-top: 6px; padding: 8px 6px; background-color: #fef2f2; border-radius: 8px; border: 1px dashed #ef4444; color: #b91c1c; font-weight: 700;">
-                            <span>Код для отмены:</span>
-                            <span style="font-family: monospace; font-size: 15px; letter-spacing: 1px;">${response.code || '000000'}</span>
-                        </div>
-                    </div>
-                    
-                    <button type="button" style="width: 100%; height: 44px; background-color: #2563eb; color: #ffffff; border: none; border-radius: 10px; font-size: 13px; font-weight: 800; text-transform: uppercase; letter-spacing: 0.5px; cursor: pointer; transition: all 0.2s ease;" onclick="window.location.reload();">Отлично</button>
+        // Скрываем кнопку отправки, чтобы её больше не нажали дважды
+        const submitBtn = document.getElementById('submitBtn');
+        if (submitBtn) submitBtn.style.display = 'none';
+        
+        // УМНЫЙ ПЕРЕХВАТ КОДА ОТМЕНЫ: Вытаскиваем 6 цифр из ответа, даже если они зашиты внутри текста!
+        let realCancelCode = response.code || response.cancelCode;
+        if (!realCancelCode && response.message) {
+            const match = response.message.match(/\d{6}/); // Ищем 6 цифр подряд в тексте ответа
+            if (match) realCancelCode = match[0];
+        }
+        if (!realCancelCode) realCancelCode = 'См. Таблицу'; // Страховка
+
+        // Собираем все заполненные данные с формы для красивого чека
+        const nameVal = document.getElementById('name')?.value || '';
+        const instructorVal = document.getElementById('selectedInstructor')?.value || '';
+        const levelVal = document.getElementById('level')?.value || 'none';
+        
+        // Красиво расшифровываем уровень для мотоциклистов
+        let levelText = '';
+        if (currentCategory === 'moto') {
+            levelText = levelVal === 'red' ? ' (Новичок)' : (levelVal === 'yellow' ? ' (Опыт)' : ' (Профи)');
+        }
+
+        // Разбираем выбранную дату и время из скрытого инпута
+        const slotRaw = document.getElementById('selectedSlot')?.value || '';
+        const slotParts = slotRaw.split('|');
+        const dateVal = slotParts[0] || '';
+        const timeVal = slotParts[1] || '';
+
+        // Определяем конкретную технику, на которую записался ученик
+        let vehicleName = 'Мотоцикл';
+        if (currentCategory === 'car') {
+            const activeCarCard = document.querySelector('.car-card-selector.active, .type-tab.active[id^="tab-car_"]');
+            const carId = activeCarCard ? activeCarCard.id.replace('tab-', '') : 'car_granta_manual';
+            vehicleName = carId.includes('granta') ? 'Lada Granta МКПП' : (carId.includes('logan') ? 'Renault Logan МКПП' : 'Nissan Murano АКПП');
+        } else {
+            vehicleName = (document.getElementById('selectedBike')?.value || 'Bajaj Boxer') + levelText;
+        }
+
+        // Находим наш блок успеха, зачищаем его и превращаем в премиальный чек!
+        status.className = 'status ok';
+        status.style.display = 'block';
+        status.innerHTML = `
+            <div class="success-card-overlay" style="display: flex; flex-direction: column; align-items: center; text-align: center; width: 100%; box-sizing: border-box;">
+                
+                <!-- КРУТОЙ ИЗУМРУДНО-ГОНОЧНЫЙ КРУГ УСПЕХА -->
+                <div class="success-icon-circle" style="display: flex; align-items: center; justify-content: center; width: 58px; height: 58px; background-color: #ecfdf5; border: 2px solid #059669; border-radius: 50%; margin-bottom: 14px; box-shadow: 0 0 12px rgba(5, 150, 105, 0.25);">
+                    <svg xmlns="http://w3.org" fill="none" viewBox="0 0 24 24" stroke-width="3.5" stroke="#059669" style="width: 26px; height: 26px;">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M4.5 12.75l6 6 9-13.5" />
+                    </svg>
                 </div>
-            `;
-            
-            // Выполняем твой оригинальный сброс формы в самом конце
-            document.getElementById('mainForm').reset();
-            document.getElementById('phone').value = "+7 ";
-            setCategory('moto');
-            loadSlots();
+                
+                <h2 style="font-size: 18px; font-weight: 900; color: #0f172a; text-transform: uppercase; letter-spacing: 0.5px; margin: 0 0 4px 0;">Запись подтверждена</h2>
+                <p style="font-size: 12px; color: #64748b; margin: 0 0 18px 0; line-height: 1.4;">Ждем вас на автодроме! Сводка вашей брони сохранена в базе данных автошколы.</p>
+                
+                <div class="success-details-box" style="width: 100%; background-color: #f8fafc; border: 1px solid #e2e8f0; border-radius: 12px; padding: 14px; margin-bottom: 18px; text-align: left; box-sizing: border-box;">
+                    <div style="display: flex; justify-content: space-between; font-size: 13px; padding: 6px 0; border-bottom: 1px dashed #e2e8f0; color: #64748b; font-weight: 600;">Ученик: <span style="color: #0f172a; font-weight: 800;">${nameVal}</span></div>
+                    <div style="display: flex; justify-content: space-between; font-size: 13px; padding: 6px 0; border-bottom: 1px dashed #e2e8f0; color: #64748b; font-weight: 600;">Инструктор: <span style="color: #0f172a; font-weight: 800;">${instructorVal}</span></div>
+                    <div style="display: flex; justify-content: space-between; font-size: 13px; padding: 6px 0; border-bottom: 1px dashed #e2e8f0; color: #64748b; font-weight: 600;">Техника: <span style="color: #0f172a; font-weight: 800;">${vehicleName}</span></div>
+                    <div style="display: flex; justify-content: space-between; font-size: 13px; padding: 6px 0; border-bottom: 1px dashed #e2e8f0; color: #64748b; font-weight: 600;">Дата занятия: <span style="color: #0f172a; font-weight: 800;">${dateVal}</span></div>
+                    <div style="display: flex; justify-content: space-between; font-size: 13px; padding: 6px 0; border-bottom: 1px dashed #e2e8f0; color: #64748b; font-weight: 600;">Время выезда: <span style="color: #0f172a; font-weight: 800;">${timeVal}</span></div>
+                    
+                    <!-- Выводим НАСТОЯЩИЙ вытащенный код отмены вместо нулей! -->
+                    <div style="display: flex; justify-content: space-between; align-items: center; font-size: 13px; margin-top: 8px; padding: 8px 8px; background-color: #fff1f2; border-radius: 8px; border: 1px dashed #f43f5e; color: #e11d48; font-weight: 700;">
+                        <span>Код для отмены:</span>
+                        <span style="font-family: monospace; font-size: 16px; letter-spacing: 1px; font-weight: 900;">${realCancelCode}</span>
+                    </div>
+                </div>
+                
+                <button type="button" style="width: 100%; height: 44px; background-color: #2563eb; color: #ffffff; border: none; border-radius: 10px; font-size: 13px; font-weight: 800; text-transform: uppercase; letter-spacing: 0.5px; cursor: pointer; transition: all 0.2s ease;" onclick="window.location.reload();">Отлично</button>
+            </div>
+        `;
+        
+        // Выполняем твой оригинальный сброс формы в самом конце
+        document.getElementById('mainForm').reset();
+        document.getElementById('phone').value = "+7 ";
+        setCategory('moto');
+        loadSlots();
+
 
         } else { status.className = 'err'; status.innerText = 'Ошибка: ' + response.message; document.getElementById('submitBtn').disabled = false; }
     }
