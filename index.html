@@ -37,26 +37,25 @@
             transition: background 0.3s ease-in-out, color 0.3s ease-in-out;
         }
         
-        /* Настройки главного заголовка: шрифт и размеры строго по твоему макету */
-        /* Настройки главного заголовка: ШРИФТ BEBAS NEUE ПО ТВОЕМУ СКРИНШОТУ */
-        /* Настройки главного заголовка: ШРИФТ BEBAS NEUE С ЗАЩИТОЙ ОТ ПЕРЕНОСОВ */
-        /* НАСТРОЙКИ ГЛАВНОГО ЗАГОЛОВОКА: ПОЛНАЯ ЗАЩИТА ЭКРАНА ОТ ПЕРЕКОСОВ */
+        /* НАСТРОЙКИ ГЛАВНОГО ЗАГОЛОВОКА: ИДЕАЛЬНЫЙ БАЛАНС КОМП + ТЕЛЕФОН */
         h2 {
             font-family: 'Bebas Neue', sans-serif !important; /* Наш вытянутый гоночный шрифт */
-            font-size: 6.5vw !important; /* УМНАЯ СЖИМАЕМАЯ ШИРИНА: шрифт сам подстраивается под экран телефона! */
-            max-font-size: 32px !important; /* Ограничение для больших экранов компов */
+            
+            /* ЖЕЛЕЗНЫЙ ФИКС: На телефонах сжимается до 24px, на компах никогда не растет больше 36px! */
+            font-size: clamp(24px, 6vw, 36px) !important; 
+            
             font-weight: 400 !important;
             color: #0f172a !important; /* Плотный асфальтовый цвет букв днем */
             text-transform: uppercase !important; /* Жесткий гоночный капс */
-            letter-spacing: 1px !important; /* Аккуратный журнальный зазор между буквами */
+            letter-spacing: 1.5px !important; /* Благородный зазор между буквами */
             text-align: center !important;
             
-            /* ФИКС КРИТИЧЕСКОЙ ОШИБКИ: Убрали nowrap, чтобы заголовок больше не рвал форму вширь! */
+            /* Полная защита от переносов и разрывов блоков */
             white-space: normal !important; 
             word-wrap: break-word !important;
-            
             width: 100% !important;
             box-sizing: border-box !important;
+            
             margin-top: 5px !important;
             margin-bottom: 25px !important;
         }
