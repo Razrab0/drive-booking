@@ -967,36 +967,48 @@
 </div>
 
         <!-- НАШЕ РОСКОШНОЕ ВССПЛЫВАЮЩЕЕ ОКНО ОТМЕНЫ ЗАНЯТИЙ ПО МАКЕТАМ -->
-<div id="cancelPopupOverlay" class="cancel-popup-overlay" onclick="if(event.target === this) closeCancelPopup();" style="position: fixed !important; top: 0 !important; left: 0 !important; width: 100% !important; height: 100% !important; background-color: rgba(15, 23, 42, 0.6) !important; backdrop-filter: blur(8px) !important; z-index: 100000 !important; display: none; align-items: center !important; justify-content: center !important; padding: 16px !important; box-sizing: border-box !important;">
-    <div class="cancel-popup-container" style="display: flex !important; flex-direction: row !important; background-color: #f4f6f9 !important; border-radius: 24px !important; width: 100% !important; max-width: 780px !important; min-height: 280px !important; overflow: hidden !important; box-shadow: 0 20px 50px rgba(15, 23, 42, 0.3) !important; position: relative !important;">
+        <!-- НАШЕ РОСКОШНОЕ ВССПЛЫВАЮЩЕЕ ОКНО С ИНЛАЙН-ЗАЩИТОЙ ПОД СМАРТФОНЫ -->
+        <div id="cancelPopupOverlay" class="cancel-popup-overlay" onclick="if(event.target === this) closeCancelPopup();" style="position: fixed !important; top: 0 !important; left: 0 !important; width: 100% !important; height: 100% !important; background-color: rgba(15, 23, 42, 0.6) !important; backdrop-filter: blur(8px) !important; z-index: 100000 !important; display: none; align-items: center !important; justify-content: center !important; padding: 16px !important; box-sizing: border-box !important;">
+            
+            <!-- Встроенный железный фикс для мобилок напрямую в разметке -->
+            <style>
+                @media (max-width: 600px) {
+                    .cancel-popup-container { flex-direction: column !important; max-width: 320px !important; min-height: auto !important; border-radius: 20px !important; }
+                    .cancel-popup-image { flex: 0 0 auto !important; width: 100% !important; height: 130px !important; }
+                    .cancel-popup-form { flex: 0 0 auto !important; width: 100% !important; padding: 22px 16px !important; }
+                    .cancel-popup-form h2 { font-size: 24px !important; margin-bottom: 4px !important; }
+                    .cancel-popup-form input, .cancel-popup-form .cancel-submit-btn { max-width: 100% !important; height: 44px !important; }
+                }
+            </style>
+
+            <div class="cancel-popup-container" style="display: flex !important; flex-direction: row !important; background-color: #f4f6f9 !important; border-radius: 24px !important; width: 100% !important; max-width: 740px !important; min-height: 280px !important; overflow: hidden !important; box-shadow: 0 20px 50px rgba(15, 23, 42, 0.3) !important; position: relative !important;">
                 
-                <!-- Левая часть: Картинка стоп-сигнала машины -->
                 <!-- Левая часть: ИНТЕРАКТИВНАЯ СМЕНА ФАР ИЗ POWERPOINT (ДЕНЬ + НОЧЬ) -->
-        <div class="cancel-popup-image" style="flex: 0 0 45% !important; position: relative !important; background-color: #000000 !important;">
-            <!-- ДНЕВНАЯ ФАРА: day_beam.jpg (Показывается днем) -->
-            <div class="popup-far-day" style="position: absolute !important; top:0; left:0; width:100%; height:100%; background-image: url('day_beam.jpg') !important; background-size: cover !important; background-position: center center !important;"></div>
+                <div class="cancel-popup-image" style="flex: 0 0 45% !important; position: relative !important; background-color: #000000 !important;">
+                    <!-- ДНЕВНАЯ ФАРА: day_beam.jpg -->
+                    <div class="popup-far-day" style="position: absolute !important; top:0; left:0; width:100%; height:100%; background-image: url('day_beam.jpg') !important; background-size: cover !important; background-position: center center !important;"></div>
+                    <!-- НОЧНАЯ ФАРА: night_beam.jpg -->
+                    <div class="popup-far-night" style="position: absolute !important; top:0; left:0; width:100%; height:100%; background-image: url('night_beam.jpg') !important; background-size: cover !important; background-position: center center !important; display: none;"></div>
+                </div>
+                
+                <!-- Правая часть: Интерфейс формы отмены записи -->
+                <div class="cancel-popup-form" style="flex: 1 1 55% !important; padding: 30px 24px !important; display: flex !important; flex-direction: column !important; justify-content: center !important; align-items: center !important; position: relative !important; box-sizing: border-box !important;">
+                    <button type="button" class="cancel-popup-close" onclick="closeCancelPopup()" style="position: absolute !important; top: 14px !important; right: 16px !important; background: none !important; border: none !important; font-size: 22px !important; color: #94a3b8 !important; cursor: pointer !important; outline: none !important;">×</button>
                     
-            <!-- НОЧНАЯ ФАРА: night_beam.jpg (Вспыхивает ночью) -->
-            <div class="popup-far-night" style="position: absolute !important; top:0; left:0; width:100%; height:100%; background-image: url('night_beam.jpg') !important; background-size: cover !important; background-position: center center !important; display: none;"></div>
+                    <h2 style="font-family: 'Bebas Neue', sans-serif !important; font-size: 30px !important; font-weight: 400 !important; color: #1b2a3b !important; text-transform: uppercase !important; letter-spacing: 1.5px !important; margin: 0 0 4px 0 !important; text-align: center !important;">Отмена занятия</h2>
+                    <p style="font-size: 12px !important; font-weight: 600 !important; color: #64748b !important; line-height: 1.4 !important; margin: 0 0 16px 0 !important; text-align: center !important;">Отмена занятия возможна за 24 часа до него</p>
+                    
+                    <input type="text" id="cancelCode" placeholder="6-значный цифровой код" style="width: 100% !important; max-width: 260px !important; height: 44px !important; background-color: #ffffff !important; border: 1px solid #cbd5e1 !important; border-radius: 12px !important; font-size: 14px !important; font-weight: 700 !important; color: #1b2a3b !important; text-align: center !important; outline: none !important; box-sizing: border-box !important;">
+                    
+                    <!-- Блок вывода статуса отмены бронирования -->
+                    <div id="cancelStatus" style="font-size: 12px; font-weight: 700; margin-top: 8px; margin-bottom: 2px; text-align: center;"></div>
+                    
+                    <button type="button" class="cancel-submit-btn" onclick="cancelBooking()" style="width: 100% !important; max-width: 260px !important; height: 44px !important; margin-top: 12px !important; background: linear-gradient(180deg, #dc2626 0%, #b91c1c 100%) !important; color: #ffffff !important; border: none !important; border-radius: 12px !important; font-family: 'Bebas Neue', sans-serif !important; font-size: 18px !important; letter-spacing: 1px !important; text-transform: uppercase !important; cursor: pointer !important; box-shadow: 0 4px 12px rgba(220, 28, 38, 0.2) !important;">Отменить запись</button>
+                </div>
+                
+            </div>
         </div>
 
-                
-                <!-- Правая часть: Управление отменной (Дневные стили по умолчанию) -->
-        <div class="cancel-popup-form" style="flex: 1 1 55% !important; padding: 30px 24px !important; display: flex !important; flex-direction: column !important; justify-content: center !important; align-items: center !important; position: relative !important; box-sizing: border-box !important;">
-            <button type="button" class="cancel-popup-close" onclick="closeCancelPopup()" style="position: absolute !important; top: 14px !important; right: 16px !important; background: none !important; border: none !important; font-size: 22px !important; color: #94a3b8 !important; cursor: pointer !important; outline: none !important;">×</button>
-                    
-            <h2 style="font-family: 'Bebas Neue', sans-serif !important; font-size: 32px !important; font-weight: 400 !important; color: #1b2a3b !important; text-transform: uppercase !important; letter-spacing: 1.5px !important; margin: 0 0 4px 0 !important; text-align: center !important;">Отмена занятия</h2>
-            <p style="font-size: 12px !important; font-weight: 600 !important; color: #64748b !important; line-height: 1.4 !important; margin: 0 0 18px 0 !important; text-align: center !important;">Отмена занятия возможна за 24 часа до него</p>
-                    
-            <input type="text" id="cancelCode" placeholder="6-значный цифровой код" style="width: 100% !important; max-width: 280px !important; height: 44px !important; background-color: #ffffff !important; border: 1px solid #cbd5e1 !important; border-radius: 12px !important; font-size: 14px !important; font-weight: 700 !important; color: #1b2a3b !important; text-align: center !important; outline: none !important; box-sizing: border-box !important;">
-                    
-            <div id="cancelStatus" style="font-size: 12px; font-weight: 700; margin-top: 8px; margin-bottom: 2px; text-align: center;"></div>
-                    
-            <button type="button" class="cancel-submit-btn" onclick="cancelBooking()" style="width: 100% !important; max-width: 280px !important; height: 44px !important; margin-top: 12px !important; background: linear-gradient(180deg, #dc2626 0%, #b91c1c 100%) !important; color: #ffffff !important; border: none !important; border-radius: 12px !important; font-family: 'Bebas Neue', sans-serif !important; font-size: 18px !important; letter-spacing: 1px !important; text-transform: uppercase !important; cursor: pointer !important; box-shadow: 0 4px 12px rgba(220, 28, 38, 0.2) !important;">Отменить запись</button>
-        </div>
-                
-    </div>
-</div>
 
 <script>
     const API_URL = 'https://script.google.com/macros/s/AKfycbyriDUH29iTG14H4LjRLaFNOZLAG_sWv5sjA_fk_8jZC0HUGQS_BDtWicZkxaVaR2lK/exec';
