@@ -633,32 +633,58 @@
             .cancel-popup-form { padding: 24px 16px !important; }
         }
 
-        /* НАШ ОФИЦИАЛЬНЫЙ НОЧНОЙ РЕЖИМ ПОП-АПА СТРОГО ПО МАКЕТУ МАШИ */
+/* --- СТРОГИЙ НОЧНОЙ РЕЖИМ ДЛЯ ПОП-АПА ПО МАКЕТУ МАШИ (ЖЕЛЕЗНЫЙ ФИКС) --- */
+/* Главный контейнер окна ночью становится угольно-черным */
+        .theme-night .cancel-popup-container,
         .box.theme-night ~ #cancelPopupOverlay .cancel-popup-container,
-        .theme-night .cancel-popup-container {
-            background-color: #000000 !important; /* Глубокий матовый чёрный фон карточки */
+        #cancelPopupOverlay.theme-night .cancel-popup-container {
+            background-color: #000000 !important; /* Абсолютно черный цвет подложки по макету */
             border: 1px solid #1e293b !important;
             box-shadow: 0 25px 60px rgba(0, 0, 0, 0.8) !important;
         }
-        .theme-night .cancel-popup-form { background-color: #000000 !important; }
-        .theme-night .cancel-popup-form h2 { color: #ffffff !important; }
-        .theme-night .cancel-popup-form p { color: #94a3b8 !important; }
         
-        /* Поле ввода ночью становится светлым по макету */
-        .theme-night .cancel-popup-form input { 
-            background-color: #f1f5f9 !important; 
-            border: 1px solid #cbd5e1 !important; 
-            color: #0f172a !important; 
+        /* Перекрашиваем правую форму поп-апа в сплошной черный цвет */
+        .theme-night .cancel-popup-form,
+        .box.theme-night ~ #cancelPopupOverlay .cancel-popup-form {
+            background-color: #000000 !important;
         }
         
-        /* ФИКС КНОПКИ: сочный красный градиент стоп-сигнала + БЕЛЫЙ аккуратный контур! */
-        .theme-night .cancel-popup-form .cancel-submit-btn {
+        /* Крупный заголовок "ОТМЕНА ЗАНЯТИЯ" ночью горит кристально белым */
+        .theme-night .cancel-popup-form h2,
+        .box.theme-night ~ #cancelPopupOverlay .cancel-popup-form h2 {
+            color: #ffffff !important;
+            text-shadow: 0 0 2px rgba(255, 255, 255, 0.1) !important;
+        }
+        
+        /* Пояснительный текст под заголовком */
+        .theme-night .cancel-popup-form p,
+        .box.theme-night ~ #cancelPopupOverlay .cancel-popup-form p {
+            color: #94a3b8 !important;
+        }
+        
+        /* Светлое поле ввода инпута на черном фоне */
+        .theme-night .cancel-popup-form input,
+        .box.theme-night ~ #cancelPopupOverlay .cancel-popup-form input {
+            background-color: #f1f5f9 !important;
+            border: 1px solid #cbd5e1 !important;
+            color: #0f172a !important;
+        }
+        
+        /* Ночная кнопка действия: сочный темно-красный градиент с БЕЛЫМ контуром по макету */
+        .theme-night .cancel-popup-form .cancel-submit-btn,
+        .box.theme-night ~ #cancelPopupOverlay .cancel-popup-form .cancel-submit-btn {
             background: linear-gradient(180deg, #be123c 0%, #991b1b 100%) !important;
-            border: 1px solid #ffffff !important; /* Тот самый белый контур! */
+            border: 1px solid #ffffff !important; /* Тонкий белый контур вокруг кнопки */
             color: #ffffff !important;
             box-shadow: 0 4px 14px rgba(185, 28, 28, 0.3) !important;
         }
-        .theme-night .cancel-popup-close { color: #94a3b8 !important; }
+        
+        /* Крестик закрытия окна ночью меняем на белый, чтоб не терялся */
+        .theme-night .cancel-popup-close,
+        .box.theme-night ~ #cancelPopupOverlay .cancel-popup-close {
+            color: #94a3b8 !important;
+        }
+
     
     </style>
 </head>
@@ -678,9 +704,9 @@
             <!-- Правая сторона: Твоя кнопка переключения фар (тем) -->
             <button onclick="toggleTheme()" style="background: none !important; border: none !important; cursor: pointer !important; padding: 5px !important; display: flex !important; align-items: center !important; justify-content: center !important; outline: none !important; transition: transform 0.2s ease !important;">
                 <!-- ДНЕВНАЯ ФАРА: видна только днем -->
-                <img src="https://icons8.com" class="day-headlight" style="width: 24px; height: 24px; display: block; transition: all 0.3s ease;">
+                <img src="day_beam.png" class="day-headlight" style="width: 24px; height: 24px; display: block; transition: all 0.3s ease;">
                 <!-- НОЧНАЯ ФАРА: видна только ночью -->
-                <img src="https://icons8.com" class="night-headlight" style="width: 24px; height: 24px; display: none; transition: all 0.3s ease; filter: drop-shadow(0 0 5px rgba(245, 158, 11, 0.6));">
+                <img src="night_beam.png" class="night-headlight" style="width: 24px; height: 24px; display: none; transition: all 0.3s ease; filter: drop-shadow(0 0 5px rgba(245, 158, 11, 0.6));">
             </button>
             
         </div>
