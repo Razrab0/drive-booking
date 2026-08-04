@@ -1397,10 +1397,19 @@ function updateInterface() {
         `;
         
         // Выполняем твой оригинальный сброс формы в самом конце
-        document.getElementById('mainForm').reset();
-        document.getElementById('phone').value = "+7 ";
-        setCategory('moto');
-        loadSlots();
+        // Выполняем оригинальный сброс полей формы
+        if (document.getElementById('mainForm')) document.getElementById('mainForm').reset();
+        if (document.getElementById('phone')) document.getElementById('phone').value = "+7 ";
+        
+        // ЖЕЛЕЗНЫЙ ФИКС БАНА СЛОТОВ: Принудительно заставляем сайт перечитать базу данных Google Таблицы!
+        if (typeof loadSlots === 'function') loadSlots();
+        if (typeof fetchSlots === 'function') fetchSlots();
+        if (typeof updateInterface === 'function') updateInterface();
+        if (typeof updateTimeSlots === 'function') updateTimeSlots();
+        
+        // Возвращаем фокус на мотоциклы по умолчанию
+        if (typeof setCategory === 'function') setCategory('moto');
+
 
 
         } else { status.className = 'err'; status.innerText = 'Ошибка: ' + response.message; document.getElementById('submitBtn').disabled = false; }
