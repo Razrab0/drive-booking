@@ -710,27 +710,21 @@
             color: #94a3b8 !important;
         }
             
+/* --- АВТОМАТИЧЕСКАЯ СМЕНА КАРТИНOK ФАР ВНУТРИ ПОП-АПА --- */
+/* В ночной теме прячем дневную картинку фары и выводим ночную яркую! */
+        .theme-night .popup-far-day,
+        .box.theme-night ~ #cancelPopupOverlay .popup-far-day {
+            display: none !important;
+        }
+        
+        .theme-night .popup-far-night,
+        .box.theme-night ~ #cancelPopupOverlay .popup-far-night {
+            display: block !important;
+        }
+    
     </style>
 </head>
 <body>
-    
-    <!-- ПРИБОРНАЯ ПАНЕЛЬ: Вставили сразу после body, парит на самом верху страницы! -->
-    <div id="controlsRow" style="display: flex !important; justify-content: space-between !important; align-items: center !important; width: 100% !important; max-width: 480px !important; margin: 20px auto 0 auto !important; box-sizing: border-box !important; padding: 0 16px !important;">
-        
-        <!-- Левая сторона: Изящная плашка отмены занятия -->
-        <button type="button" class="cancel-popup-trigger-btn" onclick="openCancelPopup()" style="background: none !important; border: 1px solid #cbd5e1 !important; border-radius: 12px !important; padding: 6px 14px !important; font-size: 11px !important; font-weight: 800 !important; color: #64748b !important; text-transform: uppercase !important; letter-spacing: 0.5px !important; cursor: pointer !important; font-family: inherit !important; transition: all 0.2s ease !important; outline: none !important;">
-            Отменить занятие
-        </button>
-        
-        <!-- Правая сторона: Кнопка переключения фар -->
-        <button type="button" id="themeToggleBtn" onclick="toggleTheme();" style="background: none !important; border: none !important; cursor: pointer !important; padding: 5px !important; display: flex !important; align-items: center !important; justify-content: center !important; outline: none !important; transition: transform 0.2s ease !important;">
-            <!-- ДНЕВНАЯ ФАРА -->
-            <img src="day_beam.jpg" class="day-headlight-icon" style="width: 26px; height: 26px; transition: all 0.2s ease;">
-            <!-- НОЧНАЯ ФАРА -->
-            <img src="night_beam.jpg" class="night-headlight-icon" style="width: 26px; height: 26px; transition: all 0.2s ease; filter: drop-shadow(0 0 5px rgba(245, 158, 11, 0.6));">
-        </button>
-        
-    </div>
 
 
     <div class="box theme-day" id="mainBoxContainer">
@@ -741,6 +735,25 @@
                <!-- БЛОК УПРАВЛЕНИЯ НА ПРИБОРНОЙ ПАНЕЛИ: ОТМЕНА И ФАРЫ -->
 
     </div>
+
+            <!-- ПРИБОРНАЯ ПАНЕЛЬ: Внутри главного поля на самом верху по ТЗ -->
+    <div id="controlsRow" style="display: flex !important; justify-content: space-between !important; align-items: center !important; width: 100% !important; margin-bottom: 25px !important; box-sizing: border-box !important; padding: 0 4px !important;">
+            
+            <!-- Левая сторона: Маленькая изящная плашка отмены занятия -->
+        <button type="button" class="cancel-popup-trigger-btn" onclick="openCancelPopup()" style="background: none !important; border: 1px solid #cbd5e1 !important; border-radius: 10px !important; padding: 6px 14px !important; font-size: 11px !important; font-weight: 800 !important; color: #64748b !important; text-transform: uppercase !important; letter-spacing: 0.5px !important; cursor: pointer !important; font-family: inherit !important; transition: all 0.2s ease !important; outline: none !important;">
+                Отменить занятие
+        </button>
+            
+        <!-- Правая сторона: Кнопка переключения фар (ФИКС: расширение .jpg!) -->
+        <button type="button" id="themeToggleBtn" onclick="toggleTheme();" style="background: none !important; border: none !important; cursor: pointer !important; padding: 5px !important; display: flex !important; align-items: center !important; justify-content: center !important; outline: none !important; transition: transform 0.2s ease !important;">
+            <!-- ДНЕВНАЯ ФАРА: day_beam.jpg -->
+            <img src="day_beam.jpg" class="day-headlight-icon" style="width: 26px; height: 26px; transition: all 0.2s ease;">
+            <!-- НОЧНАЯ ФАРА: night_beam.jpg -->
+            <img src="night_beam.jpg" class="night-headlight-icon" style="width: 26px; height: 26px; transition: all 0.2s ease; filter: drop-shadow(0 0 5px rgba(245, 158, 11, 0.6));">
+        </button>
+            
+    </div>
+
 
     <h2>ЗАПИСЬ НА ВОЖДЕНИЕ</h2>
     <form id="mainForm">
@@ -913,7 +926,15 @@
     <div class="cancel-popup-container" style="display: flex !important; flex-direction: row !important; background-color: #f4f6f9 !important; border-radius: 24px !important; width: 100% !important; max-width: 780px !important; min-height: 280px !important; overflow: hidden !important; box-shadow: 0 20px 50px rgba(15, 23, 42, 0.3) !important; position: relative !important;">
                 
                 <!-- Левая часть: Картинка стоп-сигнала машины -->
-        <div class="cancel-popup-image" style="flex: 0 0 45% !important; background-image: url('https://unsplash.com') !important; background-size: cover !important; background-position: center center !important; position: relative !important;"></div>
+                <!-- Левая часть: ИНТЕРАКТИВНАЯ СМЕНА ФАР ИЗ POWERPOINT (ДЕНЬ + НОЧЬ) -->
+        <div class="cancel-popup-image" style="flex: 0 0 45% !important; position: relative !important; background-color: #000000 !important;">
+            <!-- ДНЕВНАЯ ФАРА: day_beam.jpg (Показывается днем) -->
+            <div class="popup-far-day" style="position: absolute !important; top:0; left:0; width:100%; height:100%; background-image: url('day_beam.jpg') !important; background-size: cover !important; background-position: center center !important;"></div>
+                    
+            <!-- НОЧНАЯ ФАРА: night_beam.jpg (Вспыхивает ночью) -->
+            <div class="popup-far-night" style="position: absolute !important; top:0; left:0; width:100%; height:100%; background-image: url('night_beam.jpg') !important; background-size: cover !important; background-position: center center !important; display: none;"></div>
+        </div>
+
                 
                 <!-- Правая часть: Управление отменной (Дневные стили по умолчанию) -->
         <div class="cancel-popup-form" style="flex: 1 1 55% !important; padding: 30px 24px !important; display: flex !important; flex-direction: column !important; justify-content: center !important; align-items: center !important; position: relative !important; box-sizing: border-box !important;">
