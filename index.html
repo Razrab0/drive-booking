@@ -667,7 +667,24 @@
 <div class="box theme-day" id="mainBoxContainer">
     <!-- Кнопочка аккуратно встанет в верхний правый угол, не ломая остальные элементы формы -->
     <div style="text-align: right; margin-bottom: 10px;">
-        <button type="button" onclick="toggleTheme()" id="themeBtn" style="background: #f4f6f8; border: none; padding: 6px 12px; border-radius: 20px; font-size: 12px; font-weight: 700; cursor: pointer; color: #000000;">🌙 Ночь</button>
+          <!-- БЛОК УПРАВЛЕНИЯ НА ПРИБОРНОЙ ПАНЕЛИ: ОТМЕНА И ФАРЫ -->
+        <div style="display: flex !important; justify-content: space-between !important; align-items: center !important; width: 100% !important; margin-bottom: 20px !important; box-sizing: border-box !important; padding: 0 4px !important;">
+            
+            <!-- Левая сторона: Маленькая изящная плашка отмены по ТЗ -->
+            <button type="button" onclick="openCancelPopup()" style="background: none !important; border: 1px solid #cbd5e1 !important; border-radius: 10px !important; padding: 6px 14px !important; font-size: 11px !important; font-weight: 800 !important; color: #64748b !important; text-transform: uppercase !important; letter-spacing: 0.5px !important; cursor: pointer !important; font-family: inherit !important; transition: all 0.2s ease !important; outline: none !important;">
+                Отменить занятие
+            </button>
+            
+            <!-- Правая сторона: Твоя кнопка переключения фар (тем) -->
+            <button onclick="toggleTheme()" style="background: none !important; border: none !important; cursor: pointer !important; padding: 5px !important; display: flex !important; align-items: center !important; justify-content: center !important; outline: none !important; transition: transform 0.2s ease !important;">
+                <!-- ДНЕВНАЯ ФАРА: видна только днем -->
+                <img src="https://icons8.com" class="day-headlight" style="width: 24px; height: 24px; display: block; transition: all 0.3s ease;">
+                <!-- НОЧНАЯ ФАРА: видна только ночью -->
+                <img src="https://icons8.com" class="night-headlight" style="width: 24px; height: 24px; display: none; transition: all 0.3s ease; filter: drop-shadow(0 0 5px rgba(245, 158, 11, 0.6));">
+            </button>
+            
+        </div>
+
     </div>
 
     <h2>ЗАПИСЬ НА ВОЖДЕНИЕ</h2>
