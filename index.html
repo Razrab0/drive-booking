@@ -713,6 +713,25 @@
     </style>
 </head>
 <body>
+    <body>
+    <!-- ПРИБОРНАЯ ПАНЕЛЬ: Вставили сразу после body, парит на самом верху страницы! -->
+    <div id="controlsRow" style="display: flex !important; justify-content: space-between !important; align-items: center !important; width: 100% !important; max-width: 480px !important; margin: 20px auto 0 auto !important; box-sizing: border-box !important; padding: 0 16px !important;">
+        
+        <!-- Левая сторона: Изящная плашка отмены занятия -->
+        <button type="button" class="cancel-popup-trigger-btn" onclick="openCancelPopup()" style="background: none !important; border: 1px solid #cbd5e1 !important; border-radius: 12px !important; padding: 6px 14px !important; font-size: 11px !important; font-weight: 800 !important; color: #64748b !important; text-transform: uppercase !important; letter-spacing: 0.5px !important; cursor: pointer !important; font-family: inherit !important; transition: all 0.2s ease !important; outline: none !important;">
+            Отменить занятие
+        </button>
+        
+        <!-- Правая сторона: Кнопка переключения фар -->
+        <button type="button" id="themeToggleBtn" onclick="toggleTheme();" style="background: none !important; border: none !important; cursor: pointer !important; padding: 5px !important; display: flex !important; align-items: center !important; justify-content: center !important; outline: none !important; transition: transform 0.2s ease !important;">
+            <!-- ДНЕВНАЯ ФАРА -->
+            <img src="day_beam.png" class="day-headlight-icon" style="width: 26px; height: 26px; transition: all 0.2s ease;">
+            <!-- НОЧНАЯ ФАРА -->
+            <img src="night_beam.png" class="night-headlight-icon" style="width: 26px; height: 26px; transition: all 0.2s ease; filter: drop-shadow(0 0 5px rgba(245, 158, 11, 0.6));">
+        </button>
+        
+    </div>
+
 
 <div class="box theme-day" id="mainBoxContainer">
     <!-- Кнопочка аккуратно встанет в верхний правый угол, не ломая остальные элементы формы -->
@@ -720,25 +739,6 @@
           <!-- БЛОК УПРАВЛЕНИЯ НА ПРИБОРНОЙ ПАНЕЛИ: ОТМЕНА И ФАРЫ -->
                 <!-- БЛОК УПРАВЛЕНИЯ НА ПРИБОРНОЙ ПАНЕЛИ: ОТМЕНА И ФАРЫ -->
                <!-- БЛОК УПРАВЛЕНИЯ НА ПРИБОРНОЙ ПАНЕЛИ: ОТМЕНА И ФАРЫ -->
-        <div id="controlsRow" style="display: flex !important; justify-content: space-between !important; align-items: center !important; width: 100% !important; margin-bottom: 20px !important; box-sizing: border-box !important; padding: 0 4px !important;">
-            
-            <!-- Левая сторона: Маленькая изящная плашка отмены занятия -->
-            <button type="button" class="cancel-popup-trigger-btn" onclick="openCancelPopup()" style="background: none !important; border: 1px solid #cbd5e1 !important; border-radius: 10px !important; padding: 6px 14px !important; font-size: 11px !important; font-weight: 800 !important; color: #64748b !important; text-transform: uppercase !important; letter-spacing: 0.5px !important; cursor: pointer !important; font-family: inherit !important; transition: all 0.2s ease !important; outline: none !important;">
-                Отменить занятие
-            </button>
-            
-            <!-- Правая сторона: Кнопка переключения фар -->
-            <button type="button" id="themeToggleBtn" onclick="toggleTheme();" style="background: none !important; border: none !important; cursor: pointer !important; padding: 5px !important; display: flex !important; align-items: center !important; justify-content: center !important; outline: none !important; transition: transform 0.2s ease !important;">
-                <!-- ДНЕВНАЯ ФАРА: day_beam.png -->
-                <img src="day_beam.jpg" class="day-headlight-icon" style="width: 26px; height: 26px; transition: all 0.2s ease;">
-                
-                <!-- НОЧНАЯ ФАРА: night_beam.png -->
-                <img src="night_beam.jpg" class="night-headlight-icon" style="width: 26px; height: 26px; transition: all 0.2s ease; filter: drop-shadow(0 0 5px rgba(245, 158, 11, 0.6));">
-            </button>
-            
-        </div>
-
-
 
     </div>
 
