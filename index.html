@@ -721,7 +721,52 @@
         .box.theme-night ~ #cancelPopupOverlay .popup-far-night {
             display: block !important;
         }
-    
+    /* --- ПОЛНАЯ АДАПТАЦИЯ ПОП-АПА ФАР ПОД ЭКРАНЫ ТЕЛЕФОНОВ --- */
+        @media (max-width: 600px) {
+            /* Перестраиваем контейнер из горизонтального ряда в вертикальный стек */
+            .cancel-popup-container,
+            .box ~ #cancelPopupOverlay .cancel-popup-container {
+                flex-direction: column !important;
+                width: 100% !important;
+                max-width: 340px !important; /* Идеальная ширина карточки на экране смартфона */
+                min-height: auto !important;
+                border-radius: 20px !important;
+            }
+        
+            /* Верхняя секция на мобилке: картинка фары аккуратно ложится наверх */
+            .cancel-popup-image,
+            .box ~ #cancelPopupOverlay .cancel-popup-image {
+                flex: 0 0 auto !important;
+                width: 100% !important;
+                height: 140px !important; /* Удобная высота для фотки фары на телефоне */
+            }
+        
+            /* Нижняя секция на мобилке: поле ввода и кнопка опускаются под картинку */
+            .cancel-popup-form,
+            .box ~ #cancelPopupOverlay .cancel-popup-form {
+                flex: 0 0 auto !important;
+                width: 100% !important;
+                padding: 24px 16px !important; /* Даем воздуху внутри формы */
+                box-sizing: border-box !important;
+            }
+        
+            /* Чуть уменьшаем шрифты заголовка на телефоне, чтоб не рвали вёрстку */
+            .cancel-popup-form h2,
+            .box ~ #cancelPopupOverlay .cancel-popup-form h2 {
+                font-size: 26px !important;
+                margin-bottom: 6px !important;
+            }
+        
+            /* Делаем инпут и кнопку максимально удобными под нажатие пальца */
+            .cancel-popup-form input,
+            .cancel-popup-form .cancel-submit-btn,
+            .box ~ #cancelPopupOverlay .cancel-popup-form input,
+            .box ~ #cancelPopupOverlay .cancel-popup-form .cancel-submit-btn {
+                max-width: 100% !important; /* Растягиваем по ширине мобильной карточки */
+                height: 46px !important;
+            }
+        }
+
     </style>
 </head>
 <body>
