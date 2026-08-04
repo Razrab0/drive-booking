@@ -685,7 +685,31 @@
             color: #94a3b8 !important;
         }
 
-    
+/* --- АВТОШКОЛЬНЫЙ ТЮНИНГ ФАР: КОРРЕКТНОЕ ПЕРЕКЛЮЧЕНИЕ КАРТИНКОВ --- */
+/* ПО УМОЛЧАНИЮ ДНЕМ: дневная фара видна, ночная полностью скрыта */
+        .day-headlight-icon { display: block !important; }
+        .night-headlight-icon { display: none !important; }
+        
+        /* КОГДА ВКЛЮЧАЕТСЯ НОЧНАЯ ТЕМА: дневная фара исчезает, ночная загорается! */
+        body.theme-night .day-headlight-icon,
+        .box.theme-night ~ #cancelPopupOverlay .day-headlight-icon,
+        .theme-night .day-headlight-icon {
+            display: none !important;
+        }
+        
+        body.theme-night .night-headlight-icon,
+        .box.theme-night ~ #cancelPopupOverlay .night-headlight-icon,
+        .theme-night .night-headlight-icon {
+            display: block !important;
+        }
+        
+        /* Ночная перекраска рамки и текста утренней плашки отмены */
+        body.theme-night .cancel-popup-trigger-btn,
+        .theme-night .cancel-popup-trigger-btn {
+            border-color: #334155 !important;
+            color: #94a3b8 !important;
+        }
+            
     </style>
 </head>
 <body>
@@ -695,23 +719,25 @@
     <div style="text-align: right; margin-bottom: 10px;">
           <!-- БЛОК УПРАВЛЕНИЯ НА ПРИБОРНОЙ ПАНЕЛИ: ОТМЕНА И ФАРЫ -->
                 <!-- БЛОК УПРАВЛЕНИЯ НА ПРИБОРНОЙ ПАНЕЛИ: ОТМЕНА И ФАРЫ -->
-        <div id="controlsRow" class="theme-day" style="display: flex !important; justify-content: space-between !important; align-items: center !important; width: 100% !important; margin-bottom: 20px !important; box-sizing: border-box !important; padding: 0 4px !important;">
+               <!-- БЛОК УПРАВЛЕНИЯ НА ПРИБОРНОЙ ПАНЕЛИ: ОТМЕНА И ФАРЫ -->
+        <div id="controlsRow" style="display: flex !important; justify-content: space-between !important; align-items: center !important; width: 100% !important; margin-bottom: 20px !important; box-sizing: border-box !important; padding: 0 4px !important;">
             
             <!-- Левая сторона: Маленькая изящная плашка отмены занятия -->
-            <button type="button" id="cancelPopupBtn" onclick="openCancelPopup()" style="background: none !important; border: 1px solid #cbd5e1 !important; border-radius: 10px !important; padding: 6px 14px !important; font-size: 11px !important; font-weight: 800 !important; color: #64748b !important; text-transform: uppercase !important; letter-spacing: 0.5px !important; cursor: pointer !important; font-family: inherit !important; transition: all 0.2s ease !important; outline: none !important;">
+            <button type="button" class="cancel-popup-trigger-btn" onclick="openCancelPopup()" style="background: none !important; border: 1px solid #cbd5e1 !important; border-radius: 10px !important; padding: 6px 14px !important; font-size: 11px !important; font-weight: 800 !important; color: #64748b !important; text-transform: uppercase !important; letter-spacing: 0.5px !important; cursor: pointer !important; font-family: inherit !important; transition: all 0.2s ease !important; outline: none !important;">
                 Отменить занятие
             </button>
             
-            <!-- Правая сторона: Кнопка переключения фар (названия картинок прописаны строго по ТЗ!) -->
-            <button type="button" onclick="toggleTheme();" style="background: none !important; border: none !important; cursor: pointer !important; padding: 5px !important; display: flex !important; align-items: center !important; justify-content: center !important; outline: none !important; transition: transform 0.2s ease !important;">
-                <!-- ДНЕВНАЯ ФАРА: day_beam.png (Изначально видна) -->
-                <img id="dayBeamImg" src="day_beam.jpg" style="width: 26px; height: 26px; display: block; transition: all 0.2s ease;">
+            <!-- Правая сторона: Кнопка переключения фар -->
+            <button type="button" id="themeToggleBtn" onclick="toggleTheme();" style="background: none !important; border: none !important; cursor: pointer !important; padding: 5px !important; display: flex !important; align-items: center !important; justify-content: center !important; outline: none !important; transition: transform 0.2s ease !important;">
+                <!-- ДНЕВНАЯ ФАРА: day_beam.png -->
+                <img src="day_beam.png" class="day-headlight-icon" style="width: 26px; height: 26px; transition: all 0.2s ease;">
                 
-                <!-- НОЧНАЯ ФАРА: night_beam.png (Изначально скрыта) -->
-                <img id="nightBeamImg" src="night_beam.jpg" style="width: 26px; height: 26px; display: none; transition: all 0.2s ease; filter: drop-shadow(0 0 5px rgba(245, 158, 11, 0.6));">
+                <!-- НОЧНАЯ ФАРА: night_beam.png -->
+                <img src="night_beam.png" class="night-headlight-icon" style="width: 26px; height: 26px; transition: all 0.2s ease; filter: drop-shadow(0 0 5px rgba(245, 158, 11, 0.6));">
             </button>
             
         </div>
+
 
 
     </div>
