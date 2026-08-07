@@ -1237,15 +1237,45 @@ function updateInterface() {
         let isAllowed = true;
         let isCarType = (currentCategory === 'car');
         
-        let activeCarCard = document.querySelector('.car-card-selector.active, .type-tab.active[id^="tab-car_"]');
-        let targetId = isCarType ? (activeCarCard ? activeCarCard.id.replace('tab-', '') : 'car_granta_manual') : selectedBike;
+        let activeCarCard = document.createElement('div'); // Техническая заглушка для совместимости
+        let activeCarDom = document.querySelector('.car-card-selector.active, .type-tab.active[id^="tab-car_"]');
+        let targetId = isCarType ? (activeCarDom ? activeCarDom.id.replace('tab-', '') : 'car_granta_manual') : selectedBike;
 
-        let isBusyByAnyone = (slot.bikes || []).some(b => b.toString().trim() === targetId.toString().trim());
+        // 1. Вытаскиваем ВСЕ записи обоих инструкторов на этот час и дату из тотального массива
+        const allBookingsThisHour = (globalSlotsData || []).filter(s => s.date === slot.date && s.time === slot.time);
+        
+        // Находим брони ИМЕННО ТЕКУЩЕГО выбранного инструктора (Игоря или Андрея) на этот час
+        const myBookingsThisHour = allBookingsThisHour.filter(s => s.instructor === currentInst);
+        
+        // Проверяем точную занятость конкретного инструктора в этот час (на мотике он или на авто)
+        const iHaveCar = myBookingsThisHour.some(s => s.category && s.category.startsWith('car_'));
+        const iHaveMoto = myBookingsThisHour.some(s => s.category === 'moto');
+
+        // ЖЕЛЕЗНЫЙ БАН КОНКРЕТНОЙ ТЕХНИКИ: Если именно эта Гранта, Логан или конкретный байк уже заняты — второй раз их взять нельзя!
+        let isBusyByAnyone = allBookingsThisHour.some(s => {
+            const checkVehicle = s.category === 'moto' ? (s.bike || '') : (s.category || '');
+            return checkVehicle.toString().trim() === targetId.toString().trim();
+        });
         if (isBusyByAnyone) { isAllowed = false; }
 
-        if (isCarType && slot.car > 0) { isAllowed = false; }
+        // ТОТАЛЬНЫЙ СЧЁТЧИК МОТОЦИКЛОВ НА АВТОДРОМЕ (У Игоря и Андрея вместе)
+        let globalTotalMotos = 0;
+        allBookingsThisHour.forEach(s => { if (s.category === 'moto') globalTotalMotos += (parseInt(s.totalMoto) || 1); });
+
+        // 2. ИСПРАВЛЕННАЯ ЛОГИКА ДЛЯ МАШИН:
+        if (isCarType) {
+            if (iHaveMoto) isAllowed = false; // Если Я веду мотики — машины для МЕНЯ закрыты!
+            if (iHaveCar) isAllowed = false;  // Если Я уже занял какую-то тачку — вторую мне нельзя!
+        }
+        
+        // 3. ИСПРАВЛЕННАЯ ЛОГИКА ДЛЯ МОТОЦИКЛОВ:
         if (!isCarType) {
-            if (slot.totalMoto >= 3 || slot.car > 0) isAllowed = false;
+            if (iHaveCar) isAllowed = false; // Если Я уехал на машине — мотики для МЕНЯ закрыты!
+            
+            // ЖЕЛЕЗНЫЙ ЛИМИТ В 3 БАЙКА: Если 3 мотика на автодроме заняты суммарно — байки кончились тотально!
+            if (globalTotalMotos >= 3) isAllowed = false;
+            
+            // Твои родные безупречные мото-шахматы по уровням (red, yellow, green)
             const level = document.getElementById('level')?.value || 'green';
             if (level === "red" && (slot.red > 0 || slot.yellow > 0 || slot.green > 2)) isAllowed = false;
             if (level === "yellow" && (slot.red > 0 || slot.yellow >= 2 || (slot.yellow === 1 && slot.green > 1))) isAllowed = false;
